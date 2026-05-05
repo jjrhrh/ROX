@@ -33,32 +33,7 @@ html, body {
   min-height: 100vh;
   overflow-x: clip;
 }
-/* ===== SPLASH ===== */
-#splash-screen {
-  position: fixed; inset: 0; z-index: 99999;
-  background: var(--bg);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 16px;
-  transition: opacity 0.7s ease;
-  opacity: 1;
-}
-#splash-screen h1 {
-  font-size: 2rem; font-weight: 900; color: var(--text);
-}
-#splash-screen h1 span { color: var(--accent); }
-.splash-logo { font-size: 3rem; }
-.splash-dots { display: flex; gap: 8px; }
-.splash-dots span {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--accent);
-  animation: dot-pulse 1.2s infinite ease-in-out;
-}
-.splash-dots span:nth-child(2) { animation-delay: 0.2s; }
-.splash-dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes dot-pulse {
-  0%,80%,100% { transform: scale(0.6); opacity: 0.4; }
-  40%         { transform: scale(1.2); opacity: 1;   }
+
 }
 /* ===== BOTTOM NAV ===== */
 .bottom-nav {
