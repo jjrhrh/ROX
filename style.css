@@ -211,3 +211,81 @@ html, body {
   border-color: var(--accent);
   box-shadow: 0 0 24px var(--accent-glow);
   }
+/* ===== SECTIONS ===== */
+.home-section { padding: 20px 0 8px; }
+.section-header {
+  display: flex; align-items: center;
+  gap: 10px; padding: 0 16px 12px;
+  flex-direction: row-reverse;
+}
+.section-bar {
+  width: 4px; height: 22px;
+  background: var(--accent);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+.section-title {
+  font-size: 1.05rem; font-weight: 900;
+  color: var(--text);
+}
+
+/* ===== MOVIES ROW ===== */
+.movies-row {
+  display: flex; gap: 10px;
+  overflow-x: auto; padding: 0 16px 12px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.movies-row::-webkit-scrollbar { display: none; }
+
+/* ===== MOVIE CARD ===== */
+.movie-card {
+  flex: 0 0 110px;
+  scroll-snap-align: start;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.movie-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 28px var(--accent-glow);
+  border-color: var(--border-accent);
+}
+.movie-poster-wrap {
+  position: relative;
+  aspect-ratio: 2/3; overflow: hidden;
+}
+.movie-poster {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.3s;
+}
+.movie-card:hover .movie-poster { transform: scale(1.07); }
+.movie-rating {
+  position: absolute; bottom: 6px; left: 6px;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  color: var(--gold);
+  font-size: 0.68rem; font-weight: 900;
+  padding: 3px 7px; border-radius: var(--radius-full);
+}
+.movie-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.25s;
+}
+.movie-card:hover .movie-overlay { opacity: 1; }
+.play-icon { font-size: 2rem; color: #fff; }
+
+/* ===== LOADING ===== */
+.loading {
+  text-align: center; padding: 60px 20px;
+  color: var(--text2); font-size: 1rem;
+}
