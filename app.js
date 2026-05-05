@@ -99,20 +99,37 @@ async function loadHeroSwiper() {
 function updateHeroInfo(movies, index) {
   const m = movies[index % movies.length];
   if (!m) return;
+
   const backdrop = document.getElementById('heroBackdrop');
   if (backdrop && m.backdrop_path) {
     backdrop.style.backgroundImage = `url('${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}')`;
     backdrop.classList.remove('loaded');
     setTimeout(() => backdrop.classList.add('loaded'), 50);
   }
-  const yearEl  = document.getElementById('heroInfoYear');
-  const titleEl = document.getElementById('heroInfoTitle');
-  const capsEl  = document.getElementById('heroInfoCaps');
+
+  const GENRES = {
+    28:'أكشن', 12:'مغامرة', 16:'رسوم متحركة', 35:'كوميديا', 80:'جريمة',
+    99:'وثائقي', 18:'دراما', 10751:'عائلي', 14:'خيال', 36:'تاريخي',
+    27:'رعب', 10402:'موسيقى', 9648:'غموض', 10749:'رومانسي',
+    878:'خيال علمي', 53:'إثارة', 10752:'حرب'
+  };
+
+  const yearEl   = document.getElementById('heroInfoYear');
+  const titleEl  = document.getElementById('heroInfoTitle');
+  const genresEl = document.getElementById('heroInfoGenres');
+  const ratingEl = document.getElementById('heroInfoRating');
+
   if (yearEl)  yearEl.textContent  = m.release_date ? m.release_date.slice(0,4) : '';
   if (titleEl) titleEl.textContent = m.title || m.original_title || '';
-  if (capsEl) {
+
+  if (genresEl) {
+    const names = (m.genre_ids || []).slice(0,3).map(id => GENRES[id]).filter(Boolean);
+    genresEl.innerHTML = names.map(n => `<span class="hero-cap">${n}</span>`).join('');
+  }
+
+  if (ratingEl) {
     const rating = m.vote_average ? m.vote_average.toFixed(1) : '';
-    capsEl.innerHTML = rating ? `<span class="hero-cap hero-cap-rating">⭐ ${rating}</span>` : '';
+    ratingEl.innerHTML = rating ? `<span class="hero-cap hero-cap-rating">⭐ ${rating}</span>` : '';
   }
 }
 // ===== HOME PAGE =====
