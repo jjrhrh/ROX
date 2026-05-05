@@ -289,3 +289,127 @@ html, body {
   text-align: center; padding: 60px 20px;
   color: var(--text2); font-size: 1rem;
 }
+/* ===== DETAIL PAGE ===== */
+.detail-backdrop {
+  position: relative; width: 100%;
+  height: 55vw; max-height: 320px; min-height: 200px;
+  background-size: cover; background-position: center top;
+}
+.detail-backdrop-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(5,5,5,0.2) 0%, var(--bg) 100%);
+}
+.detail-back-btn {
+  position: absolute; top: 14px; right: 14px;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  color: var(--text); font-family: 'Cairo',sans-serif;
+  font-size: 0.88rem; font-weight: 700;
+  padding: 8px 16px; border-radius: var(--radius-full);
+  cursor: pointer; z-index: 5;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.detail-back-btn:hover {
+  background: var(--accent);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+.detail-body {
+  padding: 0 16px 100px;
+  margin-top: -40px; position: relative; z-index: 2;
+}
+.detail-top { display: flex; gap: 14px; align-items: flex-end; }
+.detail-poster {
+  width: 105px; flex-shrink: 0;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-accent);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+  object-fit: cover; aspect-ratio: 2/3;
+}
+.detail-info { flex: 1; padding-bottom: 4px; }
+.detail-title {
+  font-size: 1.2rem; font-weight: 900;
+  color: var(--text); margin-bottom: 10px;
+  line-height: 1.3;
+}
+.detail-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.detail-badge {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  padding: 4px 10px; border-radius: var(--radius-full);
+  font-size: 0.72rem; font-weight: 700; color: var(--text2);
+}
+.detail-rating { color: var(--gold); border-color: rgba(245,197,24,0.3); }
+.detail-genres { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.detail-genre {
+  background: var(--accent-soft); border: 1px solid var(--border-accent);
+  color: var(--accent); padding: 3px 10px;
+  border-radius: var(--radius-full); font-size: 0.7rem; font-weight: 700;
+}
+.detail-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.detail-btn {
+  padding: 9px 16px; border-radius: var(--radius-full);
+  border: none; font-family: 'Cairo',sans-serif;
+  font-size: 0.8rem; font-weight: 700;
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+}
+.detail-btn:active { transform: scale(0.95); }
+.detail-btn-trailer {
+  background: var(--accent2); color: #fff;
+  box-shadow: 0 0 18px var(--accent2-glow);
+}
+.detail-btn-watch {
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid var(--border-accent);
+}
+.detail-btn-later {
+  background: var(--glass); color: var(--text2);
+  border: 1px solid var(--glass-border);
+}
+.detail-section { margin-top: 24px; }
+.detail-section-title {
+  font-size: 0.95rem; font-weight: 900; color: var(--accent);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.detail-section-title::after {
+  content: ''; flex: 1; height: 1px;
+  background: var(--border-accent); opacity: 0.4;
+}
+.detail-overview {
+  color: var(--text2); font-size: 0.9rem;
+  line-height: 1.8; text-align: justify;
+}
+.detail-prod-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.detail-prod-item {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.prod-label { font-size: 0.7rem; color: var(--text3); font-weight: 700; }
+.prod-val   { font-size: 0.92rem; color: var(--text); font-weight: 900; }
+.cast-row {
+  display: flex; gap: 10px; overflow-x: auto;
+  padding-bottom: 10px; scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+.cast-row::-webkit-scrollbar { display: none; }
+.cast-card {
+  flex: 0 0 70px; scroll-snap-align: start;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 5px;
+}
+.cast-card img {
+  width: 60px; height: 60px; border-radius: 50%;
+  object-fit: cover; border: 2px solid var(--border-accent);
+}
+.cast-name {
+  font-size: 0.62rem; font-weight: 700; color: var(--text);
+  text-align: center; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; max-width: 70px;
+}
+.cast-char {
+  font-size: 0.58rem; color: var(--text3); text-align: center;
+  white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis; max-width: 70px;
+}
