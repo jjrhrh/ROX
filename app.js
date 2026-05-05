@@ -428,42 +428,7 @@ function openMovieOfDay() {}
 function openStats()      {}
 function openSurprise()   {}
 function openAI()         {}
-// ===== HERO BACKDROP =====
 
-
-async function loadHeroBanner() {
-  try {
-    const url  = `${CONFIG.API.TMDB_BASE}/movie/popular?api_key=${CONFIG.KEYS.TMDB}&language=ar-SA`;
-    const res  = await fetch(url);
-    const data = await res.json();
-    heroMovies = (data.results || []).filter(m => m.backdrop_path);
-    if (!heroMovies.length) return;
-    updateHeroBanner(heroMovies[0]);
-    heroAutoTimer = setInterval(() => {
-      heroIdx = (heroIdx + 1) % heroMovies.length;
-      updateHeroBanner(heroMovies[heroIdx]);
-    }, 6000);
-  } catch(e) {}
-}
-
-function updateHeroBanner(movie) {
-  const backdrop = document.getElementById('heroBackdrop');
-  const info     = document.getElementById('heroInfo');
-  if (!backdrop || !movie) return;
-  const imgUrl = `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}`;
-  backdrop.style.backgroundImage = `url('${imgUrl}')`;
-  backdrop.classList.remove('loaded');
-  setTimeout(() => backdrop.classList.add('loaded'), 50);
-  if (info) {
-    const title  = movie.title || movie.original_title;
-    const rating = movie.vote_average?.toFixed(1) || '';
-    info.innerHTML = `
-      <h2 class="hero-movie-title">${title}</h2>
-      ${rating ? `<span class="hero-movie-rating">⭐ ${rating}</span>` : ''}
-    `;
-  }
-}
-// ===== END HERO =====
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
 
