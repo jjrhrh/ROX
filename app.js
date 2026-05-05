@@ -421,7 +421,7 @@ function openMovieOfDay() {}
 function openStats()      {}
 function openSurprise()   {}
 function openAI()         {}
-// ===== HERO SWIPER =====
+// ===== END HERO =====
 let heroSwiperInstance = null;
 
 async function loadHeroBanner() {
