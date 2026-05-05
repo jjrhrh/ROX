@@ -478,22 +478,7 @@ function updateHeroBanner(movie) {
   if (btnWatch)  btnWatch.onclick  = () => openDetail(movie.id, 'movie');
   if (btnDetail) btnDetail.onclick = () => openDetail(movie.id, 'movie');
 }
-
-  if (info) {
-    info.innerHTML = `
-      <h2 class="hero-movie-title">${title}</h2>
-      <div class="hero-movie-meta">
-        ${rating ? `<span class="hero-badge hero-badge-rating">⭐ ${rating}</span>` : ''}
-        ${year   ? `<span class="hero-badge hero-badge-year">${year}</span>`         : ''}
-      </div>
-      <p class="hero-movie-overview">${overview}</p>
-    `;
-  }
-
-  if (btns) btns.style.display = 'flex';
-  if (btnWatch)  btnWatch.onclick  = () => openDetail(movie.id, 'movie');
-  if (btnDetail) btnDetail.onclick = () => openDetail(movie.id, 'movie');
-}
+  
 // ===== END HERO =====
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
