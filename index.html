@@ -23,15 +23,19 @@
   </div>
 </div>
 <!-- HERO -->
+<!-- HERO -->
 <div id="heroSection" class="hero-section">
-  <div id="heroSlider" class="hero-slider"></div>
+  <div class="hero-backdrop" id="heroBackdrop"></div>
   <div class="hero-gradient"></div>
-  <div class="hero-logo">Cinema <span>ROX</span></div>
-  <div class="hero-search-wrap">
-    <input type="text" id="searchInput"
-      class="hero-search-input"
-      placeholder="🔍 ابحث عن فيلم أو مسلسل..."
-      oninput="handleSearch(this.value)">
+  <div class="hero-content">
+    <div class="hero-logo">Cinema <span>ROX</span></div>
+    <div class="hero-info" id="heroInfo"></div>
+    <div class="hero-search-wrap">
+      <input type="text" id="searchInput"
+        class="hero-search-input"
+        placeholder="🔍 ابحث عن فيلم أو مسلسل..."
+        oninput="handleSearch(this.value)">
+    </div>
   </div>
 </div>
 <!-- PAGES -->
