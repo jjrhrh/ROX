@@ -422,9 +422,7 @@ function openStats()      {}
 function openSurprise()   {}
 function openAI()         {}
 // ===== HERO BACKDROP =====
-let heroAutoTimer = null;
-let heroMovies    = [];
-let heroIdx       = 0;
+
 
 async function loadHeroBanner() {
   try {
