@@ -151,7 +151,7 @@ html, body {
     to bottom,
     rgba(5,5,5,0.0) 0%,
     rgba(5,5,5,0.4) 50%,
-    var(--bg) 100%
+    #050505 100%
   );
 }
 .hero-section::after {
