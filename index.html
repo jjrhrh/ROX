@@ -15,24 +15,22 @@
 <body>
 
 <!-- HERO -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-
 <div id="heroSection" class="hero-section">
-  <div class="hero-blur-bg" id="heroBlurBg"></div>
-  <div class="hero-backdrop-layer" id="heroBackdropLayer"></div>
+  <div class="hero-backdrop" id="heroBackdrop"></div>
   <div class="hero-gradient"></div>
-
-  <div class="hero-topbar">
+  <div class="hero-content">
     <div class="hero-logo">Cinema <span>ROX</span></div>
-  </div>
-
-  <div class="swiper heroSwiper">
-    <div class="swiper-wrapper" id="heroSwiperWrapper"></div>
+    <div class="hero-info" id="heroInfo"></div>
+    <div class="hero-search-wrap">
+      <input type="text" id="searchInput"
+        class="hero-search-input"
+        placeholder="🔍 ابحث عن فيلم أو مسلسل..."
+        oninput="handleSearch(this.value)">
+    </div>
   </div>
 </div>
-
 <!-- PAGES -->
-<div id="homePage" class="page active"></div>
+<div id="homePage"       class="page"></div>
 <div id="searchPage"     class="page">
   <div class="search-header">
     <input type="text" id="searchInput2" class="search-input-page"
@@ -89,7 +87,6 @@
 </div>
 
 <!-- SCRIPTS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="config.js"></script>
 <script src="app.js"></script>
 </body>
