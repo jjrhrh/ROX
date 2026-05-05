@@ -446,9 +446,9 @@ async function loadHeroBanner() {
 }
 
 function updateHeroBanner(movie) {
-  const backdrop = document.getElementById('heroBackdrop');
-  const info     = document.getElementById('heroInfo');
-  const btns     = document.getElementById('heroBtns');
+  const backdrop  = document.getElementById('heroBackdrop');
+  const info      = document.getElementById('heroInfo');
+  const btns      = document.getElementById('heroBtns');
   const btnWatch  = document.getElementById('heroBtnWatch');
   const btnDetail = document.getElementById('heroBtnDetail');
   if (!backdrop || !movie) return;
@@ -462,6 +462,22 @@ function updateHeroBanner(movie) {
   const rating   = movie.vote_average?.toFixed(1) || '';
   const overview = movie.overview ? movie.overview.substring(0, 100) + '…' : '';
   const year     = (movie.release_date || '').slice(0, 4);
+
+  if (info) {
+    info.innerHTML = `
+      <h2 class="hero-movie-title">${title}</h2>
+      <div class="hero-movie-meta">
+        ${rating ? `<span class="hero-badge hero-badge-rating">⭐ ${rating}</span>` : ''}
+        ${year   ? `<span class="hero-badge hero-badge-year">${year}</span>`         : ''}
+      </div>
+      <p class="hero-movie-overview">${overview}</p>
+    `;
+  }
+
+  if (btns) btns.style.display = 'flex';
+  if (btnWatch)  btnWatch.onclick  = () => openDetail(movie.id, 'movie');
+  if (btnDetail) btnDetail.onclick = () => openDetail(movie.id, 'movie');
+}
 
   if (info) {
     info.innerHTML = `
