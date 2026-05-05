@@ -421,82 +421,40 @@ function openMovieOfDay() {}
 function openStats()      {}
 function openSurprise()   {}
 function openAI()         {}
-// ===== END HERO =====
-let heroSwiperInstance = null;
+// ===== HERO BACKDROP =====
+
 
 async function loadHeroBanner() {
   try {
-    const url    = buildTMDBUrl('/trending/movie/week', { page: 1 });
-    const res    = await fetch(url);
-    const data   = await res.json();
-    const movies = (data.results || [])
-      .filter(m => m.backdrop_path && m.poster_path)
-      .slice(0, 5);
-    if (!movies.length) return;
+    const url  = `${CONFIG.API.TMDB_BASE}/movie/popular?api_key=${CONFIG.KEYS.TMDB}&language=ar-SA`;
+    const res  = await fetch(url);
+    const data = await res.json();
+    heroMovies = (data.results || []).filter(m => m.backdrop_path);
+    if (!heroMovies.length) return;
+    updateHeroBanner(heroMovies[0]);
+    heroAutoTimer = setInterval(() => {
+      heroIdx = (heroIdx + 1) % heroMovies.length;
+      updateHeroBanner(heroMovies[heroIdx]);
+    }, 6000);
+  } catch(e) {}
+}
 
-    const wrapper = document.getElementById('heroSwiperWrapper');
-    if (!wrapper) return;
-
-    wrapper.innerHTML = movies.map(m => {
-      const title    = m.title || m.original_title || '';
-      const year     = (m.release_date || '').slice(0, 4);
-      const rating   = m.vote_average?.toFixed(1) || '';
-      const overview = m.overview ? m.overview.substring(0, 110) + '…' : '';
-      const poster   = `${CONFIG.IMAGES.POSTER_LG}${m.poster_path}`;
-      const backdrop = `${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}`;
-      return `
-        <div class="swiper-slide hero-slide-item"
-             data-id="${m.id}"
-             data-poster="${poster}"
-             data-backdrop="${backdrop}">
-          <div class="hero-slide-inner">
-            <div class="hero-poster-wrap">
-              <img class="hero-poster-img" src="${poster}" alt="${title}" loading="lazy">
-            </div>
-            <div class="hero-glass-info">
-              <h2 class="hero-movie-title">${title}</h2>
-              <div class="hero-movie-meta">
-                ${rating ? `<span class="hero-badge hero-badge-rating">⭐ ${rating}</span>` : ''}
-                ${year   ? `<span class="hero-badge hero-badge-year">${year}</span>`         : ''}
-              </div>
-              <p class="hero-movie-overview">${overview}</p>
-              <div class="hero-btns">
-                <button class="hero-btn hero-btn-watch"
-                        onclick="openDetail(${m.id},'movie')">▶ مشاهدة الآن</button>
-                <button class="hero-btn hero-btn-detail"
-                        onclick="openDetail(${m.id},'movie')">📋 التفاصيل</button>
-              </div>
-            </div>
-          </div>
-        </div>`;
-    }).join('');
-
-    // تحديث الخلفية المشوشة عند تغيير الشريحة
-    function updateBlurBg(index) {
-      const bg   = document.getElementById('heroBlueBg');
-      const slide = movies[index];
-      if (!bg || !slide) return;
-      bg.style.backgroundImage =
-        `url('${CONFIG.IMAGES.BACKDROP}${slide.backdrop_path}')`;
-    }
-
-    updateBlurBg(0);
-
-    heroSwiperInstance = new Swiper('.heroSwiper', {
-      effect        : 'fade',
-      fadeEffect    : { crossFade: true },
-      loop          : true,
-      autoplay      : { delay: 6000, disableOnInteraction: false },
-      speed         : 1000,
-      grabCursor    : true,
-      on: {
-        slideChange() {
-          updateBlurBg(this.realIndex);
-        }
-      }
-    });
-
-  } catch(e) { console.warn('Hero Swiper:', e); }
+function updateHeroBanner(movie) {
+  const backdrop = document.getElementById('heroBackdrop');
+  const info     = document.getElementById('heroInfo');
+  if (!backdrop || !movie) return;
+  const imgUrl = `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}`;
+  backdrop.style.backgroundImage = `url('${imgUrl}')`;
+  backdrop.classList.remove('loaded');
+  setTimeout(() => backdrop.classList.add('loaded'), 50);
+  if (info) {
+    const title  = movie.title || movie.original_title;
+    const rating = movie.vote_average?.toFixed(1) || '';
+    info.innerHTML = `
+      <h2 class="hero-movie-title">${title}</h2>
+      ${rating ? `<span class="hero-movie-rating">⭐ ${rating}</span>` : ''}
+    `;
+  }
 }
 // ===== END HERO =====
 // ===== INIT =====
@@ -504,7 +462,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   bnavGo('home');
   try {
-await Promise.all([loadHeroBanner(), loadHomePage()]);
+    await Promise.all([loadHeroBanner(), loadHomePage()]);
   } catch(e) {
     console.error('خطأ في التحميل:', e);
   }
