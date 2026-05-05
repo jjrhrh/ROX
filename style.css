@@ -470,8 +470,8 @@ html, body {
 .hero-section {
   position: relative !important;
   width: 100% !important;
-  height: 70vh !important;
-  overflow: hidden !important;
+  height: auto !important;
+  overflow: visible !important;
   background: var(--bg) !important;
 }
 .hero-backdrop {
@@ -554,3 +554,55 @@ html, body {
   font-size: 0.85rem; font-weight: 900;
   padding: 4px 14px; border-radius: var(--radius-full);
 } 
+/* ===== HERO SWIPER NEW ===== */
+.hero-swiper {
+  width: 100%;
+  padding: 56px 0 12px !important;
+  overflow: visible !important;
+  position: relative; z-index: 3;
+}
+.hero-swiper-slide {
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 2/3;
+  transition: transform 0.4s, box-shadow 0.4s;
+  cursor: pointer;
+  opacity: 0.55;
+  transform: scale(0.88);
+}
+.hero-swiper-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.swiper-slide-active.hero-swiper-slide {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.85);
+}
+.hero-info-panel {
+  text-align: center;
+  padding: 16px 20px 0;
+  position: relative; z-index: 3;
+}
+.hero-info-year {
+  font-size: 0.82rem; color: var(--text2);
+  font-weight: 700; margin-bottom: 4px;
+}
+.hero-info-title {
+  font-size: 1.35rem; font-weight: 900;
+  color: var(--text); margin-bottom: 10px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+}
+.hero-info-caps {
+  display: flex; justify-content: center;
+  flex-wrap: wrap; gap: 8px;
+}
+.hero-cap {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  color: var(--text2);
+  font-size: 0.75rem; font-weight: 700;
+  padding: 5px 14px; border-radius: var(--radius-full);
+}
+.hero-cap-rating { color: var(--gold); border-color: rgba(245,197,24,0.3); }
