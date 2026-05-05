@@ -413,3 +413,74 @@ html, body {
   white-space: nowrap; overflow: hidden;
   text-overflow: ellipsis; max-width: 70px;
 }
+/* ===== TRAILER ===== */
+.trailer-overlay {
+  position: fixed; inset: 0; z-index: 99999;
+  background: rgba(0,0,0,0.95);
+  display: flex; align-items: center; justify-content: center;
+}
+.trailer-box {
+  position: relative; width: 95vw; max-width: 700px;
+  aspect-ratio: 16/9;
+}
+.trailer-frame {
+  width: 100%; height: 100%;
+  border: none; border-radius: var(--radius-md);
+}
+.trailer-close {
+  position: absolute; top: -38px; left: 0;
+  background: none; border: none;
+  color: #fff; font-size: 1.4rem;
+  cursor: pointer; padding: 4px 10px;
+}
+
+/* ===== TOAST ===== */
+.rox-toast {
+  position: fixed; bottom: 90px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(10,10,18,0.96);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-accent);
+  color: var(--text); padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-family: 'Cairo',sans-serif;
+  font-size: 0.88rem; font-weight: 700;
+  z-index: 99998; opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  box-shadow: 0 4px 24px var(--accent-glow);
+  white-space: nowrap;
+}
+.rox-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===== SEARCH PAGE ===== */
+.search-header {
+  padding: 16px 16px 8px;
+}
+.search-input-page {
+  width: 100%; padding: 13px 20px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  color: var(--text);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.95rem; outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.search-input-page::placeholder { color: var(--text3); }
+.search-input-page:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* ===== LIBRARY ===== */
+.lib-header { padding: 20px 16px 8px; }
+.lib-title  { font-size: 1.3rem; font-weight: 900; color: var(--text); }
+.lib-section { padding: 8px 0; }
+.lib-empty {
+  padding: 40px 16px; text-align: center;
+  color: var(--text3); font-size: 0.9rem;
+}
