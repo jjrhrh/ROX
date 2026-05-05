@@ -27,3 +27,40 @@ function toggleRoxMenu() {
   const btn = document.getElementById('bnavCenter');
   if (btn) btn.style.transform = roxOpen ? 'rotate(45deg) scale(1.1)' : '';
 }
+// ===== FETCH =====
+async function fetchMovies(endpoint = '/movie/popular', options = {}) {
+  const {
+    page            = 1,
+    type            = endpoint.includes('/tv') ? 'tv' : 'movie',
+    limit           = CONFIG.DISPLAY.TRENDING_LIMIT || 20,
+    requirePoster   = true,
+    requireBackdrop = false,
+    params          = {},
+  } = options;
+
+  const url = buildTMDBUrl(endpoint, {
+    page,
+    include_adult: String(CONFIG.SEARCH.INCLUDE_ADULT),
+    ...params,
+  });
+
+  try {
+    const ctrl    = new AbortController();
+    const timeout = setTimeout(() => ctrl.abort(), CONFIG.PERFORMANCE.REQUEST_TIMEOUT_MS || 8000);
+    const res     = await fetch(url, { signal: ctrl.signal });
+    clearTimeout(timeout);
+    if (!res.ok) throw new Error(`TMDB ${res.status}`);
+    const data = await res.json();
+    return (data.results || [])
+      .filter(i => {
+        if (requirePoster   && !i.poster_path)   return false;
+        if (requireBackdrop && !i.backdrop_path) return false;
+        return true;
+      })
+      .slice(0, limit)
+      .map(i => ({ ...i, media_type: i.media_type || type }));
+  } catch (e) {
+    console.warn('fetchMovies:', endpoint, e.message);
+    return [];
+  }
+}
