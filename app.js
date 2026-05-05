@@ -64,3 +64,63 @@ async function fetchMovies(endpoint = '/movie/popular', options = {}) {
     return [];
   }
 }
+// ===== HERO SLIDER =====
+let heroMovies = [], heroIndex = 0, heroTimer = null;
+
+async function getFanartBackdrop(tmdbId) {
+  try {
+    const res = await fetch(`${CONFIG.API.FANART_BASE}/movies/${tmdbId}?api_key=${CONFIG.KEYS.FANART}`);
+    if (!res.ok) return '';
+    const d = await res.json();
+    return d.hdmoviebackground?.[0]?.url || d.moviebackground?.[0]?.url || '';
+  } catch { return ''; }
+}
+
+function resolveHeroBackdrop(movie, fanartUrl = '') {
+  if (fanartUrl)           return fanartUrl;
+  if (movie.backdrop_path) return `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}`;
+  if (movie.poster_path)   return `${CONFIG.IMAGES.ORIGINAL}${movie.poster_path}`;
+  return '';
+}
+
+function setHeroSlide(next) {
+  const slides = document.querySelectorAll('#heroSlider .hero-slide');
+  if (!slides.length) return;
+  slides[heroIndex]?.classList.remove('active');
+  heroIndex = next;
+  slides[heroIndex]?.classList.add('active');
+}
+
+function startHeroTimer() {
+  clearInterval(heroTimer);
+  if (heroMovies.length < 2) return;
+  heroTimer = setInterval(() => setHeroSlide((heroIndex + 1) % heroMovies.length), 5000);
+}
+
+async function loadHeroSlider() {
+  const slider = document.getElementById('heroSlider');
+  if (!slider) return;
+
+  let movies = await fetchMovies('/trending/movie/week', { limit: 7, requireBackdrop: true });
+  if (!movies.length) movies = await fetchMovies('/movie/popular', { limit: 7, requireBackdrop: true });
+  if (!movies.length) { slider.innerHTML = ''; return; }
+
+  const enriched = await Promise.all(
+    movies.map(async m => ({
+      ...m,
+      hero_backdrop: resolveHeroBackdrop(m, await getFanartBackdrop(m.id))
+    }))
+  );
+
+  heroMovies = enriched.filter(m => m.hero_backdrop);
+  if (!heroMovies.length) { slider.innerHTML = ''; return; }
+
+  heroIndex = 0;
+  slider.innerHTML = heroMovies.map((m, i) => `
+    <div class="hero-slide ${i === 0 ? 'active' : ''}"
+         style="background-image:url('${m.hero_backdrop}')"
+         onclick="openDetail(${m.id},'movie')"></div>
+  `).join('');
+
+  startHeroTimer();
+}
