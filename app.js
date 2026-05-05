@@ -27,20 +27,7 @@ function toggleRoxMenu() {
   const btn = document.getElementById('bnavCenter');
   if (btn) btn.style.transform = roxOpen ? 'rotate(45deg) scale(1.1)' : '';
 }
-// ===== TMDB URL BUILDER =====
-function buildTMDBUrl(endpoint, params = {}) {
-  const base = `${CONFIG.API.TMDB_BASE}${endpoint}`;
-  const p = new URLSearchParams({
-    api_key : CONFIG.KEYS.TMDB,
-    language: 'ar-SA',
-    ...params
-  });
-  // حذف المفاتيح الداخلية غير المتعلقة بالـ API
-  p.delete('limit');
-  p.delete('requireBackdrop');
-  return `${base}?${p.toString()}`;
-}
-// ===== END URL BUILDER =====
+
 // ===== FETCH =====
 async function fetchMovies(endpoint = '/movie/popular', options = {}) {
   const {
