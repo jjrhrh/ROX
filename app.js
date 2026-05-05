@@ -460,13 +460,6 @@ function updateHeroBanner(movie) {
 // ===== END HERO =====
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
-  const s = document.getElementById('splash-screen');
-  if (s) {
-    setTimeout(() => {
-      s.style.opacity = '0';
-      setTimeout(() => { if(s.parentNode) s.remove(); }, 700);
-    }, 1800);
-  }
 
   bnavGo('home');
   try {
