@@ -195,7 +195,7 @@ html, body {
   }
 /* ===== SECTIONS ===== */
 .home-section { padding: 20px 0 8px; }
-#homePage > .home-section:first-child { margin-top: -50px; }
+#homePage > .home-section:first-child { margin-top: 30px; }
 .section-header {
   display: flex; align-items: center;
   gap: 10px; padding: 0 16px 12px;
@@ -227,7 +227,7 @@ html, body {
   flex: 0 0 152px;
   scroll-snap-align: start;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 26px;
   overflow: hidden;
   background: var(--card-bg);
   border: 1px solid rgba(229,9,20,0.18);
@@ -250,7 +250,7 @@ html, body {
 }
 .movie-card:hover .movie-poster { transform: scale(1.07); }
 .movie-rating {
-  position: absolute; bottom: 6px; left: 6px;
+  position: absolute; bottom: 6px; right: 6px;
   background: rgba(0,0,0,0.65);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(245,197,24,0.5);
@@ -590,8 +590,8 @@ html, body {
   cursor: pointer;
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.55 !important;
-  filter: brightness(0.7) !important;
+  opacity: 0.5 !important;
+  filter: brightness(0.3) blur(4px) !important;
   transform: scale(0.82) !important;
 }
 .swiper-slide-active.hero-swiper-slide {
