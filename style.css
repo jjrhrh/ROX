@@ -589,8 +589,8 @@ html, body {
 .swiper-slide-active.hero-swiper-slide {
   opacity: 1;
   filter: blur(0);
-  box-shadow: 0 0 50px var(--accent-glow), 0 20px 60px rgba(0,0,0,0.8);
-};
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
 .hero-info-container {
   text-align: center !important;
   padding: 20px 20px 40px !important;
@@ -604,20 +604,21 @@ html, body {
 }
 .hero-info-title {
   text-align: center !important;
-  font-size: 1.35rem; font-weight: 900;
-  color: var(--text); margin-bottom: 10px;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+  font-size: 1.5rem; font-weight: 900;
+  color: #ffffff; margin-bottom: 12px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.6);
+  letter-spacing: 0.01em;
 }
 .hero-info-caps {
   display: flex; justify-content: center;
   flex-wrap: wrap; gap: 8px;
 }
 .hero-cap {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.15);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(0,212,255,0.3);
-  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #ffffff;
   font-size: 0.75rem; font-weight: 700;
   padding: 5px 14px; border-radius: var(--radius-full);
   box-shadow: 0 0 10px rgba(0,212,255,0.15);
