@@ -198,7 +198,7 @@ html, body {
   box-shadow: 0 0 24px var(--accent-glow);
   }
 /* ===== SECTIONS ===== */
-.home-section { padding: 40px 0 8px; }
+.home-section { padding: 20px 0 8px; }
 #homePage > .home-section:first-child { margin-top: -30px; }
 .section-header {
   display: flex; align-items: center;
@@ -228,10 +228,10 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-  flex: 0 0 145px;
+  flex: 0 0 110px;
   scroll-snap-align: start;
   cursor: pointer;
-  border-radius: 14px;
+  border-radius: 25px;
   overflow: hidden;
   background: var(--card-bg);
   border: 1px solid rgba(229,9,20,0.32);
@@ -589,12 +589,12 @@ html, body {
   border-radius: 40px;
   overflow: hidden;
   aspect-ratio: 2/3;
-  width: 299px !important;
+  width: 220px !important;
   transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s, filter 0.5s;
   cursor: pointer;
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.5 !important;
+  opacity: 0.2 !important;
   filter: brightness(0.3) blur(4px) !important;
   transform: scale(0.82) !important;
 }
@@ -607,7 +607,7 @@ html, body {
 }
 .hero-info-container {
   text-align: center !important;
-  margin-top: 10px !important;
+  margin-top: 5px !important;
   padding: 0 20px 0 !important;
   position: relative !important;
   z-index: 3 !important;
@@ -621,7 +621,7 @@ html, body {
   color: rgba(255, 255, 255, 0.6);
   text-align: center;
   font-weight: 400;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   letter-spacing: 5px;
   background: transparent;
   border: none;
@@ -630,7 +630,7 @@ html, body {
 .hero-info-title {
   text-align: center !important;
   font-size: 2.2rem; font-weight: 900;
-  color: #ffffff; margin-bottom: 12px;
+  color: #ffffff; margin-bottom: 5px;
   text-shadow: 0 0 40px rgba(255,255,255,0.25), 0 2px 10px rgba(0,0,0,1);
   letter-spacing: 0.5px;
 }
@@ -638,8 +638,8 @@ html, body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 5px;
+  margin-bottom: 5px;
 }
 .hero-cap {
   background: #1a1a1a;
