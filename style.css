@@ -604,6 +604,7 @@ html, body {
   font-weight: 700; margin-bottom: 4px;
 }
 .hero-info-title {
+  text-align: center !important;
   font-size: 1.35rem; font-weight: 900;
   color: var(--text); margin-bottom: 10px;
   text-shadow: 0 2px 12px rgba(0,0,0,0.8);
