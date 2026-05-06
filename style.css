@@ -213,7 +213,7 @@ html, body {
 }
 /* ===== MOVIES ROW ===== */
 .movies-row {
-  display: flex; gap: 10px;
+  display: flex; gap: 14px;
   overflow-x: auto; padding: 0 16px 12px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -223,7 +223,7 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-  flex: 0 0 110px;
+  flex: 0 0 132px;
   scroll-snap-align: start;
   cursor: pointer;
   border-radius: 25px;
@@ -576,11 +576,11 @@ html, body {
   border-radius: 40px;
   overflow: hidden;
   aspect-ratio: 2/3;
-  width: 65% !important;
+  width: 55% !important;
   transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s, filter 0.5s;
   cursor: pointer;
-  opacity: 0.3;
-  filter: blur(4px);
+  opacity: 0.2;
+  filter: blur(5px);
 }
 .hero-swiper-slide img {
   width: 100%; height: 100%;
@@ -590,6 +590,7 @@ html, body {
   opacity: 1;
   filter: blur(0);
   box-shadow: 0 0 50px var(--accent-glow), 0 20px 60px rgba(0,0,0,0.8);
+};
 .hero-info-container {
   text-align: center !important;
   padding: 20px 20px 40px !important;
