@@ -590,15 +590,15 @@ html, body {
   border-radius: 50px;
   overflow: hidden;
   aspect-ratio: 2/3;
-  width: 250px !important;
+  width: 200px !important;
   transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s, filter 0.5s;
   cursor: pointer;
   box-shadow: 0 40px 80px rgba(0,0,0,0.9);
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.1 !important;
-  filter: blur(5px) !important;
-  transform: scale(0.82) !important;
+  opacity: 0.12 !important;
+  filter: brightness(0.3) blur(3px) !important;
+  transform: scale(0.80) !important;
 }
 .swiper-slide-active.hero-swiper-slide {
   opacity: 1 !important;
