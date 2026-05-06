@@ -91,6 +91,7 @@ async function loadHeroSwiper() {
   slidesPerView: 1.5,
   spaceBetween: 20,
   loop: true,
+    initialSlide: 2,
   coverflowEffect: {
     rotate: 40,
     stretch: 0,
