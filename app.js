@@ -128,7 +128,28 @@ function updateHeroInfo(movies, index) {
   const ratingEl = document.getElementById('heroInfoRating');
 
   if (yearEl)  yearEl.textContent  = m.release_date ? m.release_date.slice(0,4) : '';
-  if (titleEl) titleEl.textContent = m.title || m.original_title || '';
+  if (titleEl) {
+    titleEl.textContent = m.title || m.original_title || '';
+    // Neon glow من لون البوستر
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = `${CONFIG.IMAGES.POSTER_MD}${m.poster_path}`;
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = 10; canvas.height = 10;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, 10, 10);
+        const d = ctx.getImageData(0, 0, 10, 10).data;
+        let r=0,g=0,b=0,count=0;
+        for(let i=0;i<d.length;i+=4){
+          r+=d[i]; g+=d[i+1]; b+=d[i+2]; count++;
+        }
+        r=Math.round(r/count); g=Math.round(g/count); b=Math.round(b/count);
+        titleEl.style.textShadow = `0 0 20px rgba(${r},${g},${b},0.9), 0 4px 15px rgba(0,0,0,1)`;
+      } catch(e) {}
+    };
+  }
 
   if (genresEl) {
     const names = (m.genre_ids || []).slice(0,3).map(id => GENRES[id]).filter(Boolean);
