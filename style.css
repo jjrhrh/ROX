@@ -195,6 +195,7 @@ html, body {
   }
 /* ===== SECTIONS ===== */
 .home-section { padding: 20px 0 8px; }
+#homePage > .home-section:first-child { margin-top: -50px; }
 .section-header {
   display: flex; align-items: center;
   gap: 10px; padding: 0 16px 12px;
@@ -472,7 +473,7 @@ html, body {
   position: relative !important;
   width: 100% !important;
   height: auto !important;
-  max-height: 75vh !important;
+  min-height: 600px !important;
   display: flex !important;
   flex-direction: column !important;
   padding-bottom: 0 !important;
