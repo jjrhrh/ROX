@@ -102,7 +102,8 @@ async function loadHeroSwiper() {
       init: function() { updateHeroInfo(movies, 0); },
       slideChange: function() { updateHeroInfo(movies, this.realIndex); }
     }
-  });
+});
+}
 
 function updateHeroInfo(movies, index) {
   const m = movies[index % movies.length];
