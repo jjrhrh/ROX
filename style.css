@@ -587,10 +587,11 @@ html, body {
   perspective: 1000px !important;
 }
 .hero-swiper-slide {
-  border-radius: 50px;
+  border-radius: 45px;
   overflow: hidden;
   aspect-ratio: 2/3;
-  width: 200px !important;
+  width: 220px !important;
+  height: 330px !important;
   transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s, filter 0.5s;
   cursor: pointer;
   box-shadow: 0 40px 80px rgba(0,0,0,0.9);
@@ -605,7 +606,7 @@ html, body {
   filter: brightness(1.05) !important;
   transform: scale(1.1) !important;
   z-index: 10 !important;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.95) !important;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.9) !important;
 }
 .hero-info-container {
   text-align: center !important;
