@@ -612,8 +612,13 @@ html, body {
 }
 @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 .hero-info-year {
-  font-size: 0.72rem; color: #888888; text-align: center;
-  font-weight: 400; margin-bottom: 8px; letter-spacing: 3px;
+  display: inline-block;
+  font-size: 0.68rem; color: #aaaaaa; text-align: center;
+  font-weight: 400; margin-bottom: 12px; letter-spacing: 4px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 4px 14px; border-radius: var(--radius-full);
+  backdrop-filter: blur(10px);
 }
 .hero-info-title {
   text-align: center !important;
@@ -627,24 +632,27 @@ html, body {
   flex-wrap: wrap; gap: 8px;
 }
 .hero-cap {
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(255,255,255,0.18);
   color: #FFFFFF;
   font-size: 0.75rem; font-weight: 600;
   padding: 6px 16px; border-radius: var(--radius-full);
-  margin-top: 4px;
+  margin-top: 6px;
+  box-shadow: 0 0 8px rgba(255,255,255,0.04);
 }
-.hero-cap-rating { color: var(--gold); border-color: rgba(245,197,24,0.3); }
-.hero-info-genres {
-  display: flex; justify-content: center;
-  flex-wrap: wrap; gap: 8px;
-  margin-bottom: 6px;
+.hero-cap-rating {
+  background: rgba(0,0,0,0.5) !important;
+  border: 1px solid rgba(245,197,24,0.45) !important;
+  color: var(--gold) !important;
+  font-size: 0.88rem !important;
+  padding: 8px 20px !important;
+  box-shadow: 0 0 14px rgba(245,197,24,0.2) !important;
 }
 .hero-info-rating {
   display: flex; justify-content: center;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 .hero-cap-rating {
   background: rgba(0,0,0,0.55) !important;
