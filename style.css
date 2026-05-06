@@ -580,7 +580,7 @@ html, body {
 .hero-swiper {
   width: 100% !important;
   height: 380px !important;
-  padding: 10px 0 16px !important;
+  padding: 10px 75px 16px !important;
   overflow: visible !important;
   position: relative !important;
   z-index: 100 !important;
