@@ -88,7 +88,7 @@ async function loadHeroSwiper() {
   effect: 'coverflow',
   grabCursor: true,
   centeredSlides: true,
-  slidesPerView: 1.5,
+  slidesPerView: 1.6,
   spaceBetween: 20,
   loop: true,
     dir: 'ltr',
