@@ -596,17 +596,16 @@ html, body {
   box-shadow: 0 40px 80px rgba(0,0,0,0.9);
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.2 !important;
-  filter: blur(2px) !important;
+  opacity: 0.35 !important;
+  filter: brightness(0.5) blur(1px) !important;
   transform: scale(0.82) !important;
 }
 .swiper-slide-active.hero-swiper-slide {
   opacity: 1 !important;
-  filter: brightness(1.1) grayscale(0) !important;
-  transform: scale(1.15) !important;
-  z-index: 999 !important;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.9) !important;
-  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+  filter: brightness(1.05) !important;
+  transform: scale(1.1) !important;
+  z-index: 10 !important;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.95) !important;
 }
 .hero-info-container {
   text-align: center !important;
