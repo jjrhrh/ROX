@@ -203,18 +203,43 @@ function buildSection(title, movies, type = 'movie') {
 async function loadHomePage() {
   const page = document.getElementById('homePage');
   if (!page) return;
-  page.innerHTML = '<div class="loading">⏳ جاري التحميل...</div>';
 
-  const [trending, topRated, series] = await Promise.all([
-    fetchMovies('/movie/popular'),
-    fetchMovies('/movie/top_rated'),
-    fetchMovies('/tv/popular'),
-  ]);
+  const SECTIONS = [
+    { id: 'sec_popular',  title: 'الأفلام الرائجة',  endpoint: '/movie/popular',   type: 'movie' },
+    { id: 'sec_toprated', title: 'الأعلى تقييماً',   endpoint: '/movie/top_rated', type: 'movie' },
+    { id: 'sec_tvseries', title: 'أحدث المسلسلات',   endpoint: '/tv/popular',      type: 'tv'    },
+  ];
 
-  page.innerHTML =
-    buildSection('الأفلام الرائجة', trending,  'movie') +
-    buildSection('الأعلى تقييماً',  topRated,  'movie') +
-    buildSection('المسلسلات',        series,    'tv');
+  // عرض الـ Skeleton فوراً بدون انتظار
+  page.innerHTML = SECTIONS.map(s => `
+    <div class="home-section" id="${s.id}">
+      <div class="section-header">
+        <span class="section-bar"></span>
+        <h2 class="section-title">${s.title}</h2>
+      </div>
+      <div class="movies-row" id="${s.id}_row">
+        ${Array(6).fill('<div class="movie-card skeleton-card"></div>').join('')}
+      </div>
+    </div>`).join('');
+
+  // كل قسم يتحمل بشكل مستقل
+  SECTIONS.forEach(async s => {
+    try {
+      const movies = await fetchMovies(s.endpoint, { type: s.type });
+      const row = document.getElementById(`${s.id}_row`);
+      const container = document.getElementById(s.id);
+      if (!row || !container) return;
+
+      if (!movies.length) {
+        container.remove();
+        return;
+      }
+      row.innerHTML = movies.map(m => buildMovieCard(m, s.type)).join('');
+    } catch (e) {
+      const container = document.getElementById(s.id);
+      if (container) container.remove();
+    }
+  });
 }
 // ===== DETAIL PAGE =====
 async function openDetail(id, type = 'movie') {
