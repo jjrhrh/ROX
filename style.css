@@ -597,7 +597,7 @@ html, body {
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
   opacity: 0.2 !important;
-  filter: brightness(0.2) !important;
+  filter: blur(2px) !important;
   transform: scale(0.82) !important;
 }
 .swiper-slide-active.hero-swiper-slide {
