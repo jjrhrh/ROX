@@ -211,10 +211,9 @@ async function loadHomePage() {
     fetchMovies('/tv/popular'),
   ]);
 
-  page.innerHTML =
-    buildSection('🔥 الأفلام الرائجة', trending,  'movie') +
-    buildSection('⭐ الأعلى تقييماً',  topRated,  'movie') +
-    buildSection('📺 المسلسلات',        series,    'tv');
+  buildSection('الأفلام الرائجة', trending,  'movie') +
+    buildSection('الأعلى تقييماً',  topRated,  'movie') +
+    buildSection('المسلسلات',        series,    'tv');
 }
 // ===== DETAIL PAGE =====
 async function openDetail(id, type = 'movie') {
