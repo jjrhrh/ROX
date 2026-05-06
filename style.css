@@ -481,7 +481,7 @@ html, body {
   overflow: hidden !important;
   background: var(--bg) !important;
 }
-..hero-backdrop {
+.hero-backdrop {
   display: none !important;
 }
 .hero-backdrop.loaded {
@@ -723,4 +723,19 @@ html, body {
   border: 1px solid rgba(245,197,24,0.55) !important;
   color: var(--gold) !important;
   box-shadow: 0 0 10px rgba(245,197,24,0.25) !important;
+}
+/* ===== SKELETON LOADER ===== */
+.skeleton-card {
+  flex: 0 0 152px;
+  aspect-ratio: 2/3;
+  border-radius: 26px;
+  background: linear-gradient(90deg, #111 25%, #1e1e1e 50%, #111 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border: 1px solid rgba(229,9,20,0.1);
+  min-height: 228px;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
