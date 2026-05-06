@@ -153,14 +153,15 @@ function updateHeroInfo(movies, index) {
   }
 
   if (genresEl) {
-    const names = (m.genre_ids || []).slice(0,3).map(id => GENRES[id]).filter(Boolean);
-    genresEl.innerHTML = names.map(n => `<span class="hero-cap">${n}</span>`).join('');
-  }
-
-  if (ratingEl) {
-    const rating = m.vote_average ? m.vote_average.toFixed(1) : '';
-    ratingEl.innerHTML = rating ? `<span class="hero-cap hero-cap-rating">⭐ ${rating}</span>` : '';
-  }
+  const typeLabel = (m.media_type === 'tv') ? '📺 مسلسل' : '🎬 فيلم';
+  const year      = m.release_date ? `📅 ${m.release_date.slice(0,4)}` : '';
+  const rating    = m.vote_average ? `⭐ ${m.vote_average.toFixed(1)}` : '';
+  genresEl.innerHTML =
+    `<span class="hero-cap">${typeLabel}</span>` +
+    (year   ? `<span class="hero-cap">${year}</span>` : '') +
+    (rating ? `<span class="hero-cap hero-cap-gold">${rating}</span>` : '');
+}
+if (ratingEl) ratingEl.innerHTML = '';
 }
 // ===== HOME PAGE =====
 function buildMovieCard(movie, type = 'movie') {
