@@ -224,7 +224,7 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-  flex: 0 0 132px;
+flex: 0 0 152px;
   scroll-snap-align: start;
   cursor: pointer;
   border-radius: 25px;
@@ -613,12 +613,15 @@ html, body {
 @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 .hero-info-year {
   display: inline-block;
-  font-size: 0.68rem; color: #aaaaaa; text-align: center;
-  font-weight: 400; margin-bottom: 12px; letter-spacing: 4px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  padding: 4px 14px; border-radius: var(--radius-full);
-  backdrop-filter: blur(10px);
+  font-size: 0.68rem;
+  color: #cccccc;
+  text-align: center;
+  font-weight: 400;
+  margin-bottom: 12px;
+  letter-spacing: 4px;
+  background: transparent;
+  border: none;
+  padding: 4px 0;
 }
 .hero-info-title {
   text-align: center !important;
@@ -632,15 +635,16 @@ html, body {
   flex-wrap: wrap; gap: 8px;
 }
 .hero-cap {
-  background: rgba(255,255,255,0.03);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 0.5px solid rgba(255,255,255,0.18);
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 0.5px solid rgba(255, 255, 255, 0.9);
   color: #FFFFFF;
-  font-size: 0.75rem; font-weight: 600;
-  padding: 6px 16px; border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 50px;
   margin-top: 6px;
-  box-shadow: 0 0 8px rgba(255,255,255,0.04);
 }
 .hero-cap-rating {
   background: rgba(0,0,0,0.5) !important;
@@ -663,4 +667,45 @@ html, body {
   border-radius: var(--radius-full) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
+}
+/* ===== PREMIUM GRID — تقييم وسنة داخل البوستر ===== */
+.movie-year-badge {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 3px 7px;
+  border-radius: var(--radius-full);
+  letter-spacing: 1px;
+}
+
+.movie-rating {
+  position: absolute;
+  bottom: 7px;
+  left: 7px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 197, 24, 0.5);
+  color: var(--gold);
+  font-size: 0.68rem;
+  font-weight: 900;
+  padding: 3px 7px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 8px rgba(245, 197, 24, 0.3);
+}
+/* ===== NEON PULSE — لمعان دوري كل 4 ثوانٍ ===== */
+@keyframes neonPulse {
+  0%, 100% { border-color: rgba(255, 255, 255, 0.9); box-shadow: none; }
+  50%       { border-color: rgba(255, 255, 255, 1);   box-shadow: 0 0 10px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.3); }
+}
+
+.hero-cap {
+  animation: neonPulse 4s ease-in-out infinite;
 }
