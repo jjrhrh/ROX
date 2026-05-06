@@ -473,7 +473,7 @@ html, body {
   position: relative !important;
   width: 100% !important;
   height: auto !important;
-  min-height: 600px !important;
+  min-height: 650px !important;
   display: flex !important;
   flex-direction: column !important;
   padding-bottom: 0 !important;
@@ -560,10 +560,12 @@ html, body {
 } 
 /* ===== HERO SWIPER NEW ===== */
 .hero-swiper {
-  width: 100%;
+  width: 100% !important;
+  height: 400px !important;
   padding: 10px 0 16px !important;
   overflow: visible !important;
-  position: relative; z-index: 3;
+  position: relative !important;
+  z-index: 3 !important;
 }
 .hero-swiper-slide {
   border-radius: 35px;
