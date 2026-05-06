@@ -1,20 +1,20 @@
 /* ===== CINEMA ROX — VARIABLES ===== */
 :root {
-  --accent:        #00d4ff;
-  --accent-glow:   rgba(0,212,255,0.35);
-  --accent-soft:   rgba(0,212,255,0.10);
+  --accent:        #e50914;
+  --accent-glow:   rgba(229,9,20,0.40);
+  --accent-soft:   rgba(229,9,20,0.10);
   --accent2:       #e50914;
-  --accent2-glow:  rgba(229,9,20,0.35);
-  --bg:            #050505;
-  --bg2:           #0d0d0d;
-  --bg3:           #141414;
-  --card-bg:       #111118;
+  --accent2-glow:  rgba(229,9,20,0.40);
+  --bg:            #000000;
+  --bg2:           #060000;
+  --bg3:           #0c0000;
+  --card-bg:       #0a0000;
   --text:          #ffffff;
   --text2:         #aaaaaa;
   --text3:         #555566;
   --gold:          #f5c518;
   --border:        rgba(255,255,255,0.07);
-  --border-accent: rgba(0,212,255,0.3);
+  --border-accent: rgba(229,9,20,0.35);
   --glass:         rgba(255,255,255,0.04);
   --glass-border:  rgba(255,255,255,0.09);
   --radius-sm:     8px;
@@ -214,8 +214,8 @@ html, body {
 }
 /* ===== MOVIES ROW ===== */
 .movies-row {
-  display: flex; gap: 14px;
-  overflow-x: auto; padding: 0 16px 12px;
+  display: flex; gap: 18px;
+  overflow-x: auto; padding: 0 16px 16px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -224,15 +224,15 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-flex: 0 0 152px;
+  flex: 0 0 152px;
   scroll-snap-align: start;
   cursor: pointer;
-  border-radius: 25px;
+  border-radius: 20px;
   overflow: hidden;
   background: var(--card-bg);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(229,9,20,0.18);
   transition: transform 0.25s, box-shadow 0.25s;
-  box-shadow: inset 0 -20px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.9);
 }
 .movie-card:hover {
   transform: translateY(-4px) scale(1.03);
