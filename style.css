@@ -590,11 +590,11 @@ html, body {
   filter: brightness(1.1) grayscale(0) !important;
   transform: scale(1.15) !important;
   z-index: 999 !important;
-  box-shadow: 0 20px 80px rgba(0,0,0,0.9) !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.9) !important;
 }
 .hero-info-container {
   text-align: center !important;
-  margin-top: 40px !important;
+  margin-top: 10px !important;
   padding: 0 20px 0 !important;
   position: relative !important;
   z-index: 3 !important;
@@ -629,15 +629,13 @@ html, body {
   margin-bottom: 50px;
 }
 .hero-cap {
-  background: rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 0.5px solid rgba(255, 255, 255, 0.9);
+  background: #1a1a1a;
+  border: 1px solid #333;
   color: #FFFFFF;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 6px 16px;
-  border-radius: 50px;
+  border-radius: 12px;
   margin-top: 6px;
 }
 .hero-cap-rating {
