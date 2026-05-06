@@ -586,12 +586,13 @@ html, body {
   z-index: 3 !important;
 }
 .hero-swiper-slide {
-  border-radius: 45px;
+  border-radius: 50px;
   overflow: hidden;
   aspect-ratio: 2/3;
   width: 240px !important;
   transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s, filter 0.5s;
   cursor: pointer;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8);
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
   opacity: 0.2 !important;
@@ -632,7 +633,7 @@ html, body {
   text-align: center !important;
   font-size: 2.2rem; font-weight: 900;
   color: #ffffff; margin-bottom: 5px;
-  text-shadow: 0 0 40px rgba(255,255,255,0.25), 0 2px 10px rgba(0,0,0,1);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
   letter-spacing: 0.5px;
 }
 .hero-info-caps {
