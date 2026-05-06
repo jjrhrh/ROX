@@ -208,10 +208,9 @@ html, body {
   box-shadow: 0 0 10px var(--accent-glow);
 }
 .section-title {
-  font-size: 1.05rem; font-weight: 900;
-  color: var(--text);
+  font-size: 1.1rem; font-weight: 900;
+  color: #ffffff; letter-spacing: 0.02em;
 }
-
 /* ===== MOVIES ROW ===== */
 .movies-row {
   display: flex; gap: 10px;
