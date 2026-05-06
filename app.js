@@ -88,21 +88,16 @@ async function loadHeroSwiper() {
     effect: 'coverflow',
     grabCursor: true,
     centeredSlides: true,
-    slidesPerView: 1.3,
-    spaceBetween: 20,
+    slidesPerView: 1.4,
+    spaceBetween: 10,
     loop: true,
     coverflowEffect: {
       rotate: 35,
-      stretch: 10,
+      stretch: -20,
       depth: 250,
       modifier: 1,
       slideShadows: false,
     },
-    on: {
-      init: function() { updateHeroInfo(movies, 0); },
-      slideChange: function() { updateHeroInfo(movies, this.realIndex); }
-    }
-  });
 }
 
 function updateHeroInfo(movies, index) {
