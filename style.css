@@ -587,19 +587,20 @@ html, body {
   perspective: 1000px !important;
 }
 .hero-swiper-slide {
-  border-radius: 45px;
+  border-radius: 50px;
   overflow: hidden;
   aspect-ratio: 2/3;
-  width: 220px !important;
-  height: 330px !important;
+  width: 240px !important;
+  height: 360px !important;
   transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s, filter 0.5s;
   cursor: pointer;
   box-shadow: 0 40px 80px rgba(0,0,0,0.9);
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.12 !important;
-  filter: brightness(0.3) blur(3px) !important;
-  transform: scale(0.80) !important;
+  opacity: 0.15 !important;
+  filter: brightness(0.25) blur(2px) !important;
+  transform: scale(0.78) !important;
+  z-index: -1 !important;
 }
 .swiper-slide-active.hero-swiper-slide {
   opacity: 1 !important;
