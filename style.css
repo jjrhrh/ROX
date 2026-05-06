@@ -601,13 +601,13 @@ html, body {
   width: 100% !important;
 }
 .hero-info-year {
-  font-size: 0.85rem; color: var(--text2); text-align: center;
-  font-weight: 700; margin-bottom: 8px;
+  font-size: 0.78rem; color: #b3b3b3; text-align: center;
+  font-weight: 700; margin-bottom: 15px; letter-spacing: 2px;
 }
 .hero-info-title {
   text-align: center !important;
   font-size: 2.2rem; font-weight: 900;
-  color: #FFFFFF; margin-bottom: 14px;
+  color: #FFFFFF; margin-bottom: 20px;
   text-shadow: 0 4px 15px rgba(0,0,0,1);
   letter-spacing: 1px;
 }
@@ -619,7 +619,7 @@ html, body {
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 0.5px solid rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.1);
   color: #FFFFFF;
   font-size: 0.75rem; font-weight: 700;
   padding: 5px 14px; border-radius: var(--radius-full);
