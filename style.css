@@ -590,8 +590,9 @@ html, body {
   border-radius: 50px;
   overflow: hidden;
   aspect-ratio: 2/3;
-  width: 240px !important;
-  height: 360px !important;
+  width: 220px !important;
+  height: 330px !important;
+  margin: 0 auto;
   transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s, filter 0.5s;
   cursor: pointer;
   box-shadow: 0 40px 80px rgba(0,0,0,0.9);
