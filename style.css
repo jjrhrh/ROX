@@ -228,7 +228,7 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-  flex: 0 0 160px;
+  flex: 0 0 184px;
   scroll-snap-align: start;
   cursor: pointer;
   border-radius: 22px;
@@ -495,6 +495,7 @@ html, body {
   transition: opacity 1.2s ease !important;
   z-index: 0 !important;
   filter: brightness(0.58) saturate(1.6) !important;
+  } 
 .hero-backdrop.loaded {
   opacity: 1 !important;
 }
@@ -588,7 +589,7 @@ html, body {
   border-radius: 40px;
   overflow: hidden;
   aspect-ratio: 2/3;
-  width: 260px !important;
+  width: 299px !important;
   transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s, filter 0.5s;
   cursor: pointer;
 }
@@ -638,7 +639,7 @@ html, body {
   justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 50px;
+  margin-bottom: 16px;
 }
 .hero-cap {
   background: #1a1a1a;
