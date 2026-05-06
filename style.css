@@ -251,12 +251,13 @@ html, body {
 .movie-card:hover .movie-poster { transform: scale(1.07); }
 .movie-rating {
   position: absolute; bottom: 6px; left: 6px;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--glass-border);
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(245,197,24,0.5);
   color: var(--gold);
   font-size: 0.68rem; font-weight: 900;
   padding: 3px 7px; border-radius: var(--radius-full);
+  box-shadow: 0 0 8px rgba(245,197,24,0.3);
 }
 .movie-overlay {
   position: absolute; inset: 0;
