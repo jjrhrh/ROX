@@ -476,40 +476,40 @@ html, body {
 .hero-section {
   position: relative !important;
   width: 100% !important;
-  height: 550px !important;
-  min-height: 550px !important;
-  padding-top: 20px !important;
+  height: 92vh !important;
+  min-height: 580px !important;
   display: flex !important;
   flex-direction: column !important;
-  padding-bottom: 0 !important;
-  overflow: visible !important;
-  background: var(--bg) !important;
+  justify-content: flex-end !important;
+  padding-bottom: 24px !important;
+  overflow: hidden !important;
+  background: #000 !important;
 }
 .hero-backdrop {
   position: absolute !important;
-  inset: -30px !important;
+  inset: -10px !important;
   background-size: cover !important;
-  background-position: center !important;
+  background-position: center top !important;
   background-repeat: no-repeat !important;
   opacity: 0 !important;
-  transition: opacity 1.5s ease !important;
+  transition: opacity 1.2s ease !important;
   z-index: 0 !important;
-  filter: blur(100px) brightness(0.35) saturate(2.5) !important;
-  transform: scale(1.15) !important;
+  transform: scale(1.08) !important;
+  animation: kenBurns 12s ease-in-out infinite alternate !important;
 }
-.hero-backdrop.loaded {
-  opacity: 1 !important;
+.hero-backdrop.loaded { opacity: 1 !important; }
+@keyframes kenBurns {
+  from { transform: scale(1.08) translate(0, 0); }
+  to   { transform: scale(1.18) translate(-1%, -1%); }
 }
 .hero-gradient {
   position: absolute !important;
-  inset: 0 !important; z-index: 1 !important;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.18) 0%,
-    rgba(0,0,0,0.50) 38%,
-    rgba(0,0,0,0.88) 72%,
-    #2e0000 100%
-  ) !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  background:
+    radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,0,0.7) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.92) 80%, #000 100%)
+  !important;
 }
 .hero-content {
   position: relative !important;
@@ -588,53 +588,21 @@ html, body {
   z-index: 100 !important;
   perspective: 1000px !important;
 }
-.hero-swiper-slide {
-  border-radius: 36px;
-  overflow: hidden;
-  width: 230px !important;
-  height: 345px !important;
-  transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease;
-  cursor: pointer;
-  position: relative;
-  transform: scale(0.82);
-  opacity: 0.3;
-  filter: brightness(0.3);
-}
-.hero-swiper-slide img {
+.hero-swiper {
   width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block !important;
-  opacity: 1 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
-.hero-swiper-slide.swiper-slide-active {
-  transform: scale(1) !important;
-  opacity: 1 !important;
-  filter: brightness(1.05) !important;
-  box-shadow:
-    0 0 100px rgba(255,255,255,0.2),
-    0 30px 70px rgba(0,0,0,0.9) !important;
-}
-.hero-swiper-slide.swiper-slide-active::after {
-  content: '';
-  position: absolute;
-  top: 100%; left: 0; right: 0;
-  height: 50px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent);
-  transform: scaleY(-1);
-  border-radius: 0 0 36px 36px;
-  pointer-events: none;
-}
-.hero-info-container {
-  text-align: center !important;
-  margin-top: 20px !important;
-  padding: 0 20px 0 !important;
+.hero-swiper-slide { display: none !important; }
+  margin-top: 0 !important;
+  padding: 0 24px 0 !important;
   position: relative !important;
-  z-index: 3 !important;
+  z-index: 5 !important;
   width: 100% !important;
-  animation: fadeIn 0.4s ease;
 }
-@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .hero-info-year {
   display: inline-block;
   font-size: 0.65rem;
@@ -783,4 +751,13 @@ html, body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+} 
+.hero-section::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+  z-index: 6;
+  pointer-events: none;
 } 
