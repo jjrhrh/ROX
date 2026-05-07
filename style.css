@@ -592,10 +592,11 @@ html, body {
   width: 100% !important;
   height: 0 !important;
   overflow: hidden !important;
-  opacity: 0 !important;
+  opacity: 0.15 !important;
   pointer-events: none !important;
 }
-.hero-swiper-slide { display: none !important; }
+.hero-info-container {
+  text-align: center !important;
   margin-top: 0 !important;
   padding: 0 24px 0 !important;
   position: relative !important;
