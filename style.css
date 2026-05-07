@@ -588,14 +588,14 @@ html, body {
   perspective: 1000px !important;
 }
 .hero-swiper-slide {
-  border-radius: 60px;
+  border-radius: 50px;
   overflow: hidden;
   aspect-ratio: 2/3;
   width: 210px !important;
   height: 315px !important;
-  transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s, filter 0.5s;
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.6s, opacity 0.6s, filter 0.6s;
   cursor: pointer;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 30px 70px rgba(0,0,0,0.9);
 }
 .hero-swiper-slide img {
   width: 100%;
@@ -605,17 +605,22 @@ html, body {
   display: block;
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.4 !important;
-  filter: brightness(0.3) blur(2px) !important;
-  transform: scale(0.8) !important;
+  opacity: 0.15 !important;
+  filter: brightness(0.2) blur(6px) !important;
+  transform: scale(0.75) !important;
   z-index: -1 !important;
 }
 .swiper-slide-active.hero-swiper-slide {
   opacity: 1 !important;
-  filter: brightness(1.2) !important;
-  transform: scale(1.2) !important;
+  filter: brightness(1.1) !important;
+  transform: scale(1.15) !important;
   z-index: 100 !important;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.9) !important;
+  box-shadow: 0 0 40px rgba(255,255,255,0.12), 0 40px 80px rgba(0,0,0,0.95) !important;
+  animation: pulse 3s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(255,255,255,0.12), 0 40px 80px rgba(0,0,0,0.95); }
+  50% { box-shadow: 0 0 60px rgba(255,255,255,0.2), 0 40px 80px rgba(0,0,0,0.95); }
 }
 .hero-info-container {
   text-align: center !important;
@@ -642,9 +647,15 @@ html, body {
 .hero-info-title {
   text-align: center !important;
   font-size: 2.2rem; font-weight: 900;
-  color: #ffffff !important; margin-bottom: 5px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  color: transparent !important;
+  -webkit-text-stroke: 2px #ffffff;
+  margin-bottom: 5px;
   letter-spacing: 0.5px;
+  transition: color 0.3s ease, -webkit-text-stroke 0.3s ease;
+}
+.hero-info-title:hover {
+  color: #ffffff !important;
+  -webkit-text-stroke: 0px;
 }
 .hero-info-caps {
   display: flex;
@@ -654,8 +665,8 @@ html, body {
   margin-bottom: 5px;
 }
 .hero-cap {
-  background: #1a1a1a;
-  border: 1px solid #333;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.18);
   color: #FFFFFF;
   font-size: 0.75rem;
   font-weight: 600;
