@@ -588,13 +588,6 @@ html, body {
   z-index: 100 !important;
   perspective: 1000px !important;
 }
-.hero-swiper {
-  width: 100% !important;
-  height: 0 !important;
-  overflow: hidden !important;
-  opacity: 0.15 !important;
-  pointer-events: none !important;
-}
 .hero-info-container {
   text-align: center !important;
   margin-top: 0 !important;
