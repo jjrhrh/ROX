@@ -749,7 +749,14 @@ html, body {
   100% { background-position: -200% 0; }
 }
 .movie-title-bar {
-  display: none;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 5px 6px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .hero-swiper-slide {
   border-radius: 30px !important;
