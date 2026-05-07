@@ -606,14 +606,14 @@ html, body {
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
   opacity: 0.2 !important;
-  filter: brightness(0.3) blur(4px) !important;
+  filter: brightness(0.2) blur(5px) !important;
   transform: scale(0.78) !important;
   z-index: -1 !important;
 }
 .swiper-slide-active.hero-swiper-slide {
   opacity: 1 !important;
   filter: brightness(1.2) !important;
-  transform: scale(1.15) !important;
+  transform: scale(1.2) !important;
   z-index: 100 !important;
   box-shadow: 0 40px 80px rgba(0,0,0,0.9) !important;
 }
