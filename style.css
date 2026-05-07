@@ -579,22 +579,24 @@ html, body {
 } 
 /* ===== HERO SWIPER NEW ===== */
 .hero-swiper {
-  width: 100% !important;
-  height: 380px !important;
-  padding: 10px 0 16px !important;
-  direction: ltr;
-  overflow: visible !important;
-  position: relative !important;
-  z-index: 100 !important;
-  perspective: 1000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  pointer-events: none !important;
 }
 .hero-info-container {
-  margin-top: 0 !important;
-  padding: 0 24px 16px !important;
+  margin-top: auto !important;
+  padding: 0 24px 32px !important;
   position: relative !important;
-  z-index: 5 !important;
+  z-index: 10 !important;
   width: 100% !important;
   text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 8px !important;
 }
 @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .hero-info-year {
