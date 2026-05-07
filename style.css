@@ -224,7 +224,7 @@ html, body {
 }
 /* ===== MOVIES ROW ===== */
 .movies-row {
-  display: flex; gap: 20px;
+  display: flex; gap: 12px;
   overflow-x: auto; padding: 0 16px 16px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -735,14 +735,14 @@ html, body {
 }
 /* ===== SKELETON LOADER ===== */
 .skeleton-card {
-  flex: 0 0 160px;
+  flex: 0 0 130px;
   aspect-ratio: 2/3;
   border-radius: 26px;
   background: linear-gradient(90deg, #111 25%, #1e1e1e 50%, #111 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
   border: 1px solid rgba(229,9,20,0.1);
-  min-height: 228px;
+  min-height: 195px;
 }
 @keyframes shimmer {
   0%   { background-position: 200% 0; }
