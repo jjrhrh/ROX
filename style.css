@@ -755,3 +755,10 @@ html, body {
   z-index: 6;
   pointer-events: none;
 } 
+.hero-swiper-slide {
+  border-radius: 40px !important;
+  overflow: hidden !important;
+}
+.hero-swiper-slide img {
+  border-radius: 40px !important;
+} 
