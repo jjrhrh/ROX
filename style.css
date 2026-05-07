@@ -34,15 +34,6 @@ html, body {
   overflow-x: clip;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: transparent;
-  z-index: 0;
-  pointer-events: none;
-}
-
 .bottom-nav, .page, #heroSection, .rox-menu {
   position: relative;
   z-index: 1;
