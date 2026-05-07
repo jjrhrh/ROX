@@ -750,13 +750,14 @@ html, body {
 }
 .movie-title-bar {
   color: #ffffff;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  padding: 6px 8px 4px;
+  padding: 5px 4px 4px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
 }
 .hero-swiper-slide {
   border-radius: 30px !important;
