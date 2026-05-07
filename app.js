@@ -111,10 +111,10 @@ function updateHeroInfo(movies, index) {
   if (!m) return;
 
   const backdrop = document.getElementById('heroBackdrop');
-  if (backdrop && m.backdrop_path) {
-    backdrop.style.backgroundImage = `url('${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}')`;
+  if (backdrop && m.poster_path) {
+    backdrop.style.backgroundImage = `url('https://image.tmdb.org/t/p/w780${m.poster_path}')`;
     backdrop.classList.remove('loaded');
-    setTimeout(() => backdrop.classList.add('loaded'), 50);
+    setTimeout(() => backdrop.classList.add('loaded'), 80);
   }
 
   const GENRES = {
@@ -131,7 +131,15 @@ function updateHeroInfo(movies, index) {
 
   if (yearEl)  yearEl.textContent  = m.release_date ? m.release_date.slice(0,4) : '';
   if (titleEl) {
-    titleEl.textContent = m.title || m.original_title || '';
+    titleEl.style.opacity = '0';
+    titleEl.style.transform = 'scale(0.92)';
+    setTimeout(() => {
+      titleEl.textContent = m.title || m.original_title || '';
+      titleEl.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      titleEl.style.opacity = '1';
+      titleEl.style.transform = 'scale(1)';
+    }, 150);
+  }
     // Neon glow من لون البوستر
     const img = new Image();
     img.crossOrigin = 'anonymous';
