@@ -618,26 +618,27 @@ html, body {
 .hero-info-title {
   display: block;
   text-align: center !important;
-  font-size: 2rem; font-weight: 900;
-  color: #ffffff !important;
+  font-size: 2.2rem; font-weight: 900;
+  color: #FFFFFF !important;
   margin-bottom: 14px;
   letter-spacing: 0.5px;
   text-shadow:
-    0 0 40px rgba(255,255,255,0.4),
-    0 0 80px rgba(255,255,255,0.15),
-    0 4px 20px rgba(0,0,0,1);
+    0 0 0px rgba(255,255,255,0),
+    0 2px 4px rgba(0,0,0,1),
+    0 4px 24px rgba(0,0,0,0.95);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .hero-cap {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.3);
-  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.95);
   font-size: 0.72rem;
   font-weight: 600;
   padding: 5px 14px;
   border-radius: var(--radius-full);
-  box-shadow: 0 0 8px rgba(255,255,255,0.1), inset 0 0 6px rgba(255,255,255,0.04);
-  backdrop-filter: blur(4px);
+  box-shadow: 0 0 10px rgba(0,243,255,0.15), 0 0 20px rgba(0,243,255,0.07);
+  backdrop-filter: blur(8px);
+  transition: box-shadow 0.3s ease;
 }
 .hero-cap-rating {
   background: rgba(0,0,0,0.5) !important;
