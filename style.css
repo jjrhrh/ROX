@@ -580,7 +580,7 @@ html, body {
 .hero-swiper {
   width: 100% !important;
   height: 380px !important;
-  padding: 10px 75px 16px !important;
+  padding: 10px 0 16px !important;
   overflow: visible !important;
   position: relative !important;
   z-index: 100 !important;
@@ -605,8 +605,8 @@ html, body {
 }
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.15 !important;
-  filter: brightness(0.25) blur(2px) !important;
+  opacity: 0.35 !important;
+  filter: brightness(0.4) blur(1px) !important;
   transform: scale(0.78) !important;
   z-index: -1 !important;
 }
