@@ -279,15 +279,7 @@ html, body {
 .movie-card:hover .movie-overlay { opacity: 1; }
 .play-icon { font-size: 2rem; color: #fff; }
 .movie-title-bar {
-  padding: 6px 6px 8px;
-  font-size: 0.68rem;
-  font-weight: 300;
-  color: rgba(255,255,255,0.55);
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: 0.1px;
+  display: none;
 }
 /* ===== LOADING ===== */
 .loading {
