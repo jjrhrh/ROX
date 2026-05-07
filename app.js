@@ -87,16 +87,16 @@ async function loadHeroSwiper() {
   heroSwiper = new Swiper('#heroSwiper', {
   effect: 'coverflow',
   grabCursor: true,
-  centeredSlides: false,
+  centeredSlides: true,
   slidesPerView: 1.5,
   spaceBetween: 20,
   loop: true,
     rtl: false,
   coverflowEffect: {
-    rotate: 40,
-    stretch: 50,
+    rotate: 50,
+    stretch: 10,
     depth: 500,
-    modifier: 1.5,
+    modifier: 1,
     slideShadows: false,
   },
   on: {
