@@ -150,7 +150,7 @@ function updateHeroInfo(movies, index) {
     ratingEl.innerHTML = rating ? `<span class="hero-cap hero-cap-rating">⭐ ${rating}</span>` : '';
   }
 }
-    function buildMovieCard(movie, type = 'movie') {
+ function buildMovieCard(movie, type = 'movie') {
   const title  = type === 'movie'
     ? (movie.title || movie.original_title)
     : (movie.name  || movie.original_name);
