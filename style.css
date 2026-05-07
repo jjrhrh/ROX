@@ -762,3 +762,21 @@ html, body {
 .hero-swiper-slide img {
   border-radius: 40px !important;
 } 
+.swiper-slide-active.hero-swiper-slide {
+  box-shadow: 
+    0 20px 60px rgba(0,0,0,0.95),
+    0 40px 100px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(255,255,255,0.06) !important;
+}
+.swiper-slide-active.hero-swiper-slide::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: 0; right: 0;
+  height: 40px;
+  background: inherit;
+  transform: scaleY(-1);
+  filter: blur(8px);
+  opacity: 0.15;
+  border-radius: 0 0 20px 20px;
+} 
