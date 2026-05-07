@@ -158,11 +158,13 @@ function updateHeroInfo(movies, index) {
     <div class="movie-card" onclick="openDetail(${movie.id},'${type}')">
       <div class="movie-poster-wrap">
         <img class="movie-poster" src="${poster}" alt="${title}" loading="lazy"
-             onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+             onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'"
+             style="opacity:0;transition:opacity 0.3s ease;"
+             onload="this.style.opacity='1'">
         ${year   ? `<span class="movie-year-badge">${year}</span>` : ''}
-        ${rating ? `<span class="movie-rating">⭐ ${rating}</span>` : ''}
         <div class="movie-overlay"><span class="play-icon">▶</span></div>
       </div>
+      ${rating ? `<div class="movie-rating-bar">⭐ ${rating}</div>` : ''}
       <div class="movie-title-bar">${title}</div>
     </div>`;
 }
