@@ -239,9 +239,7 @@ html, body {
   transition: transform 0.25s;
 }
 .movie-card:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 8px 28px var(--accent-glow);
-  border-color: var(--border-accent);
+  transform: none;
 }
 .movie-poster-wrap {
   position: relative;
@@ -261,7 +259,7 @@ html, body {
 }
 .movie-card:hover .movie-poster { transform: scale(1.07); }
 .movie-rating {
-  position: absolute; bottom: 7px; left: 7px;
+  position: absolute; bottom: 7px; right: 7px;
   background: rgba(0,0,0,0.78);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -271,12 +269,14 @@ html, body {
   padding: 3px 8px; border-radius: var(--radius-full);
   box-shadow: 0 0 10px rgba(245,197,24,0.4);
 }
-.movie-rating-bar {
-  font-size: 0.66rem; font-weight: 900;
-  color: var(--gold);
-  text-align: center;
-  padding: 4px 0 2px;
+.movie-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.25s;
+  pointer-events: none;
 }
+.movie-card:active .movie-overlay { opacity: 1; }
 .movie-overlay {
   position: absolute; inset: 0;
   background: rgba(0,0,0,0.45);
