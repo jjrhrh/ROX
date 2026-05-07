@@ -27,15 +27,11 @@
 /* ===== BASE ===== */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html, body {
-  background-color: #050505;
+  background: var(--bg);
   color: var(--text);
   font-family: 'Cairo', sans-serif;
   min-height: 100vh;
   overflow-x: clip;
-  background-size: cover !important;
-  background-position: center top !important;
-  background-attachment: fixed !important;
-  transition: background-image 0.8s ease-in-out !important;
 }
 
 body::before {
