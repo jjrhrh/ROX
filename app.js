@@ -110,9 +110,10 @@ function updateHeroInfo(movies, index) {
   if (!m) return;
 
   const backdrop = document.getElementById('heroBackdrop');
-  if (backdrop && m.backdrop_path) {
+  if (backdrop && m.poster_path) {
     backdrop.classList.remove('loaded');
-    backdrop.style.backgroundImage = `url('${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}')`;
+    backdrop.style.backgroundImage = `url('${CONFIG.IMAGES.POSTER_LG || CONFIG.IMAGES.BACKDROP}${m.poster_path}')`;
+    backdrop.style.filter = 'blur(80px) brightness(0.3) saturate(1.8)';
     setTimeout(() => backdrop.classList.add('loaded'), 80);
   }
 
