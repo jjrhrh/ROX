@@ -11,7 +11,10 @@ function bnavGo(tab) {
 
   document.getElementById(pageMap[tab])?.classList.add('active');
   document.getElementById(btnMap[tab])?.classList.add('active');
-  if (hero) hero.style.display = tab === 'home' ? '' : 'none';
+  if (hero) {
+  hero.style.display = tab === 'home' ? '' : 'none';
+  hero.style.visibility = tab === 'home' ? '' : 'hidden';
+}
   if (tab === 'library') loadLibraryPage();
   window.scrollTo(0, 0);
 }
