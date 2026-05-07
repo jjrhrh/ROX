@@ -605,9 +605,9 @@ html, body {
   display: block;
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.15 !important;
-  filter: brightness(0.2) blur(6px) !important;
-  transform: scale(0.75) !important;
+  opacity: 0.35 !important;
+  filter: brightness(0.35) blur(3px) !important;
+  transform: scale(0.82) !important;
   z-index: -1 !important;
 }
 .swiper-slide-active.hero-swiper-slide {
