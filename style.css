@@ -511,8 +511,8 @@ html, body {
   ) !important;
 }
 .hero-content {
-  position: absolute !important;
-  inset: 0 !important; z-index: 3 !important;
+  position: relative !important;
+  inset: unset !important; z-index: 3 !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
