@@ -234,7 +234,7 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-  flex: 0 0 150px;
+  flex: 0 0 120px;
   scroll-snap-align: start;
   cursor: pointer;
   border-radius: 25px;
@@ -735,14 +735,14 @@ html, body {
 }
 /* ===== SKELETON LOADER ===== */
 .skeleton-card {
-  flex: 0 0 150px;
+  flex: 0 0 120px;
   aspect-ratio: 2/3;
   border-radius: 26px;
   background: linear-gradient(90deg, #111 25%, #1e1e1e 50%, #111 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
   border: 1px solid rgba(229,9,20,0.1);
-  min-height: 195px;
+  min-height: 180px;
 }
 @keyframes shimmer {
   0%   { background-position: 200% 0; }
@@ -751,16 +751,13 @@ html, body {
 .movie-title-bar {
   color: #ffffff;
   font-size: 0.72rem;
-  font-size: 0.75rem;
-  padding: 6px 8px;
+  font-weight: 700;
+  padding: 5px 6px;
   text-align: center;
-  white-space: normal;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-} 
+}
 .hero-swiper-slide {
   border-radius: 30px !important;
   overflow: hidden !important;
