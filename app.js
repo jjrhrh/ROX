@@ -87,8 +87,8 @@ async function loadHeroSwiper() {
   heroSwiper = new Swiper('#heroSwiper', {
   effect: 'coverflow',
   grabCursor: true,
-  centeredSlides: true,
-  slidesPerView: 1.7,
+  centeredSlides: false,
+  slidesPerView: 1.5,
   spaceBetween: 20,
   loop: true,
     rtl: false,
