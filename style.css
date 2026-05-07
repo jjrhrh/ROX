@@ -234,7 +234,7 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-  flex: 0 0 100px;
+  flex: 0 0 120px;
   scroll-snap-align: start;
   cursor: pointer;
   border-radius: 18px;
@@ -750,9 +750,9 @@ html, body {
 }
 .movie-title-bar {
   color: #ffffff;
-  font-size: 0.68rem;
-  font-weight: 700;
-  padding: 5px 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 8px 4px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
