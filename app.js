@@ -101,28 +101,11 @@ function updateHeroInfo(movies, index) {
   const m = movies[index % movies.length];
   if (!m) return;
 
-  // ── Dynamic Aura ──
-  const aura = document.getElementById('heroBackdrop');
-  if (aura && m.poster_path) {
-    const auraImg = new Image();
-    auraImg.crossOrigin = 'anonymous';
-    auraImg.src = `${CONFIG.IMAGES.POSTER_MD}${m.poster_path}`;
-    auraImg.onload = () => {
-      try {
-        const c = document.createElement('canvas');
-        c.width = 8; c.height = 8;
-        const x = c.getContext('2d');
-        x.drawImage(auraImg, 0, 0, 8, 8);
-        const d = x.getImageData(0, 0, 8, 8).data;
-        let r=0,g=0,b=0,n=0;
-        for(let i=0;i<d.length;i+=4){ r+=d[i];g+=d[i+1];b+=d[i+2];n++; }
-        r=Math.round(r/n); g=Math.round(g/n); b=Math.round(b/n);
-        aura.style.background = `radial-gradient(ellipse at center, rgba(${r},${g},${b},0.55) 0%, rgba(${r},${g},${b},0.15) 50%, transparent 80%)`;
-        aura.style.transition = 'background 1s ease, opacity 1s ease';
-        aura.classList.remove('loaded');
-        setTimeout(() => aura.classList.add('loaded'), 50);
-      } catch(e){}
-    };
+  const backdrop = document.getElementById('heroBackdrop');
+  if (backdrop && m.backdrop_path) {
+    backdrop.classList.remove('loaded');
+    backdrop.style.backgroundImage = `url('${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}')`;
+    setTimeout(() => backdrop.classList.add('loaded'), 80);
   }
 
   const GENRES = {
@@ -141,7 +124,7 @@ function updateHeroInfo(movies, index) {
 
   if (titleEl) {
     titleEl.style.opacity = '0';
-    titleEl.style.transform = 'translateY(10px)';
+    titleEl.style.transform = 'translateY(12px)';
     setTimeout(() => {
       titleEl.textContent = m.title || m.original_title || '';
       titleEl.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -152,27 +135,13 @@ function updateHeroInfo(movies, index) {
 
   if (genresEl) {
     const names = (m.genre_ids || []).slice(0,3).map(id => GENRES[id]).filter(Boolean);
-    genresEl.innerHTML = names.map(n =>
-      `<span class="hero-cap">${n}</span>`).join('');
+    genresEl.innerHTML = names.map(n => `<span class="hero-cap">${n}</span>`).join('');
   }
-
   if (ratingEl) {
     const rating = m.vote_average ? m.vote_average.toFixed(1) : '';
-    ratingEl.innerHTML = rating
-      ? `<span class="hero-cap hero-cap-rating">⭐ ${rating}</span>` : '';
+    ratingEl.innerHTML = rating ? `<span class="hero-cap hero-cap-rating">⭐ ${rating}</span>` : '';
   }
 }
-// ===== HOME PAGE =====
-function buildMovieCard(movie, type = 'movie') {
-  const title  = type === 'movie'
-    ? (movie.title || movie.original_title)
-    : (movie.name  || movie.original_name);
-  const poster = movie.poster_path
-    ? `${CONFIG.IMAGES.POSTER_MD}${movie.poster_path}`
-    : CONFIG.IMAGES.PLACEHOLDER;
-  const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
-  const year   = (movie.release_date || movie.first_air_date || '').slice(0,4);
-  return `
     <div class="movie-card" onclick="openDetail(${movie.id},'${type}')">
       <div class="movie-poster-wrap">
         <img class="movie-poster" src="${poster}" alt="${title}" loading="lazy"
