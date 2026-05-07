@@ -198,11 +198,11 @@ html, body {
 #homePage > .home-section:first-child { margin-top: -30px; }
   }
 /* ===== SECTIONS ===== */
-.home-section { padding: 20px 0 8px; }
+.home-section { padding: 8px 0 0; }
 #homePage > .home-section:first-child { margin-top: -30px; }
 .section-header {
   display: flex; align-items: center;
-  gap: 10px; padding: 0 16px 12px;
+  gap: 10px; padding: 0 16px 6px;
   flex-direction: row-reverse;
 }
 .section-bar {
@@ -219,7 +219,7 @@ html, body {
 /* ===== MOVIES ROW ===== */
 .movies-row {
   display: flex; gap: 20px;
-  overflow-x: auto; padding: 0 16px 16px;
+  overflow-x: auto; padding: 0 16px 8px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
