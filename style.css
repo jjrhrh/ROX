@@ -198,7 +198,7 @@ html, body {
 #homePage > .home-section:first-child { margin-top: -30px; }
   }
 /* ===== SECTIONS ===== */
-.home-section { padding: 8px 0 0; }
+.home-section { padding: 4px 0 0; margin-bottom: 0; }
 #homePage > .home-section:first-child { margin-top: -30px; }
 .section-header {
   display: flex; align-items: center;
@@ -219,7 +219,7 @@ html, body {
 /* ===== MOVIES ROW ===== */
 .movies-row {
   display: flex; gap: 20px;
-  overflow-x: auto; padding: 0 16px 8px;
+  overflow-x: auto; padding: 0 16px 4px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -787,3 +787,4 @@ html, body {
   z-index: 6;
   pointer-events: none;
 } 
+.movies-row .movie-card { height: auto !important; } 
