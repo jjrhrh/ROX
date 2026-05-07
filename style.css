@@ -638,19 +638,19 @@ html, body {
   border: 1px solid rgba(245,197,24,0.45) !important;
   color: var(--gold) !important;
   font-size: 0.88rem !important;
-  padding: 8px 20px !important;
+  padding: 4px 10px !important;
   box-shadow: 0 0 14px rgba(245,197,24,0.2) !important;
 }
 .hero-info-rating {
-  display: flex; justify-content: center;
-  margin-top: 12px;
+  display: flex; justify-content: flex-end;
+  margin-top: 12px; padding-right: 12px;
 }
 .hero-cap-rating {
   background: rgba(0,0,0,0.55) !important;
   border: 1px solid rgba(245,197,24,0.4) !important;
   color: var(--gold) !important;
   font-size: 0.85rem !important;
-  padding: 6px 18px !important;
+  padding: 4px 10px !important;
   border-radius: var(--radius-full) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
@@ -779,4 +779,13 @@ html, body {
   filter: blur(8px);
   opacity: 0.15;
   border-radius: 0 0 20px 20px;
+} 
+.hero-info-caps {
+  background: transparent !important;
+  border-top: none !important;
+  box-shadow: none !important;
+}
+.hero-info-container {
+  background: transparent !important;
+  border-top: none !important;
 } 
