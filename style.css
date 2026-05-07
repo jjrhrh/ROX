@@ -38,7 +38,7 @@ html, body {
   position: relative;
   z-index: 1;
 }
-.page { display: none; }
+.page { display: none; background: transparent; }
 .page.active { display: block; } 
 /* ===== BOTTOM NAV ===== */
 .bottom-nav {
