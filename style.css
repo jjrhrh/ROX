@@ -588,20 +588,13 @@ html, body {
   z-index: 100 !important;
   perspective: 1000px !important;
 }
-.hero-swiper {
-  width: 100% !important;
-  height: 0 !important;
-  overflow: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-.hero-swiper-slide { display: block !important; }
 .hero-info-container {
   margin-top: 0 !important;
   padding: 0 24px 16px !important;
   position: relative !important;
   z-index: 5 !important;
   width: 100% !important;
+  text-align: center !important;
 }
 @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .hero-info-year {
