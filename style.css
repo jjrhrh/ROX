@@ -247,7 +247,6 @@ html, body {
   overflow: hidden;
   border-radius: 25px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.85);
-  background: #111;
   will-change: transform;
   transform: translateZ(0);
 }
