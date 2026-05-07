@@ -32,6 +32,26 @@ html, body {
   font-family: 'Cairo', sans-serif;
   min-height: 100vh;
   overflow-x: clip;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+  transition: background-image 1.2s ease !important;
+}
+
+html::before, body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
+  background: rgba(5,5,5,0.82);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bottom-nav, .page, #heroSection, .rox-menu {
+  position: relative;
+  z-index: 1;
 }
 .page { display: none; }
 .page.active { display: block; } 
