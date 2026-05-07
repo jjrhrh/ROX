@@ -119,7 +119,13 @@ function updateHeroInfo(movies, index) {
     backdrop.style.transform = 'scale(1.2)';
     backdrop.style.transition = 'background-image 1s ease';
   }
-
+const bodyBg = m.backdrop_path
+    ? `${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}`
+    : `${CONFIG.IMAGES.POSTER_LG}${m.poster_path}`;
+  document.body.style.backgroundImage = `url('${bodyBg}')`;
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.backgroundPosition = 'center';
+  document.body.style.backgroundAttachment = 'fixed';
   const GENRES = {
     28:'أكشن',12:'مغامرة',16:'رسوم متحركة',35:'كوميديا',80:'جريمة',
     99:'وثائقي',18:'دراما',10751:'عائلي',14:'خيال',36:'تاريخي',
