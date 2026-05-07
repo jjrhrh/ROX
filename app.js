@@ -484,3 +484,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('خطأ في التحميل:', e);
   }
 });
+bnavGo('home');
