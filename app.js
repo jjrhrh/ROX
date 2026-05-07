@@ -136,8 +136,9 @@ function updateHeroInfo(movies, index) {
   }
 
   if (genresEl) {
-    const names = (m.genre_ids || []).slice(0,3).map(id => GENRES[id]).filter(Boolean);
-    genresEl.innerHTML = names.map(n => `<span class="hero-cap">${n}</span>`).join('');
+    const GENRE_CLASS = {28:'genre-action',18:'genre-drama',12:'genre-adventure',27:'genre-horror',35:'genre-comedy',878:'genre-scifi',53:'genre-action',10749:'genre-drama',14:'genre-adventure',16:'genre-comedy'};
+    const ids = (m.genre_ids || []).slice(0,3).filter(id => GENRES[id]);
+    genresEl.innerHTML = ids.map(id => `<span class="hero-cap ${GENRE_CLASS[id]||''}">${GENRES[id]}</span>`).join('');
   }
   if (ratingEl) {
     const rating = m.vote_average ? m.vote_average.toFixed(1) : '';
