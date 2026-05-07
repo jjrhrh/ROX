@@ -589,47 +589,43 @@ html, body {
   perspective: 1000px !important;
 }
 .hero-swiper-slide {
-  border-radius: 40px;
-  overflow: hidden;
-  width: 240px !important;
-  height: 350px !important;
-  transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s, filter 0.5s;
+  border-radius: 36px;
+  overflow: visible;
+  width: 220px !important;
+  height: 330px !important;
+  transition: opacity 0.5s, filter 0.5s;
   cursor: pointer;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 30px 70px rgba(0,0,0,0.9);
-  display: block !important;
+  position: relative;
 }
 .hero-swiper-slide img {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
-  object-position: center !important;
   display: block !important;
-  opacity: 1 !important;
+  border-radius: 36px;
 }
 .hero-swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.35 !important;
-  filter: brightness(0.35) blur(3px) !important;
+  opacity: 0.2 !important;
+  filter: brightness(0.2) blur(2px) !important;
 }
 .swiper-slide-active.hero-swiper-slide {
   opacity: 1 !important;
   filter: brightness(1.05) !important;
   z-index: 10 !important;
-  box-shadow:
-    0 0 0 1.5px rgba(255,255,255,0.35),
-    0 0 35px rgba(255,255,255,0.18),
-    0 40px 80px rgba(0,0,0,0.95) !important;
+  box-shadow: 0 0 60px rgba(255,255,255,0.12), 0 30px 70px rgba(0,0,0,0.9) !important;
 }
 .swiper-slide-active.hero-swiper-slide::after {
   content: '';
   position: absolute;
-  bottom: -35%; left: 0; right: 0;
-  height: 35%;
+  top: 100%; left: 5%; right: 5%;
+  height: 60px;
   background: inherit;
+  border-radius: 0 0 36px 36px;
   transform: scaleY(-1);
-  opacity: 0.12;
-  filter: blur(6px);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+  opacity: 0.18;
+  filter: blur(4px);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
 }
 .hero-info-container {
   text-align: center !important;
@@ -654,30 +650,28 @@ html, body {
   padding: 0;
 }
 .hero-info-title {
-  display: inline-block;
+  display: block;
   text-align: center !important;
-  font-size: 2.2rem; font-weight: 900;
+  font-size: 2rem; font-weight: 900;
   color: #ffffff !important;
-  -webkit-text-stroke: 0px;
-  margin-bottom: 8px;
+  margin-bottom: 14px;
   letter-spacing: 0.5px;
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 16px;
-  padding: 10px 24px;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.9);
+  text-shadow:
+    0 0 40px rgba(255,255,255,0.4),
+    0 0 80px rgba(255,255,255,0.15),
+    0 4px 20px rgba(0,0,0,1);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .hero-cap {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.18);
-  color: #FFFFFF;
-  font-size: 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.72rem;
   font-weight: 600;
-  padding: 6px 16px;
-  border-radius: 12px;
-  margin-top: 6px;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 8px rgba(255,255,255,0.1), inset 0 0 6px rgba(255,255,255,0.04);
+  backdrop-filter: blur(4px);
 }
 .hero-cap-rating {
   background: rgba(0,0,0,0.5) !important;
