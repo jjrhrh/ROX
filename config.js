@@ -63,11 +63,11 @@ VIDEO: Object.freeze({
     TMDB_VIDEO_PATH : '/videos',
   }),
   SERVERS: Object.freeze({
-    MOV       : 'https://vidsrc.to/embed/movie/',
-    TV        : 'https://vidsrc.to/embed/tv/',
-    TV_SEASON : 'https://vidsrc.to/embed/tv/',
-    TV_EP     : 'https://vidsrc.to/embed/tv/',
-    ANIME_EP  : 'https://vidsrc.cc/v2/embed/anime/',
+    MOV       : 'https://vidsrc.xyz/embed/movie/',
+TV        : 'https://vidsrc.xyz/embed/tv/',
+TV_SEASON : 'https://vidsrc.xyz/embed/tv/',
+TV_EP     : 'https://vidsrc.xyz/embed/tv/',
+ANIME_EP  : 'https://vidsrc.xyz/embed/tv/',
   }),
   // ─────────────────────────────────────────
   //  🎬  إعدادات عرض المحتوى
