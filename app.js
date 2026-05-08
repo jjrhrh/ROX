@@ -438,16 +438,17 @@ const isAnime = (det.genres||[]).some(g => g.id === 16)
              && (det.origin_country||[]).includes('JP');
 
 const srvs = isAnime ? [
-  { icon:'🎌', name:'Anime ROX 1', desc:'أنمي — مترجم', url:`${S.ANIME}${id}/${season}/${episode}`,  active:true },
-  { icon:'🔊', name:'Anime ROX 2', desc:'أنمي — بديل',  url:`${S.ANIME2}${id}/${season}/${episode}` },
+  { icon:'🎌', name:'Anime ROX 1', desc:'أنمي مترجم', url:`${S.ANIME}${id}/${season}/${episode}`,  active:true },
+  { icon:'🔊', name:'Anime ROX 2', desc:'سيرفر بديل', url:`${S.ANIME2}${id}/${season}/${episode}` },
 ] : type === 'tv' ? [
-  { icon:'📺', name:'TV ROX 1', desc:'الحلقة',      url:`${S.TV}${id}/${season}/${episode}`,  active:true },
+  { icon:'📺', name:'TV ROX 1', desc:'جودة عالية',  url:`${S.TV}${id}/${season}/${episode}`,  active:true },
   { icon:'📡', name:'TV ROX 2', desc:'سيرفر بديل', url:`${S.TV2}${id}/${season}/${episode}` },
   { icon:'🔍', name:'TV ROX 3', desc:'سيرفر بديل', url:`${S.TV3}${id}/${season}/${episode}` },
 ] : [
   { icon:'🎬', name:'Cinema-ROX 1', desc:'جودة عالية', url:`${S.MOV}${id}`,  active:true },
   { icon:'📺', name:'Cinema-ROX 2', desc:'سيرفر بديل', url:`${S.MOV2}${id}` },
   { icon:'⚡', name:'Cinema-ROX 3', desc:'سيرفر بديل', url:`${S.MOV3}${id}` },
+  { icon:'🔥', name:'Cinema-ROX 4', desc:'سيرفر بديل', url:`${S.MOV4}${id}` },
 ];
     const srvHTML = srvs.map(s => `
       <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" onclick="wsSelectServer(this)">
