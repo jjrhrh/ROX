@@ -124,10 +124,6 @@ document.body.style.backgroundImage = bdUrl ? `url('${bdUrl}')` : '';
   document.body.style.backgroundPosition = 'center';
   document.body.style.backgroundAttachment = 'fixed';
   document.body.style.filter = bdUrl ? 'blur(80px) brightness(0.2) saturate(3)' : 'none';
-  document.body.style.backgroundSize = 'cover';
-  document.body.style.backgroundPosition = 'center';
-  document.body.style.backgroundAttachment = 'fixed';
-  document.body.style.filter = '';
   const GENRES = {
     28:'أكشن',12:'مغامرة',16:'رسوم متحركة',35:'كوميديا',80:'جريمة',
     99:'وثائقي',18:'دراما',10751:'عائلي',14:'خيال',36:'تاريخي',
