@@ -403,6 +403,79 @@ function wsGoBack() {
   } else { goBack(); }
   window.scrollTo(0, 0);
 }
+async function openWatchPage(id, type) {
+  const page = document.getElementById('watchPage');
+  if (!page) return;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('heroSection').style.display = 'none';
+  page.classList.add('active');
+  page.innerHTML = '<div class="loading">⏳ جاري التحميل...</div>';
+  window.scrollTo(0, 0);
+  try {
+    const ep = type === 'tv' ? `/tv/${id}` : `/movie/${id}`;
+    const [det] = await Promise.all([fetch(buildTMDBUrl(ep)).then(r => r.json())]);
+    const backdrop = det.backdrop_path ? CONFIG.IMAGES.BACKDROP + det.backdrop_path : '';
+    const title = type === 'movie' ? (det.title || det.original_title) : (det.name || det.original_name);
+    const year  = (det.release_date || det.first_air_date || '').slice(0, 4);
+    const rating = det.vote_average ? det.vote_average.toFixed(1) : '';
+    const genres = (det.genres || []).map(g => g.name).join(' · ');
+    const overview = det.overview || 'لا يوجد وصف.';
+    const S = CONFIG.SERVERS;
+    const srvs = [
+      { icon:'🔥', name:'VidSrc 2', desc:'دودة عالية',   url: (type==='tv'?S.V2_TV:S.V2_MOV)+id },
+      { icon:'⚡', name:'VidSrc 1', desc:'سريع وموثوق',  url: (type==='tv'?S.V1_TV:S.V1_MOV)+id, active:true },
+      { icon:'🎬', name:'2Embed',   desc:'Ultra HD',      url: (type==='tv'?S.E2_TV:S.E2_MOV)+id },
+      { icon:'🌐', name:'MultiEmbed', desc:'الجيل القادم', url: S.ME+id+S.ME_SFX },
+    ];
+    const srvHTML = srvs.map(s => `
+      <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" onclick="wsSelectServer(this)">
+        ${s.active?'<span class="ws-check">✔</span>':''}
+        <div class="ws-icon">${s.icon}</div>
+        <div class="ws-name">${s.name}</div>
+        <div class="ws-desc">${s.desc}</div>
+        <span class="ws-free">مجاني</span>
+      </div>`).join('');
+    const prodHTML = [
+      det.budget  ? `<div class="ws-prod-item"><span class="ws-prod-val">$${det.budget.toLocaleString()}</span><span class="ws-prod-label">💰 الميزانية</span></div>` : '',
+      det.revenue ? `<div class="ws-prod-item"><span class="ws-prod-val">$${det.revenue.toLocaleString()}</span><span class="ws-prod-label">✅ الإيرادات</span></div>` : '',
+    ].join('');
+    page.innerHTML = `
+      <div class="ws-player-wrap">
+        <div class="ws-player-bg" style="background-image:url('${backdrop}')">
+          <div class="ws-overlay" id="wsOverlay" onclick="wsStartStream()">
+            <div class="ws-play-btn">▶</div>
+            <span class="ws-play-lbl">اضغط للمشاهدة</span>
+          </div>
+          <iframe id="wsFrame" class="ws-frame" src="" allowfullscreen allow="autoplay"></iframe>
+        </div>
+        <button class="ws-back" onclick="wsGoBack()">→ رجوع</button>
+      </div>
+      <div class="ws-info-card">
+        <h2 class="ws-title">${title}</h2>
+        <div class="ws-badges">
+          <span class="ws-bdg">${type==='tv'?'📺 مسلسل':'🎬 فيلم'}</span>
+          <span class="ws-bdg">📅 ${year}</span>
+          <span class="ws-bdg ws-bdg-gold">⭐ ${rating}</span>
+        </div>
+        <p class="ws-genres">${genres}</p>
+      </div>
+      <div class="ws-section">
+        <h3 class="ws-stitle">📖 القصة</h3>
+        <p class="ws-overview">${overview}</p>
+      </div>
+      <div class="ws-section">
+        <div class="ws-srv-head">
+          <h3 class="ws-stitle">🟢 مصادر البث</h3>
+          <span class="ws-srv-sub">🔒 السيرفرات الخاصة</span>
+        </div>
+        <div class="ws-grid">${srvHTML}</div>
+        <p class="ws-note">إذا لم يعمل البيزمبر جرب آخر</p>
+      </div>
+      ${prodHTML?`<div class="ws-section"><h3 class="ws-stitle">📊 بيانات الإنتاج</h3><div class="ws-prod-grid">${prodHTML}</div></div>`:''}`;
+  } catch(e) {
+    page.innerHTML = `<div class="loading">❌ خطأ<br><button onclick="wsGoBack()" class="detail-btn">← رجوع</button></div>`;
+  }
+}
 // ===== LIBRARY HELPERS =====
 function getLib(key) {
   try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
