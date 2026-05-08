@@ -333,6 +333,7 @@ async function openDetail(id, type = 'movie') {
             </div>
             <div class="detail-genres">${genres}</div>
             <div class="detail-actions">
+              <button class="detail-btn detail-btn-now" onclick="watchNow('${trailer ? trailer.key : ''}')">▶ شاهد الآن</button>
               ${trailerBtn}
               <button class="detail-btn detail-btn-watch" onclick="addToWatchlist(${id},'${type}')">❤️ قائمتي</button>
               <button class="detail-btn detail-btn-later" onclick="addToWatchLater(${id},'${type}')">⏰ سأشاهده</button>
@@ -371,6 +372,10 @@ function playTrailer(key) {
     overlay.classList.add('hidden');
     frame.src = '';
   }, { once: true });
+}
+function watchNow(key) {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (key) playTrailer(key);
 }
 // ===== LIBRARY HELPERS =====
 function getLib(key) {
