@@ -373,9 +373,9 @@ function playTrailer(key) {
     frame.src = '';
   }, { once: true });
 }
-function watchNow(key) {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (key) playTrailer(key);
+function watchNow() {
+  document.getElementById('detailPlayerWrap')
+    ?.scrollIntoView({ behavior: 'smooth' });
 }
 function selectServer(card) {
   document.querySelectorAll('.server-card').forEach(c => c.classList.remove('active'));
