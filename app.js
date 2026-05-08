@@ -459,6 +459,10 @@ async function openWatchPage(id, type) {
             <span class="ws-play-lbl">اضغط للمشاهدة</span>
           </div>
           <iframe id="wsFrame" class="ws-frame" src="" allowfullscreen allow="autoplay"></iframe>
+          <div id="wsSwitchOverlay" class="ws-switch-overlay" style="display:none">
+            <div class="ws-switch-spinner"></div>
+            <span class="ws-switch-txt">يتم الاتصال بسيرفرات Cinema-ROX الخاصة...</span>
+          </div>
         </div>
         <button class="ws-back" onclick="wsGoBack()">→ رجوع</button>
       </div>
