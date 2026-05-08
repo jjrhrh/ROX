@@ -431,14 +431,21 @@ async function openWatchPage(id, type) {
     const genres = (det.genres || []).map(g => g.name).join(' · ');
     const overview = det.overview || 'لا يوجد وصف.';
     const S = CONFIG.SERVERS;
-    const tvPath  = `${id}/1/1`;
-const tvQuery = `${id}&season=1&episode=1`;
-const srvs = [
-  { icon:'🚀', name:'Cinema-ROX (Ultra 4K)',    desc:'دقة خارقة',   url: type==='tv' ? S.V1_TV+tvPath  : S.V1_MOV+id,  active:true },
-  { icon:'👑', name:'Cinema-ROX (VIP)',          desc:'جودة ملكية',  url: type==='tv' ? `${S.V2_TV}${id}&season=1&episode=1` : S.V2_MOV+id },
-  { icon:'🌍', name:'Cinema-ROX (Arabic/Global)',desc:'عربي وعالمي', url: type==='tv' ? S.GLB_TV+id+'/1/1' : S.GLB_MOV+id },
-  { icon:'⚡', name:'Cinema-ROX (Anime Speed)',  desc:'فائق السرعة', url: type==='tv' ? S.ANI_TV+tvPath  : S.ANI_MOV+id },
-  { icon:'🎬', name:'Cinema-ROX (2Embed)',       desc:'Ultra HD',    url: type==='tv' ? S.E2_TV+id       : S.E2_MOV+id },
+const season = 1, episode = 1;
+
+// تحقق إذا الأنمي (genre_id 16 = Animation + JP)
+const isAnime = (det.genres||[]).some(g => g.id === 16)
+             && (det.origin_country||[]).includes('JP');
+
+const srvs = isAnime ? [
+  { icon:'🎌', name:'Cinema-ROX (Anime)', desc:'أنمي — مترجم',  url: `${S.ANIME_EP}${id}/${episode}/sub`, active:true },
+  { icon:'🔊', name:'Cinema-ROX (Dub)',   desc:'أنمي — مدبلج', url: `${S.ANIME_EP}${id}/${episode}/dub` },
+] : type === 'tv' ? [
+  { icon:'🎬', name:'Cinema-ROX',          desc:'الحلقة الأولى', url: `${S.TV_EP}${id}/${season}/${episode}`, active:true },
+  { icon:'📺', name:'Cinema-ROX (Season)', desc:'الموسم كامل',   url: `${S.TV_SEASON}${id}/${season}` },
+  { icon:'🔍', name:'Cinema-ROX (Show)',   desc:'كل المواسم',    url: `${S.TV}${id}` },
+] : [
+  { icon:'🎬', name:'Cinema-ROX', desc:'جودة عالية', url: `${S.MOV}${id}`, active:true },
 ];
     const srvHTML = srvs.map(s => `
       <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" onclick="wsSelectServer(this)">
