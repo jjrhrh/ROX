@@ -119,7 +119,8 @@ html, body {
               0 0 30px var(--accent-glow);
 }
 .rox-item {
-  display: flex; flex-direction: column;
+  document.body.style.backgroundImage = bdUrl ? `url('${bdUrl}')` : '';
+  document.body.style.filter = bdUrl ? 'blur(0px) brightness(0.35)' : '';
   align-items: center; gap: 6px; cursor: pointer;
 }
 .rox-circle {
@@ -607,7 +608,8 @@ html, body {
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   border-top: 1px solid rgba(229,9,20,0.8) !important;
-  margin-top: 0 !important;
+  margin-top: -60px !important;
+  backdrop-filter: blur(15px) !important;
 }
 @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .hero-info-year {
@@ -630,7 +632,8 @@ html, body {
   display: block;
   text-align: center !important;
   font-size: 2.2rem; font-weight: 900;
-  color: #ffffff !important;
+  color: transparent !important;
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.95);
   margin-bottom: 14px;
   letter-spacing: 2px;
   text-shadow: 0 0 40px rgba(255,255,255,0.6);
