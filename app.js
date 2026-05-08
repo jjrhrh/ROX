@@ -117,7 +117,11 @@ function updateHeroInfo(movies, index) {
     : `${CONFIG.IMAGES.POSTER_LG}${m.poster_path}`;
 
   const backdrop = document.getElementById('heroBackdrop');
-  if (backdrop) backdrop.style.backgroundImage = `url('${imgUrl}')`;
+  if (backdrop) {
+    backdrop.style.backgroundImage = `url('${CONFIG.IMAGES.BACKDROP}${m.backdrop_path || m.poster_path}')`;
+    backdrop.classList.remove('loaded');
+    setTimeout(() => backdrop.classList.add('loaded'), 80);
+  }
   const bdUrl = m.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}` : '';
 document.body.style.backgroundImage = '';
   document.body.style.backgroundSize = 'cover';
