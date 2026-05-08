@@ -615,6 +615,11 @@ html, body {
   border-radius: 28px 28px 0 0 !important;
   border-top: 1px solid rgba(229,9,20,1) !important;
   box-shadow: 0 -1px 12px rgba(229,9,20,0.9), 0 -8px 40px rgba(229,9,20,0.3) !important;
+  animation: laserPulse 2s ease-in-out infinite !important;
+}
+@keyframes laserPulse {
+  0%,100% { box-shadow: 0 -1px 8px rgba(229,9,20,0.5), 0 -8px 20px rgba(229,9,20,0.15); }
+  50%      { box-shadow: 0 -1px 18px rgba(229,9,20,1), 0 -8px 50px rgba(229,9,20,0.5); }
 }
 @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .hero-info-year {
