@@ -377,6 +377,18 @@ function watchNow(key) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (key) playTrailer(key);
 }
+function selectServer(card) {
+  document.querySelectorAll('.server-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+  document.getElementById('detailPlayerFrame').src = card.dataset.url;
+  document.getElementById('detailPlayerOverlay').style.display = 'none';
+}
+function startStream() {
+  const card = document.querySelector('.server-card.active');
+  if (!card) return;
+  document.getElementById('detailPlayerFrame').src = card.dataset.url;
+  document.getElementById('detailPlayerOverlay').style.display = 'none';
+}
 // ===== LIBRARY HELPERS =====
 function getLib(key) {
   try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
