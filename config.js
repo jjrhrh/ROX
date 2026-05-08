@@ -63,19 +63,32 @@ HERO: Object.freeze({
   }),
   SERVERS: Object.freeze({
   // ── أفلام ──
-  MOV    : 'https://vidsrc-embed.ru/embed/movie/',
-  MOV2   : 'https://vidsrc-embed.su/embed/movie/',
-  MOV3   : 'https://vidlink.pro/movie/',
-  MOV4   : 'https://www.2embed.stream/embed/movie/',
-
+  MOV  : 'https://vidsrc-embed.ru/embed/movie/',
+  MOV2 : 'https://vidsrc-embed.su/embed/movie/',
+  MOV3 : 'https://vidlink.pro/movie/',
+  MOV4 : 'https://www.2embed.stream/embed/movie/',
+  MOV5 : 'https://vidsrc.icu/embed/movie/',
+  MOV6 : 'https://moviesapi.club/movie/',
+  MOV7 : 'https://player.smashy.stream/movie/',
+  MOV8 : 'https://multiembed.mov/?video_id=',
+  MOV9 : 'https://vidsrc.cc/v2/embed/movie/',
   // ── مسلسلات ──
-  TV     : 'https://vidsrc-embed.ru/embed/tv/',
-  TV2    : 'https://vidsrc-embed.su/embed/tv/',
-  TV3    : 'https://vidlink.pro/tv/',
-
+  TV   : 'https://vidsrc-embed.ru/embed/tv/',
+  TV2  : 'https://vidsrc-embed.su/embed/tv/',
+  TV3  : 'https://vidlink.pro/tv/',
+  TV4  : 'https://www.2embed.stream/embed/tv/',
+  TV5  : 'https://vidsrc.icu/embed/tv/',
+  TV6  : 'https://moviesapi.club/tv/',
+  TV7  : 'https://player.smashy.stream/tv/',
+  TV8  : 'https://vidsrc.cc/v2/embed/tv/',
   // ── أنمي ──
   ANIME  : 'https://vidsrc-embed.ru/embed/tv/',
   ANIME2 : 'https://vidsrc-embed.su/embed/tv/',
+  ANIME3 : 'https://vidsrc.icu/embed/tv/',
+  ANIME4 : 'https://vidsrc.cc/v2/embed/tv/',
+  ANIME5 : 'https://moviesapi.club/tv/',
+  ANIME6 : 'https://www.2embed.stream/embed/tv/',
+  ANIME7 : 'https://vidlink.pro/tv/',
 }),
   // ─────────────────────────────────────────
   //  🎬  إعدادات عرض المحتوى
