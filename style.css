@@ -93,8 +93,10 @@ html, body {
   display: none;
   min-height: 100vh;
   padding-bottom: var(--nav-height);
+  background: #080000;
+  position: relative;
+  z-index: 4;
 }
-.page.active { display: block; }
 .hidden { display: none !important; }
 
 /* ===== ROX MENU ===== */
@@ -204,7 +206,7 @@ html, body {
   box-shadow: 0 0 24px var(--accent-glow);
   }
 /* ===== SECTIONS ===== */
-.home-section { padding: 20px 0 8px; }
+.home-section { padding: 20px 0 8px; background: #080000; position: relative; z-index: 5; }
 #homePage > .home-section:first-child { margin-top: -30px; }
 .section-header {
   display: flex; align-items: center;
@@ -625,14 +627,12 @@ html, body {
 .hero-info-title {
   display: block;
   text-align: center !important;
-  font-size: 2.4rem;
-  font-weight: 900;
+  font-size: 2.2rem; font-weight: 900;
   color: transparent !important;
-  -webkit-text-stroke: 1.5px rgba(255,255,255,1);
+  -webkit-text-stroke: 2px #ffffff;
   margin-bottom: 14px;
-  letter-spacing: 4px;
-  line-height: 1.2;
-  text-shadow: none;
+  letter-spacing: 2px;
+  text-shadow: 0 0 40px rgba(255,255,255,0.6);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .hero-cap {
