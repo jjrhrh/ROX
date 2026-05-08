@@ -63,13 +63,10 @@ VIDEO: Object.freeze({
     TMDB_VIDEO_PATH : '/videos',
   }),
   SERVERS: Object.freeze({
-  SERVERS: Object.freeze({
-    // ── vidsrc.to (أفلام ومسلسلات) ─────────
     MOV       : 'https://vidsrc.to/embed/movie/',
     TV        : 'https://vidsrc.to/embed/tv/',
     TV_SEASON : 'https://vidsrc.to/embed/tv/',
     TV_EP     : 'https://vidsrc.to/embed/tv/',
-    // ── vidsrc.cc (أنمي) ───────────────────
     ANIME_EP  : 'https://vidsrc.cc/v2/embed/anime/',
   }),
   // ─────────────────────────────────────────
