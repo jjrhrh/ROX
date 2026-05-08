@@ -591,20 +591,21 @@ html, body {
   margin-bottom: -20px !important;
   padding: 14px 0 0 !important;
 .hero-info-container {
+  .hero-info-container {
   text-align: center !important;
-  margin-top: -30px !important;
-  padding: 24px 24px 20px !important;
+  padding: 20px 24px 16px !important;
   position: relative !important;
-  z-index: 300 !important;
+  z-index: 9999 !important;
   width: 100% !important;
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
-  background: rgba(10,0,0,0.55) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  background: rgba(255,255,255,0.08) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
   border-top: 1px solid rgba(229,9,20,1) !important;
-  box-shadow: 0 -2px 16px rgba(229,9,20,0.4), 0 -12px 30px rgba(0,0,0,0.8) !important;
+  box-shadow: 0 -2px 16px rgba(229,9,20,0.5) !important;
+  margin-top: 0 !important;
 }
 @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .hero-info-year {
@@ -629,7 +630,7 @@ html, body {
   font-size: 2.6rem;
   font-weight: 900;
   color: transparent !important;
-  -webkit-text-stroke: 1.2px rgba(255,255,255,0.95);
+  -webkit-text-stroke: 1.5px white;
   margin-bottom: 14px;
   letter-spacing: 4px;
   line-height: 1.2;
