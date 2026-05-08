@@ -438,17 +438,32 @@ const isAnime = (det.genres||[]).some(g => g.id === 16)
              && (det.origin_country||[]).includes('JP');
 
 const srvs = isAnime ? [
-  { icon:'🎌', name:'Anime ROX 1', desc:'أنمي مترجم', url:`${S.ANIME}${id}/${season}/${episode}`,  active:true },
-  { icon:'🔊', name:'Anime ROX 2', desc:'سيرفر بديل', url:`${S.ANIME2}${id}/${season}/${episode}` },
+  { icon:'🎌', name:'Anime 1', desc:'رئيسي',  url:`${S.ANIME}${id}/${season}/${episode}`,  active:true },
+  { icon:'🔥', name:'Anime 2', desc:'بديل',   url:`${S.ANIME2}${id}/${season}/${episode}` },
+  { icon:'💎', name:'Anime 3', desc:'بديل',   url:`${S.ANIME3}${id}/${season}/${episode}` },
+  { icon:'⚡', name:'Anime 4', desc:'بديل',   url:`${S.ANIME4}${id}/${season}/${episode}` },
+  { icon:'🌟', name:'Anime 5', desc:'بديل',   url:`${S.ANIME5}${id}/${season}/${episode}` },
+  { icon:'🎯', name:'Anime 6', desc:'بديل',   url:`${S.ANIME6}${id}/${season}/${episode}` },
+  { icon:'🚀', name:'Anime 7', desc:'بديل',   url:`${S.ANIME7}${id}/${season}/${episode}` },
 ] : type === 'tv' ? [
-  { icon:'📺', name:'TV ROX 1', desc:'جودة عالية',  url:`${S.TV}${id}/${season}/${episode}`,  active:true },
-  { icon:'📡', name:'TV ROX 2', desc:'سيرفر بديل', url:`${S.TV2}${id}/${season}/${episode}` },
-  { icon:'🔍', name:'TV ROX 3', desc:'سيرفر بديل', url:`${S.TV3}${id}/${season}/${episode}` },
+  { icon:'📺', name:'TV 1', desc:'رئيسي',  url:`${S.TV}${id}/${season}/${episode}`,  active:true },
+  { icon:'📡', name:'TV 2', desc:'بديل',   url:`${S.TV2}${id}/${season}/${episode}` },
+  { icon:'🔥', name:'TV 3', desc:'بديل',   url:`${S.TV3}${id}/${season}/${episode}` },
+  { icon:'💎', name:'TV 4', desc:'بديل',   url:`${S.TV4}${id}/${season}/${episode}` },
+  { icon:'⚡', name:'TV 5', desc:'بديل',   url:`${S.TV5}${id}/${season}/${episode}` },
+  { icon:'🌟', name:'TV 6', desc:'بديل',   url:`${S.TV6}${id}/${season}/${episode}` },
+  { icon:'🎯', name:'TV 7', desc:'بديل',   url:`${S.TV7}${id}/${season}/${episode}` },
+  { icon:'🚀', name:'TV 8', desc:'بديل',   url:`${S.TV8}${id}/${season}/${episode}` },
 ] : [
-  { icon:'🎬', name:'Cinema-ROX 1', desc:'جودة عالية', url:`${S.MOV}${id}`,  active:true },
-  { icon:'📺', name:'Cinema-ROX 2', desc:'سيرفر بديل', url:`${S.MOV2}${id}` },
-  { icon:'⚡', name:'Cinema-ROX 3', desc:'سيرفر بديل', url:`${S.MOV3}${id}` },
-  { icon:'🔥', name:'Cinema-ROX 4', desc:'سيرفر بديل', url:`${S.MOV4}${id}` },
+  { icon:'🎬', name:'فيلم 1', desc:'رئيسي',  url:`${S.MOV}${id}`,          active:true },
+  { icon:'📺', name:'فيلم 2', desc:'بديل',   url:`${S.MOV2}${id}`          },
+  { icon:'🔥', name:'فيلم 3', desc:'بديل',   url:`${S.MOV3}${id}`          },
+  { icon:'💎', name:'فيلم 4', desc:'بديل',   url:`${S.MOV4}${id}`          },
+  { icon:'⚡', name:'فيلم 5', desc:'بديل',   url:`${S.MOV5}${id}`          },
+  { icon:'🌟', name:'فيلم 6', desc:'بديل',   url:`${S.MOV6}${id}`          },
+  { icon:'🎯', name:'فيلم 7', desc:'بديل',   url:`${S.MOV7}${id}`          },
+  { icon:'🚀', name:'فيلم 8', desc:'بديل',   url:`${S.MOV8}${id}&tmdb=1`   },
+  { icon:'✨', name:'فيلم 9', desc:'بديل',   url:`${S.MOV9}${id}`          },
 ];
     const srvHTML = srvs.map(s => `
       <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" onclick="wsSelectServer(this)">
