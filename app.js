@@ -431,6 +431,7 @@ async function openWatchPage(id, type) {
     const genres = (det.genres || []).map(g => g.name).join(' · ');
     const overview = det.overview || 'لا يوجد وصف.';
     const S = CONFIG.SERVERS;
+    const tvPath = `${id}/1/1`;
     const srvs = [
       { icon:'👑', name:'Cinema-ROX (VIP)',          desc:'جودة ملكية',      url:(type==='tv'?S.VIP_TV:S.VIP_MOV)+id,   active:true },
       { icon:'🚀', name:'Cinema-ROX (Ultra 4K)',      desc:'دقة خارقة',       url:(type==='tv'?S.K4_TV:S.K4_MOV)+id },
