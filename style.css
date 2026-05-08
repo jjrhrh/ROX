@@ -431,6 +431,77 @@ html, body {
   white-space: nowrap; overflow: hidden;
   text-overflow: ellipsis; max-width: 70px;
 }
+/* ===== PLAYER WRAP ===== */
+.detail-player-wrap {
+  position: relative; width: 100%; height: 56vw;
+  max-height: 320px; min-height: 200px;
+  background-size: cover; background-position: center;
+  overflow: hidden;
+}
+.detail-player-overlay {
+  position: absolute; inset: 0; z-index: 3;
+  background: rgba(0,0,0,0.55);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  cursor: pointer;
+}
+.player-play-btn {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--accent); border: none;
+  color: #fff; font-size: 1.6rem;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(229,9,20,0.7);
+}
+.player-hint { color: #fff; font-size: 0.85rem; font-weight: 700; }
+.detail-player-frame {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: none; z-index: 2;
+}
+/* ===== INFO CARD ===== */
+.detail-info-card {
+  background: rgba(20,0,0,0.85);
+  border-radius: var(--radius-md);
+  padding: 16px; margin-top: 8px;
+  border: 1px solid var(--border);
+}
+/* ===== SERVERS ===== */
+.stream-section { margin-top: 16px; }
+.stream-sub { color: var(--text3); font-size: 0.78rem; margin: -8px 0 12px; }
+.servers-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.server-card {
+  position: relative;
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 14px 10px;
+  text-align: center; cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.server-card.active {
+  border: 2px solid var(--accent) !important;
+  box-shadow: 0 0 16px rgba(229,9,20,0.5) !important;
+}
+.server-check {
+  position: absolute; top: 8px; right: 8px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 0.7rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+}
+.server-card:not(.active) .server-check { display: none; }
+.server-icon { font-size: 1.6rem; margin-bottom: 4px; }
+.server-name { font-size: 0.88rem; font-weight: 900; color: var(--text); }
+.server-desc { font-size: 0.7rem; color: var(--text3); margin: 2px 0 8px; }
+.server-tag {
+  display: inline-block; padding: 2px 10px;
+  border-radius: var(--radius-full); font-size: 0.68rem; font-weight: 700;
+}
+.tag-free { background: rgba(28,231,131,0.15); color: #1ce783; }
+.tag-blue { background: rgba(26,108,255,0.15); color: #1a6cff; }
+.server-hint {
+  text-align: center; color: var(--text3);
+  font-size: 0.75rem; margin-top: 10px;
+}
 /* ===== TRAILER ===== */
 .trailer-overlay {
   position: fixed; inset: 0; z-index: 99999;
