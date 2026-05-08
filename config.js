@@ -75,6 +75,8 @@ HERO: Object.freeze({
   MOV10: 'https://www.NontonGo.win/embed/movie/',
   MOV11: 'https://player.videasy.net/movie/',
   MOV12: 'https://vidsrc.ru/movie/',
+  MOV13: 'https://www.2embed.cc/embed/',
+  MOV14: 'https://player.vidzee.wtf/movie/',
   // ── مسلسلات ──
   TV   : 'https://vidsrc-embed.ru/embed/tv/',
   TV2  : 'https://vidsrc-embed.su/embed/tv/',
@@ -87,6 +89,8 @@ HERO: Object.freeze({
   TV9  : 'https://www.NontonGo.win/embed/tv/',
   TV10 : 'https://player.videasy.net/tv/',
   TV11 : 'https://vidsrc.ru/tv/',
+  TV12 : 'https://www.2embed.cc/embedtv/',
+  TV13 : 'https://player.vidzee.wtf/tv/',
   // ── أنمي ──
   ANIME  : 'https://vidsrc-embed.ru/embed/tv/',
   ANIME2 : 'https://vidsrc-embed.su/embed/tv/',
@@ -98,6 +102,8 @@ HERO: Object.freeze({
   ANIME8 : 'https://www.NontonGo.win/embed/tv/',
   ANIME9 : 'https://player.videasy.net/tv/',
   ANIME10: 'https://vidsrc.ru/tv/',
+  ANIME11: 'https://www.2embed.cc/embedtv/',
+  ANIME12: 'https://player.vidzee.wtf/tv/',
 }),
   // ─────────────────────────────────────────
   //  🎬  إعدادات عرض المحتوى
