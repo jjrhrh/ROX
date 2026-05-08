@@ -315,77 +315,34 @@ async function openDetail(id, type = 'movie') {
       : '';
 
     page.innerHTML = `
-      <div class="detail-player-wrap" id="detailPlayerWrap"
-           style="background-image:url('${backdrop}')"
-           data-id="${id}" data-type="${type}">
+      <div class="detail-backdrop" style="background-image:url('${backdrop}')">
+        <div class="detail-backdrop-gradient"></div>
         <button class="detail-back-btn" onclick="goBack()">← رجوع</button>
-        <div class="detail-player-overlay" id="detailPlayerOverlay" onclick="startStream()">
-          <button class="player-play-btn">▶</button>
-          <p class="player-hint">اضغط للمشاهدة</p>
-        </div>
-        <iframe id="detailPlayerFrame" class="detail-player-frame"
-                allowfullscreen allow="autoplay; encrypted-media"></iframe>
       </div>
       <div class="detail-body">
-        <div class="detail-info-card">
-          <h1 class="detail-title">${title}</h1>
-          <div class="detail-meta">
-            <span class="detail-badge">${type === 'tv' ? '📺 مسلسل' : '🎬 فيلم'}</span>
-            ${year    ? `<span class="detail-badge">📅 ${year}</span>`    : ''}
-            ${runtime ? `<span class="detail-badge">⏱ ${runtime}</span>` : ''}
-            <span class="detail-badge detail-rating">⭐ ${rating}</span>
-          </div>
-          <div class="detail-genres">${genres}</div>
-          <div class="detail-actions">
-            <button class="detail-btn detail-btn-now" onclick="watchNow()">▶ شاهد الآن</button>
-            ${trailerBtn}
-            <button class="detail-btn detail-btn-watch" onclick="addToWatchlist(${id},'${type}')">❤️ قائمتي</button>
-            <button class="detail-btn detail-btn-later" onclick="addToWatchLater(${id},'${type}')">⏰ سأشاهده</button>
+        <div class="detail-top">
+          <img class="detail-poster" src="${poster}" alt="${title}"
+               onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+          <div class="detail-info">
+            <h1 class="detail-title">${title}</h1>
+            <div class="detail-meta">
+              ${year    ? `<span class="detail-badge">📅 ${year}</span>`    : ''}
+              ${runtime ? `<span class="detail-badge">⏱ ${runtime}</span>` : ''}
+              <span class="detail-badge detail-rating">⭐ ${rating}</span>
+              <span class="detail-badge">${type === 'tv' ? '📺 مسلسل' : '🎬 فيلم'}</span>
+            </div>
+            <div class="detail-genres">${genres}</div>
+            <div class="detail-actions">
+              <button class="detail-btn detail-btn-now" onclick="watchNow('${trailer ? trailer.key : ''}')">▶ شاهد الآن</button>
+              ${trailerBtn}
+              <button class="detail-btn detail-btn-watch" onclick="addToWatchlist(${id},'${type}')">❤️ قائمتي</button>
+              <button class="detail-btn detail-btn-later" onclick="addToWatchLater(${id},'${type}')">⏰ سأشاهده</button>
+            </div>
           </div>
         </div>
         <div class="detail-section">
           <h3 class="detail-section-title">📖 القصة</h3>
           <p class="detail-overview">${overview}</p>
-        </div>
-        <div class="detail-section stream-section">
-          <h3 class="detail-section-title">● مصادر البث</h3>
-          <p class="stream-sub">🔒 السيرفرات الخاصة</p>
-          <div class="servers-grid">
-            <div class="server-card active"
-                 data-url="https://vidsrc.to/embed/${type==='tv'?'tv':'movie'}/${id}"
-                 onclick="selectServer(this)">
-              <span class="server-check">✓</span>
-              <div class="server-icon">⚡</div>
-              <div class="server-name">VidSrc 1</div>
-              <div class="server-desc">سريع وموثوق</div>
-              <span class="server-tag tag-free">مجاني</span>
-            </div>
-            <div class="server-card"
-                 data-url="https://vidsrc.xyz/embed/${type==='tv'?'tv':'movie'}/?tmdb=${id}"
-                 onclick="selectServer(this)">
-              <div class="server-icon">🔥</div>
-              <div class="server-name">VidSrc 2</div>
-              <div class="server-desc">دقة عالية</div>
-              <span class="server-tag tag-free">مجاني</span>
-            </div>
-            <div class="server-card"
-                 data-url="https://www.2embed.cc/embed/${id}"
-                 onclick="selectServer(this)">
-              <div class="server-icon">🎬</div>
-              <div class="server-name">2Embed</div>
-              <div class="server-desc">Ultra HD</div>
-              <span class="server-tag tag-free">مجاني</span>
-            </div>
-            <div class="server-card"
-                 data-url="https://multiembed.mov/?video_id=${id}&tmdb=1"
-                 onclick="selectServer(this)">
-              <div class="server-icon">🌐</div>
-              <div class="server-name">MultiEmbed</div>
-              <div class="server-desc">الخيار الأفضل</div>
-              <span class="server-tag tag-blue">مجاني</span>
-            </div>
-          </div>
-          <p class="server-hint">إذا لم يعمل السيرفر جرب آخر ↩</p>
         </div>
         <div class="detail-section detail-prod-grid">
           ${detail.budget  ? `<div class="detail-prod-item"><span class="prod-label">💰 الميزانية</span><span class="prod-val">$${(detail.budget/1e6).toFixed(1)}M</span></div>`   : ''}
