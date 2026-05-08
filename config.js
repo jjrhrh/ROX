@@ -62,15 +62,20 @@ HERO: Object.freeze({
     TMDB_VIDEO_PATH : '/videos',
   }),
   SERVERS: Object.freeze({
-  MOV    : 'https://vidsrc.fyi/embed/movie/',
-  MOV2   : 'https://vidlink.pro/movie/',
-  MOV3   : 'https://www.2embed.stream/embed/movie/',
-  MOV4   : 'https://multiembed.mov/?video_id=',
-  TV     : 'https://vidsrc.fyi/embed/tv/',
-  TV2    : 'https://vidlink.pro/tv/',
-  TV3    : 'https://www.2embed.stream/embed/tv/',
-  ANIME  : 'https://vidsrc.fyi/embed/tv/',
-  ANIME2 : 'https://vidlink.pro/tv/',
+  // ── أفلام ──
+  MOV    : 'https://vidsrc-embed.ru/embed/movie/',
+  MOV2   : 'https://vidsrc-embed.su/embed/movie/',
+  MOV3   : 'https://vidlink.pro/movie/',
+  MOV4   : 'https://www.2embed.stream/embed/movie/',
+
+  // ── مسلسلات ──
+  TV     : 'https://vidsrc-embed.ru/embed/tv/',
+  TV2    : 'https://vidsrc-embed.su/embed/tv/',
+  TV3    : 'https://vidlink.pro/tv/',
+
+  // ── أنمي ──
+  ANIME  : 'https://vidsrc-embed.ru/embed/tv/',
+  ANIME2 : 'https://vidsrc-embed.su/embed/tv/',
 }),
   // ─────────────────────────────────────────
   //  🎬  إعدادات عرض المحتوى
