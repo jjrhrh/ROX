@@ -422,10 +422,12 @@ async function openWatchPage(id, type) {
     const overview = det.overview || 'لا يوجد وصف.';
     const S = CONFIG.SERVERS;
     const srvs = [
-      { icon:'🔥', name:'VidSrc 2', desc:'دودة عالية',   url: (type==='tv'?S.V2_TV:S.V2_MOV)+id },
-      { icon:'⚡', name:'VidSrc 1', desc:'سريع وموثوق',  url: (type==='tv'?S.V1_TV:S.V1_MOV)+id, active:true },
-      { icon:'🎬', name:'2Embed',   desc:'Ultra HD',      url: (type==='tv'?S.E2_TV:S.E2_MOV)+id },
-      { icon:'🌐', name:'MultiEmbed', desc:'الجيل القادم', url: S.ME+id+S.ME_SFX },
+      { icon:'👑', name:'Cinema-ROX (VIP)',          desc:'جودة ملكية',      url:(type==='tv'?S.VIP_TV:S.VIP_MOV)+id,   active:true },
+      { icon:'🚀', name:'Cinema-ROX (Ultra 4K)',      desc:'دقة خارقة',       url:(type==='tv'?S.K4_TV:S.K4_MOV)+id },
+      { icon:'⚡', name:'Cinema-ROX (Anime Speed)',   desc:'فائق السرعة',     url:(type==='tv'?S.ANI_TV:S.ANI_MOV)+id },
+      { icon:'🌍', name:'Cinema-ROX (Arabic/Global)', desc:'عربي وعالمي',     url:(type==='tv'?S.GLB_TV:S.GLB_MOV)+id },
+      { icon:'☁️', name:'Cinema-ROX (Cloud Server)',  desc:'خادم سحابي',      url:(type==='tv'?S.CLD_TV:S.CLD_MOV)+id },
+      { icon:'🛡️', name:'Cinema-ROX (Backup Server)', desc:'احتياطي موثوق',   url:(type==='tv'?S.BCK_TV:S.BCK_MOV)+id },
     ];
     const srvHTML = srvs.map(s => `
       <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" onclick="wsSelectServer(this)">
