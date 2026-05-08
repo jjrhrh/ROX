@@ -592,6 +592,8 @@ html, body {
   height: 420px !important;
   margin-bottom: 0 !important;
   padding: 10px 0 0 !important;
+  overflow: visible !important;
+}
 .hero-info-container {
   text-align: center !important;
   padding: 24px 16px 20px !important;
@@ -601,7 +603,7 @@ html, body {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
-  background: linear-gradient(to right, transparent, rgba(0,0,0,0.6) 20%, rgba(0,0,0,0.6) 80%, transparent) !important;
+  background: rgba(0,0,0,0.3) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   border-top: 1px solid rgba(229,9,20,0.8) !important;
@@ -628,8 +630,7 @@ html, body {
   display: block;
   text-align: center !important;
   font-size: 2.2rem; font-weight: 900;
-  color: transparent !important;
-  -webkit-text-stroke: 2px #ffffff;
+  color: #ffffff !important;
   margin-bottom: 14px;
   letter-spacing: 2px;
   text-shadow: 0 0 40px rgba(255,255,255,0.6);
