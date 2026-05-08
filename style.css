@@ -251,6 +251,15 @@ html, body {
   box-shadow: 0 8px 28px var(--accent-glow);
   border-color: var(--border-accent);
 }
+/* ===== ANIME CARD — Purple Neon ===== */
+.anime-card {
+  border: 1px solid rgba(147,51,234,0.55) !important;
+  box-shadow: 0 4px 16px rgba(147,51,234,0.25) !important;
+}
+.anime-card:hover {
+  border-color: rgba(167,71,254,0.95) !important;
+  box-shadow: 0 8px 28px rgba(147,51,234,0.55) !important;
+}                                
 .movie-poster-wrap {
   position: relative;
   aspect-ratio: 2/3; overflow: hidden;
