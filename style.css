@@ -239,6 +239,7 @@ html, body {
   cursor: pointer;
   border-radius: 18px;
   overflow: visible;
+  min-width: 0;
   background: var(--card-bg);
   border: 1px solid rgba(229,9,20,0.32);
   transition: transform 0.25s, box-shadow 0.25s;
@@ -757,7 +758,9 @@ html, body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  max-width: 100%;
+  display: block;
+  box-sizing: border-box;
 }
 .hero-swiper-slide {
   border-radius: 30px !important;
