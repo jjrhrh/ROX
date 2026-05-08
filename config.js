@@ -57,16 +57,13 @@ HERO: Object.freeze({
     MAX_RESULTS       : 10,      // أقصى عدد نتائج في القائمة
     INCLUDE_ADULT     : false,   // إخفاء المحتوى الكبار
   }),
-// ===== إعدادات نظام الفيديو =====
-VIDEO: Object.freeze({
-    YOUTUBE_EMBED   : 'https://www.youtube.com/embed/',
-    TMDB_VIDEO_PATH : '/videos',
+  SERVERS: Object.freeze({
+    MOV       : 'https://embed.su/embed/movie/',
+    TV        : 'https://embed.su/embed/tv/',
+    TV_SEASON : 'https://embed.su/embed/tv/',
+    TV_EP     : 'https://embed.su/embed/tv/',
+    ANIME_EP  : 'https://embed.su/embed/tv/',
   }),
-  MOV       : 'https://embed.su/embed/movie/',
-TV        : 'https://embed.su/embed/tv/',
-TV_SEASON : 'https://embed.su/embed/tv/',
-TV_EP     : 'https://embed.su/embed/tv/',
-ANIME_EP  : 'https://embed.su/embed/tv/',
   // ─────────────────────────────────────────
   //  🎬  إعدادات عرض المحتوى
   // ─────────────────────────────────────────
