@@ -119,7 +119,7 @@ function updateHeroInfo(movies, index) {
   const backdrop = document.getElementById('heroBackdrop');
   if (backdrop) backdrop.style.backgroundImage = `url('${imgUrl}')`;
   const bdUrl = m.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}` : '';
-  document.body.style.backgroundImage = bdUrl ? `linear-gradient(rgba(0,0,0,0.82),rgba(0,0,0,0.92)),url('${bdUrl}')` : '';
+  document.body.style.backgroundImage = bdUrl ? `linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.75)),url('${bdUrl}')` : '';
   document.body.style.backgroundSize = 'cover';
   document.body.style.backgroundPosition = 'center';
   document.body.style.backgroundAttachment = 'fixed';
