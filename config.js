@@ -79,7 +79,6 @@ VIDEO: Object.freeze({
     GLB_TV  : 'https://autoembed.to/tv/tmdb/',
     CLD_MOV : 'https://embed.su/embed/movie/',
     CLD_TV  : 'https://embed.su/embed/tv/',
-        AIO     : 'https://nuvio.top/',
   }),
   // ─────────────────────────────────────────
   //  🎬  إعدادات عرض المحتوى
