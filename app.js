@@ -94,6 +94,11 @@ let movies = await fetchMovies('/trending/movie/week', { limit: CONFIG.HERO.LIMI
     slidesPerView: 1.5,
     spaceBetween: 20,
     loop: true,
+    autoplay: {
+      delay: CONFIG.HERO?.AUTOPLAY_MS || 6500,
+      disableOnInteraction: false,
+    },
+    speed: CONFIG.HERO?.TRANSITION_MS || 1000,
     coverflowEffect: {
       rotate: 50,
       stretch: -100,
