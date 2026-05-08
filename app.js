@@ -172,7 +172,7 @@ function updateHeroInfo(movies, index) {
         ${rating ? `<span class="movie-rating">⭐ ${rating}</span>` : ''}
         <div class="movie-overlay"><span class="play-icon">▶</span></div>
       </div>
-      <div class="movie-title-bar">${title}</div>
+      <div class="movie-title-bar">${title.length > 18 ? title.slice(0,18)+'...' : title}</div>
     </div>`;
 }
 
