@@ -587,24 +587,23 @@ html, body {
 /* ===== HERO SWIPER NEW ===== */
 .hero-swiper {
   width: 100% !important;
-  height: 378px !important;
-  margin-bottom: -20px !important;
-  padding: 14px 0 0 !important;
+  height: 420px !important;
+  margin-bottom: 0 !important;
+  padding: 10px 0 0 !important;
 .hero-info-container {
   text-align: center !important;
-  padding: 22px 24px 18px !important;
+  padding: 24px 16px 20px !important;
   position: relative !important;
   z-index: 100 !important;
   width: 100% !important;
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
-  background: rgba(0,0,0,0.5) !important;
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.6) 20%, rgba(0,0,0,0.6) 80%, transparent) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   border-top: 1px solid rgba(229,9,20,0.8) !important;
-  box-shadow: 0 -4px 20px rgba(229,9,20,0.25) !important;
-  margin-top: -10px !important;
+  margin-top: 0 !important;
 }
 @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .hero-info-year {
