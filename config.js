@@ -62,6 +62,16 @@ VIDEO: Object.freeze({
     YOUTUBE_EMBED   : 'https://www.youtube.com/embed/',
     TMDB_VIDEO_PATH : '/videos',
   }),
+  SERVERS: Object.freeze({
+    V1_MOV: 'https://vidsrc.xyz/embed/movie/',
+    V1_TV : 'https://vidsrc.xyz/embed/tv/',
+    V2_MOV: 'https://vidsrc.me/embed/movie?id=',
+    V2_TV : 'https://vidsrc.me/embed/tv?id=',
+    E2_MOV: 'https://www.2embed.cc/embed/',
+    E2_TV : 'https://www.2embed.cc/embedtv/',
+    ME    : 'https://multiembed.mov/?video_id=',
+    ME_SFX: '&tmdb=1',
+  }),
   // ─────────────────────────────────────────
   //  🎬  إعدادات عرض المحتوى
   // ─────────────────────────────────────────
