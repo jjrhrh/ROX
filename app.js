@@ -437,7 +437,10 @@ async function openDetail(id, type = 'movie') {
     const allRevs   = revData.results || [];
     const arRevs    = allRevs.filter(r => /[\u0600-\u06FF]/.test(r.content));
     const reviews   = (arRevs.length ? arRevs : allRevs).slice(0, 3);
-    const tvSeasons = type === 'tv' ? (detail.seasons||[]).filter(s=>s.season_number>0) : [];
+    const tvSeasons = type === 'tv' ? (detail.seasons||[]).filter(s=>s.season_number>0 && s.name!=='Specials') : [];
+    const totalEps = tvSeasons.reduce((sum,s)=>sum+(s.episode_count||0),0);
+    const network = detail.networks?.[0]?.name || '';
+    const status = detail.status === 'Returning Series' ? '🟢 مستمر' : detail.status === 'Ended' ? '🔴 منتهي' : detail.status || '';
 const reviewsHTML = `
       <div class="detail-section">
         <h3 class="detail-section-title">💬 التعليقات</h3>
