@@ -217,9 +217,24 @@ function toggleOtakuMode() {
 }
 
 async function loadOtakuHero() {
+  const wrapper = document.getElementById('heroSwiperWrapper');
+  if (!wrapper) return;
   const url = buildTMDBUrl('/discover/tv', { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' });
-  const [data] = await Promise.all([fetch(url).then(r => r.json())]);
-  renderHeroSlides(data.results || [], 'tv');
+  const res  = await fetch(url).then(r => r.json());
+  const list = (res.results || []).filter(m => m.poster_path).slice(0, CONFIG.HERO.LIMIT);
+  wrapper.innerHTML = list.map(m =>
+    `<div class="swiper-slide hero-swiper-slide" onclick="openDetail(${m.id},'tv')">
+      <img src="${CONFIG.IMAGES[CONFIG.HERO.POSTER_SIZE]}${m.poster_path}" loading="lazy">
+    </div>`
+  ).join('');
+  if (heroSwiper) { heroSwiper.destroy(true, true); heroSwiper = null; }
+  heroSwiper = new Swiper('#heroSwiper', {
+    loop:true, slidesPerView:'auto', centeredSlides:true,
+    autoplay:{ delay: CONFIG.HERO?.AUTOPLAY_MS||6500, disableOnInteraction:false },
+    speed: CONFIG.HERO?.TRANSITION_MS||1000,
+    on:{ init(){ updateHeroInfo(list,0); }, slideChange(){ updateHeroInfo(list,this.realIndex); } }
+  });
+  heroSwiper.init();
 }
 async function loadHomePage() {
   const page = document.getElementById('homePage');
