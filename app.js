@@ -209,9 +209,22 @@ function toggleOtakuMode() {
   _otakuOn = !_otakuOn;
   document.getElementById('htmlRoot').classList.toggle('otaku-mode', _otakuOn);
   document.getElementById('bnavOtaku').classList.toggle('active', _otakuOn);
-  loadHomePage();
-  if (_otakuOn) loadOtakuHero();
-  else loadHeroSwiper();
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+  const hero = document.getElementById('heroSection');
+  if (_otakuOn) {
+    document.getElementById('homePage').classList.add('active');
+    document.getElementById('bnavOtaku').classList.add('active');
+    if (hero) hero.style.display = '';
+    loadOtakuPage();
+  } else {
+    document.getElementById('homePage').classList.add('active');
+    document.getElementById('bnavHome').classList.add('active');
+    if (hero) hero.style.display = '';
+    loadHeroSwiper();
+    loadHomePage();
+  }
+  window.scrollTo(0, 0);
 }
 
 async function loadOtakuHero() {
