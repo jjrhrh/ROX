@@ -226,20 +226,22 @@ async function loadHomePage() {
   if (!page) return;
 
   const SECTIONS = _otakuOn ? [
-    { id: 'sec_otaku1', title: '🔥 صدارة الموسم',       endpoint: '/discover/tv',    type: 'tv',
+    { id: 'sec_otaku1', title: '🔥 صدارة الموسم',          endpoint: '/discover/tv',    type: 'tv',
       cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
-    { id: 'sec_otaku2', title: '🏆 أساطير الأوتـاكو',   endpoint: '/discover/tv',    type: 'tv',
+    { id: 'sec_otaku2', title: '🏆 أساطير الأوتـاكو',      endpoint: '/discover/tv',    type: 'tv',
       cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'200' } },
     { id: 'sec_otaku3', title: '🎬 سينما الأنمي العالمية', endpoint: '/discover/movie', type: 'movie',
       cardClass: 'anime-card', params: { with_genres:'16', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku4', title: '🆕 أنمي هذا العام',        endpoint: '/discover/tv',    type: 'tv',
+      cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'first_air_date.desc', 'first_air_date.gte':'2024-01-01' } },
+    { id: 'sec_otaku5', title: '💎 كلاسيكيات الأنمي',     endpoint: '/discover/tv',    type: 'tv',
+      cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'500', 'first_air_date.lte':'2010-12-31' } },
+    { id: 'sec_otaku6', title: '🎭 أنمي دراما وعواطف',    endpoint: '/discover/tv',    type: 'tv',
+      cardClass: 'anime-card', params: { with_genres:'16,18', with_origin_country:'JP', sort_by:'popularity.desc' } },
   ] : [
-    { id: 'sec_popular',  title: 'الأفلام الرائجة',        endpoint: '/movie/popular',   type: 'movie' },
-    { id: 'sec_toprated', title: 'الأعلى تقييماً',         endpoint: '/movie/top_rated', type: 'movie' },
-    { id: 'sec_tvseries', title: 'أحدث المسلسلات',         endpoint: '/tv/popular',      type: 'tv'    },
-    { id: 'sec_anime',    title: '🔥 أنميات الموسم',        endpoint: '/discover/tv',     type: 'tv',
-      cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
-    { id: 'sec_topanime', title: '🏆 الأنمي الأعلى تقييماً', endpoint: '/discover/tv',   type: 'tv',
-      cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'200' } },
+    { id: 'sec_popular',  title: 'الأفلام الرائجة',   endpoint: '/movie/popular',   type: 'movie' },
+    { id: 'sec_toprated', title: 'الأعلى تقييماً',    endpoint: '/movie/top_rated', type: 'movie' },
+    { id: 'sec_tvseries', title: 'أحدث المسلسلات',    endpoint: '/tv/popular',      type: 'tv'    },
   ];
 
   // عرض الـ Skeleton فوراً بدون انتظار
