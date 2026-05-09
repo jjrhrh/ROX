@@ -996,3 +996,56 @@ html, body {
 .ws-card:nth-child(4) .ws-icon { filter:drop-shadow(0 0 8px #22c55e); }
 .ws-card:nth-child(5) .ws-icon { filter:drop-shadow(0 0 8px #ffffff); }
 .ws-card:nth-child(6) .ws-icon { filter:drop-shadow(0 0 8px #ff8800); }
+/* ===== STATS BAR ===== */
+.detail-stats-bar { display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+.stat-cap {
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 4px 12px; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 800; color: var(--text2);
+}
+.stat-gold { color: var(--gold); border-color: rgba(245,197,24,0.35); }
+
+/* ===== SEASONS GLASS ===== */
+.seasons-glass {
+  margin-top: 22px;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 18px; padding: 16px;
+}
+.seasons-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.season-select {
+  background: rgba(229,9,20,0.15);
+  border: 1px solid rgba(229,9,20,0.4);
+  color: #fff; font-family:'Cairo',sans-serif;
+  font-size: 0.8rem; font-weight: 700;
+  padding: 6px 12px; border-radius: 999px;
+  outline: none; cursor: pointer;
+}
+
+/* ===== EPISODE CARD ===== */
+.ep-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  cursor: pointer; transition: transform 0.2s;
+  width: 130px !important;
+}
+.ep-card:active { transform: scale(0.96); }
+.ep-thumb { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
+.ep-num { font-size:0.65rem; font-weight:900; color:var(--accent); padding:5px 8px 2px; }
+.ep-title { font-size:0.65rem; color:var(--text2); padding:0 8px 8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.eps-swiper { overflow:hidden; }
+
+/* ===== REVIEWS ===== */
+.reviews-list { display:flex; flex-direction:column; gap:12px; }
+.review-card {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 14px; padding: 14px 16px;
+}
+.review-author { font-size:0.75rem; font-weight:900; color:var(--accent); margin-bottom:8px; }
+.review-content { font-size:0.82rem; color:var(--text2); line-height:1.7; }
