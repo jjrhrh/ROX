@@ -1,16 +1,21 @@
 // ===== NAVIGATION =====
 function bnavGo(tab) {
+  const hero = document.getElementById('heroSection');
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
 
   if (tab === 'browse') { toggleRoxMenu(); return; }
 
-  const pageMap = { home:'homePage', search:'searchPage', library:'libraryPage', profile:'profilePage', otaku:'homePage' };
-  const btnMap  = { home:'bnavHome', search:'bnavSearch', library:'bnavLibrary', profile:'bnavProfile', otaku:'bnavOtaku' };
+  const pageMap = { home:'homePage', search:'searchPage', library:'libraryPage', profile:'profilePage' };
+  const btnMap  = { home:'bnavHome', search:'bnavSearch', library:'bnavLibrary', profile:'bnavProfile' };
+
   document.getElementById(pageMap[tab])?.classList.add('active');
   document.getElementById(btnMap[tab])?.classList.add('active');
+  if (hero) {
+  hero.style.display = tab === 'home' ? '' : 'none';
+  hero.style.visibility = tab === 'home' ? '' : 'hidden';
+}
   if (tab === 'library') loadLibraryPage();
-  if (tab === 'home' && _otakuOn) { _otakuOn = false; document.getElementById('htmlRoot').classList.remove('otaku-mode'); loadHomePage(); }
   window.scrollTo(0, 0);
 }
 
@@ -75,29 +80,37 @@ let movies = await fetchMovies('/trending/movie/week', { limit: CONFIG.HERO.LIMI
   if (!movies.length) return;
 
   wrapper.innerHTML = movies.map(m => {
-  const bg = m.backdrop_path
-    ? `${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}`
-    : `${CONFIG.IMAGES.POSTER_LG}${m.poster_path}`;
-  return `<div class="swiper-slide hero-swiper-slide" onclick="openDetail(${m.id},'movie')"
-    style="background-image:url('${bg}')"></div>`;
-}).join('');
+    const poster = `${CONFIG.IMAGES[CONFIG.HERO.POSTER_SIZE]}${m.poster_path}`;
+    return `<div class="swiper-slide hero-swiper-slide" onclick="openDetail(${m.id},'movie')">
+      <img src="${poster}" alt="${m.title || m.original_title}"
+           onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+    </div>`;
+  }).join('');
 
   heroSwiper = new Swiper('#heroSwiper', {
-  effect: 'fade',
-  fadeEffect: { crossFade: true },
-  loop: true,
-  slidesPerView: 1,
-  autoplay: {
-    delay: CONFIG.HERO?.AUTOPLAY_MS || 6500,
-    disableOnInteraction: false,
-  },
-  speed: CONFIG.HERO?.TRANSITION_MS || 1000,
-  pagination: { el: '.swiper-pagination', clickable: true },
-  on: {
-    init: function() { updateHeroInfo(movies, 0); },
-    slideChange: function() { updateHeroInfo(movies, this.realIndex); }
-  }
-});
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 1.5,
+    spaceBetween: 20,
+    loop: true,
+    autoplay: {
+      delay: CONFIG.HERO?.AUTOPLAY_MS || 6500,
+      disableOnInteraction: false,
+    },
+    speed: CONFIG.HERO?.TRANSITION_MS || 1000,
+    coverflowEffect: {
+      rotate: 50,
+      stretch: -100,
+      depth: 400,
+      modifier: 1,
+      slideShadows: false,
+    },
+    on: {
+      init: function() { updateHeroInfo(movies, 0); },
+      slideChange: function() { updateHeroInfo(movies, this.realIndex); }
+    }
+  });
 }
 
 function updateHeroInfo(movies, index) {
@@ -131,27 +144,24 @@ document.body.style.backgroundImage = '';
   const yearEl   = document.getElementById('heroInfoYear');
   const titleEl  = document.getElementById('heroInfoTitle');
   const genresEl = document.getElementById('heroInfoGenres');
-  const typeEl   = document.getElementById('heroInfoType');
   const ratingEl = document.getElementById('heroInfoRating');
-  const viewBtn  = document.getElementById('heroViewBtn');
 
-  if (yearEl)   yearEl.textContent  = m.release_date ? m.release_date.slice(0,4) : (m.first_air_date ? m.first_air_date.slice(0,4) : '');
-  if (typeEl)   typeEl.textContent  = m.media_type === 'tv' ? 'Series' : 'Movie';
-  if (ratingEl) ratingEl.textContent = m.vote_average ? '⭐ ' + m.vote_average.toFixed(1) : '';
-  if (genresEl) {
-    const names = (m.genre_ids || []).slice(0,2).map(id => GENRES[id]).filter(Boolean);
-    genresEl.textContent = names.join(' · ');
-  }
+  if (yearEl) yearEl.textContent = m.release_date ? m.release_date.slice(0,4) : '';
+
   if (titleEl) {
     titleEl.style.opacity = '0';
+    titleEl.style.transform = 'translateY(12px)';
     setTimeout(() => {
-      titleEl.textContent = m.title || m.original_title || m.name || '';
-      titleEl.style.transition = 'opacity 0.5s ease';
+      titleEl.textContent = m.title || m.original_title || '';
+      titleEl.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
       titleEl.style.opacity = '1';
-    }, 150);
+      titleEl.style.transform = 'translateY(0)';
+    }, 200);
   }
-  if (viewBtn) {
-    viewBtn.onclick = () => openDetail(m.id, m.media_type || 'movie');
+
+  if (genresEl) {
+    const names = (m.genre_ids || []).slice(0,3).map(id => GENRES[id]).filter(Boolean);
+    genresEl.innerHTML = names.map(n => `<span class="hero-cap">${n}</span>`).join('');
   }
   if (ratingEl) {
     const rating = m.vote_average ? m.vote_average.toFixed(1) : '';
@@ -193,57 +203,19 @@ function buildSection(title, movies, type = 'movie') {
       </div>
     </div>`;
 }
-// ===== OTAKU MODE =====
-let _otakuOn = false;
-function toggleOtakuMode() {
-  _otakuOn = true;
-  document.getElementById('htmlRoot').classList.add('otaku-mode');
-  bnavGo('otaku');
-  loadHomePage();
-  loadOtakuHero();
-}
 
-async function loadOtakuHero() {
-  const wrapper = document.getElementById('heroSwiperWrapper');
-  if (!wrapper) return;
-  const url = buildTMDBUrl('/discover/tv', { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' });
-  const res  = await fetch(url).then(r => r.json());
-  const list = (res.results || []).filter(m => m.poster_path).slice(0, CONFIG.HERO.LIMIT);
-  wrapper.innerHTML = list.map(m =>
-    `<div class="swiper-slide hero-swiper-slide" onclick="openDetail(${m.id},'tv')">
-      <img src="${CONFIG.IMAGES[CONFIG.HERO.POSTER_SIZE]}${m.poster_path}" loading="lazy">
-    </div>`
-  ).join('');
-  if (heroSwiper) { heroSwiper.destroy(true, true); heroSwiper = null; }
-  heroSwiper = new Swiper('#heroSwiper', {
-    loop:true, slidesPerView:'auto', centeredSlides:true,
-    autoplay:{ delay: CONFIG.HERO?.AUTOPLAY_MS||6500, disableOnInteraction:false },
-    speed: CONFIG.HERO?.TRANSITION_MS||1000,
-    on:{ init(){ updateHeroInfo(list,0); }, slideChange(){ updateHeroInfo(list,this.realIndex); } }
-  });
-  heroSwiper.init();
-}
 async function loadHomePage() {
   const page = document.getElementById('homePage');
   if (!page) return;
 
-  const SECTIONS = _otakuOn ? [
-    { id: 'sec_otaku1', title: '🔥 صدارة الموسم',          endpoint: '/discover/tv',    type: 'tv',
+  const SECTIONS = [
+    { id: 'sec_popular',  title: 'الأفلام الرائجة',        endpoint: '/movie/popular',   type: 'movie' },
+    { id: 'sec_toprated', title: 'الأعلى تقييماً',         endpoint: '/movie/top_rated', type: 'movie' },
+    { id: 'sec_tvseries', title: 'أحدث المسلسلات',         endpoint: '/tv/popular',      type: 'tv'    },
+    { id: 'sec_anime',    title: '🔥 أنميات الموسم',        endpoint: '/discover/tv',     type: 'tv',
       cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
-    { id: 'sec_otaku2', title: '🏆 أساطير الأوتـاكو',      endpoint: '/discover/tv',    type: 'tv',
+    { id: 'sec_topanime', title: '🏆 الأنمي الأعلى تقييماً', endpoint: '/discover/tv',   type: 'tv',
       cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'200' } },
-    { id: 'sec_otaku3', title: '🎬 سينما الأنمي العالمية', endpoint: '/discover/movie', type: 'movie',
-      cardClass: 'anime-card', params: { with_genres:'16', sort_by:'popularity.desc' } },
-    { id: 'sec_otaku4', title: '🆕 أنمي هذا العام',        endpoint: '/discover/tv',    type: 'tv',
-      cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'first_air_date.desc', 'first_air_date.gte':'2024-01-01' } },
-    { id: 'sec_otaku5', title: '💎 كلاسيكيات الأنمي',     endpoint: '/discover/tv',    type: 'tv',
-      cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'500', 'first_air_date.lte':'2010-12-31' } },
-    { id: 'sec_otaku6', title: '🎭 أنمي دراما وعواطف',    endpoint: '/discover/tv',    type: 'tv',
-      cardClass: 'anime-card', params: { with_genres:'16,18', with_origin_country:'JP', sort_by:'popularity.desc' } },
-  ] : [
-    { id: 'sec_popular',  title: 'الأفلام الرائجة',   endpoint: '/movie/popular',   type: 'movie' },
-    { id: 'sec_toprated', title: 'الأعلى تقييماً',    endpoint: '/movie/top_rated', type: 'movie' },
-    { id: 'sec_tvseries', title: 'أحدث المسلسلات',    endpoint: '/tv/popular',      type: 'tv'    },
   ];
 
   // عرض الـ Skeleton فوراً بدون انتظار
@@ -668,7 +640,7 @@ const srvs = isAnime ? [
             <span class="ws-switch-txt">يتم الاتصال بسيرفرات Cinema-ROX الخاصة...</span>
           </div>
         </div>
-        <button class="ws-back" onclick="wsGoBack()">← رجوع</button>
+        <button class="ws-back" onclick="wsGoBack()">→ رجوع</button>
       </div>
       <div class="ws-info-card">
         <h2 class="ws-title">${title}</h2>
