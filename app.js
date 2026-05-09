@@ -313,6 +313,10 @@ async function openDetail(id, type = 'movie') {
             </div>`).join('')}
         </div>
       </div>` : '';
+    const allRevs   = revData.results || [];
+    const arRevs    = allRevs.filter(r => /[\u0600-\u06FF]/.test(r.content));
+    const reviews   = (arRevs.length ? arRevs : allRevs).slice(0, 3);
+    const tvSeasons = type === 'tv' ? (detail.seasons||[]).filter(s=>s.season_number>0) : [];
 const reviewsHTML = reviews.length ? `
       <div class="detail-section">
         <h3 class="detail-section-title">💬 التعليقات</h3>
