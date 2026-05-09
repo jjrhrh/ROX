@@ -28,7 +28,7 @@ function bnavGo(tab) {
     hero.style.display = (tab === 'home' || tab === 'otaku') ? '' : 'none';
     hero.style.visibility = (tab === 'home' || tab === 'otaku') ? '' : 'hidden';
   }
-  if (tab === 'home') { loadHeroSwiper(); loadHomePage(); }
+  if (tab === 'home') { loadHeroSwiper(); loadHomePage(); loadNewsSection('newsFeed', CONFIG.NEWS.CINEMA, 'red'); }
   if (tab === 'library') loadLibraryPage();
   if (tab === 'otaku') { hero.style.display = ''; hero.style.visibility = ''; loadOtakuPage(); }
   window.scrollTo(0, 0);
