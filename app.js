@@ -676,7 +676,6 @@ function cwSave(id, type, poster, title, seconds, server) {
   const item = { id, type, poster, title, seconds, server, savedAt: Date.now() };
   if (idx > -1) list[idx] = item; else list.unshift(item);
   localStorage.setItem(CW_KEY, JSON.stringify(list.slice(0, 20)));
-  cwRender();
 }
 
 function cwGetAll() {
