@@ -247,8 +247,6 @@ async function loadOtakuPage() {
   const SECTIONS = [
     { id: 'sec_otaku1', title: '🔥 صدارة الموسم',          endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
     { id: 'sec_otaku2', title: '🏆 أساطير الأوتـاكو',      endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'200' } },
-    { id: 'sec_otaku3', title: '🎬 سينما الأنمي العالمية', endpoint: '/discover/movie', type: 'movie', cardClass: 'anime-card', params: { with_genres:'16', sort_by:'popularity.desc' } },
-    { id: 'sec_otaku4', title: '🌸 أنمي الرومانسية',        endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16,10749', with_origin_country:'JP', sort_by:'popularity.desc' } },
     { id: 'sec_otaku5', title: '⚔️ أنمي الأكشن والقتال',   endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16,28', with_origin_country:'JP', sort_by:'popularity.desc' } },
     { id: 'sec_otaku6', title: '👻 أنمي الرعب والغموض',    endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16,27', with_origin_country:'JP', sort_by:'popularity.desc' } },
     { id: 'sec_otaku7', title: '🚀 أنمي الخيال العلمي',    endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16,878', with_origin_country:'JP', sort_by:'popularity.desc' } },
