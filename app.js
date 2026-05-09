@@ -673,7 +673,7 @@ const srvs = isAnime ? [
             <span class="ws-switch-txt">يتم الاتصال بسيرفرات Cinema-ROX الخاصة...</span>
           </div>
         </div>
-        <button class="ws-back" onclick="wsGoBack()">→ رجوع</button>
+        <button class="ws-back" onclick="wsGoBack()">← رجوع</button>
       </div>
       <div class="ws-info-card">
         <h2 class="ws-title">${title}</h2>
