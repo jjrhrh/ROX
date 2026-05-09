@@ -604,7 +604,7 @@ const srvs = isAnime ? [
   { icon:'💠', name:'EMBED',   desc:'#25',    url:`${S.MOV25}${id}` },
 ];
     const srvHTML = srvs.map(s => `
-      <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" onclick="wsSelectServer(this)">
+      <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" data-name="${s.name}" onclick="wsSelectServer(this)">
         ${s.active?'<span class="ws-check">✔</span>':''}
         <div class="ws-icon">${s.icon}</div>
         <div class="ws-name">${s.name}</div>
