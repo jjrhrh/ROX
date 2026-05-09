@@ -263,8 +263,36 @@ async function loadOtakuPage() {
     }
 async function loadOtakuHero() {
   const url = buildTMDBUrl('/discover/tv', { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' });
-  const [data] = await Promise.all([fetch(url).then(r => r.json())]);
-  renderHeroSlides(data.results || [], 'tv');
+  const data = await fetch(url).then(r => r.json());
+  const movies = (data.results || []).filter(m => m.poster_path).slice(0, CONFIG.HERO.LIMIT);
+  const wrapper = document.getElementById('heroSwiperWrapper');
+  if (!wrapper) return;
+  wrapper.innerHTML = movies.map(m => {
+    const poster = `${CONFIG.IMAGES.POSTER_XL}${m.poster_path}`;
+    return `<div class="swiper-slide hero-swiper-slide" onclick="openDetail(${m.id},'tv')">
+      <img src="${poster}" alt="${m.name || m.original_name}"
+           onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+    </div>`;
+  }).join('');
+  if (heroSwiper) {
+    heroSwiper.destroy(true, true);
+    heroSwiper = null;
+  }
+  heroSwiper = new Swiper('#heroSwiper', {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 1.5,
+    spaceBetween: 20,
+    loop: true,
+    autoplay: { delay: 5000, disableOnInteraction: false },
+    speed: 400,
+    coverflowEffect: { rotate: 50, stretch: -100, depth: 400, modifier: 1, slideShadows: false },
+    on: {
+      init: function() { updateHeroInfo(movies, 0); },
+      slideChange: function() { updateHeroInfo(movies, this.realIndex); }
+    }
+  });
 }
 async function loadHomePage() {
   const page = document.getElementById('homePage');
