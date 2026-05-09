@@ -206,7 +206,7 @@ html, body {
   box-shadow: 0 0 24px var(--accent-glow);
   }
 /* ===== SECTIONS ===== */
-.home-section { padding: 20px 0 8px; background: #080000; position: relative; z-index: 5; }
+.home-section { padding: 20px 0 8px; background: #080000; position: relative; z-index: 5; transform: translateZ(0); }
 #homePage > .home-section:first-child { margin-top: -30px; }
 .section-header {
   display: flex; align-items: center;
@@ -231,6 +231,8 @@ html, body {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  transform: translateZ(0);
+  will-change: scroll-position;
 }
 .movies-row::-webkit-scrollbar { display: none; }
 
@@ -246,6 +248,9 @@ html, body {
   border: 1px solid rgba(229,9,20,0.32);
   transition: transform 0.25s, box-shadow 0.25s;
   box-shadow: 0 4px 24px rgba(0,0,0,0.9);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 .movie-card:hover {
   transform: translateY(-4px) scale(1.03);
