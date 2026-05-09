@@ -690,7 +690,7 @@ function cwGetAll() {
 function cwDelete(id) {
   const list = cwGetAll().filter(i => i.id !== id);
   localStorage.setItem(CW_KEY, JSON.stringify(list));
-  cwRender();
+  loadHomePage();
 }
 
 function cwRender() {
