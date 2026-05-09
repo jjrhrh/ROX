@@ -264,16 +264,17 @@ async function loadOtakuPage() {
         ${Array(6).fill('<div class="movie-card skeleton-card"></div>').join('')}
       </div>
     </div>`).join('');
-  SECTIONS.forEach(async s => {
+  for (const s of SECTIONS) {
     try {
       const movies = await fetchMovies(s.endpoint, { type: s.type, params: s.params || {} });
       const row = document.getElementById(`${s.id}_row`);
       const container = document.getElementById(s.id);
       if (!row || !container) return;
-      if (!movies.length) { container.remove(); return; }
+      if (!movies.length) { container.remove(); continue; }
       row.innerHTML = movies.map(m => buildMovieCard(m, s.type, s.cardClass || '')).join('');
+      await new Promise(r => setTimeout(r, 100));
     } catch { document.getElementById(s.id)?.remove(); }
-  });
+  }
     }
 async function loadOtakuHero() {
   const url = buildTMDBUrl('/discover/tv', { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' });
