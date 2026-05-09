@@ -203,7 +203,22 @@ function buildSection(title, movies, type = 'movie') {
       </div>
     </div>`;
 }
+// ===== OTAKU MODE =====
+let _otakuOn = false;
+function toggleOtakuMode() {
+  _otakuOn = !_otakuOn;
+  document.getElementById('htmlRoot').classList.toggle('otaku-mode', _otakuOn);
+  document.getElementById('bnavOtaku').classList.toggle('active', _otakuOn);
+  loadHomePage();
+  if (_otakuOn) loadOtakuHero();
+  else loadHeroSwiper();
+}
 
+async function loadOtakuHero() {
+  const url = buildTMDBUrl('/discover/tv', { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' });
+  const [data] = await Promise.all([fetch(url).then(r => r.json())]);
+  renderHeroSlides(data.results || [], 'tv');
+}
 async function loadHomePage() {
   const page = document.getElementById('homePage');
   if (!page) return;
