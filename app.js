@@ -492,7 +492,6 @@ async function openWatchPage(id, type, season = 1, episode = 1) {
     const genres = (det.genres || []).map(g => g.name).join(' · ');
     const overview = det.overview || 'لا يوجد وصف.';
     const S = CONFIG.SERVERS;
-const season = 1, episode = 1;
 
 // تحقق إذا الأنمي (genre_id 16 = Animation + JP)
 const isAnime = (det.genres||[]).some(g => g.id === 16)
