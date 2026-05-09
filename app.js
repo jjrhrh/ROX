@@ -208,7 +208,14 @@ async function loadHomePage() {
   const page = document.getElementById('homePage');
   if (!page) return;
 
-  const SECTIONS = [
+  const SECTIONS = _otakuOn ? [
+    { id: 'sec_otaku1', title: '🔥 صدارة الموسم',       endpoint: '/discover/tv',    type: 'tv',
+      cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku2', title: '🏆 أساطير الأوتـاكو',   endpoint: '/discover/tv',    type: 'tv',
+      cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'200' } },
+    { id: 'sec_otaku3', title: '🎬 سينما الأنمي العالمية', endpoint: '/discover/movie', type: 'movie',
+      cardClass: 'anime-card', params: { with_genres:'16', sort_by:'popularity.desc' } },
+  ] : [
     { id: 'sec_popular',  title: 'الأفلام الرائجة',        endpoint: '/movie/popular',   type: 'movie' },
     { id: 'sec_toprated', title: 'الأعلى تقييماً',         endpoint: '/movie/top_rated', type: 'movie' },
     { id: 'sec_tvseries', title: 'أحدث المسلسلات',         endpoint: '/tv/popular',      type: 'tv'    },
