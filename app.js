@@ -623,7 +623,15 @@ const srvs = isAnime ? [
             <span class="ws-play-lbl">اضغط للمشاهدة</span>
           </div>
           <iframe id="wsFrame" class="ws-frame" src="" allowfullscreen allow="autoplay"
-            onload="if(this.src)cwTrackTime(${id},'${type}','${cwPoster}','${cwTitle}')"></iframe>
+            onload="if(this.src)cwTrackTime(${id},'${type}','${cwPoster}','${cwTitle}')">
+          </iframe>
+          <script>
+            if('${resumeSrv}') {
+              document.querySelector('.ws-card.active')?.classList.remove('active');
+              const match = [...document.querySelectorAll('.ws-card')].find(c=>c.dataset.url==='${resumeSrv}');
+              if(match) { match.classList.add('active'); }
+            }
+          </script>
           <div id="wsSwitchOverlay" class="ws-switch-overlay" style="display:none">
             <div class="ws-switch-spinner"></div>
             <span class="ws-switch-txt">يتم الاتصال بسيرفرات Cinema-ROX الخاصة...</span>
