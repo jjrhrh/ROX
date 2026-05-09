@@ -594,8 +594,7 @@ html, body {
   opacity: 0 !important;
   transition: opacity 1.2s ease !important;
   z-index: 0 !important;
-  transform: scale(1.08) !important;
-  animation: kenBurns 12s ease-in-out infinite alternate !important;
+  transform: none !important;
 }
 .hero-backdrop.loaded { opacity: 1 !important; }
 @keyframes kenBurns {
