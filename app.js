@@ -523,6 +523,9 @@ const srvs = isAnime ? [
   { icon:'🟡', name:'PULSAR',  desc:'#18',        url:`${S.ANIME18}${id}/${season}/${episode}`             },
   { icon:'🟢', name:'LYRA',    desc:'#19',        url:`${S.ANIME19}${id}/${season}/${episode}`             },
   { icon:'🏅', name:'VULCAN',  desc:'#20 VIP',    url:`${S.ANIME20}${id}&tmdb=1&s=${season}&e=${episode}`  },
+  { icon:'🎖', name:'SIGMA',   desc:'#21',    url:`${S.ANIME21}${id}/${season}/${episode}`  },
+  { icon:'🌠', name:'NEXUS-X', desc:'#22 4K', url:`${S.ANIME22}${id}-${season}-${episode}`  },
+  { icon:'💠', name:'EMBED',   desc:'#23',    url:`${S.ANIME23}${id}/${season}/${episode}`  },
 ] : type === 'tv' ? [
   { icon:'📺', name:'PRIME',   desc:'#01 رئيسي', url:`${S.TV}${id}/${season}/${episode}`,                 active:true },
   { icon:'⚡', name:'NEXUS',   desc:'#02',        url:`${S.TV2}${id}/${season}/${episode}`                 },
@@ -546,6 +549,9 @@ const srvs = isAnime ? [
   { icon:'🟡', name:'PULSAR',  desc:'#20',        url:`${S.TV20}${id}/${season}/${episode}`                },
   { icon:'🟢', name:'LYRA',    desc:'#21',        url:`${S.TV21}${id}/${season}/${episode}`                },
   { icon:'🏅', name:'VULCAN',  desc:'#22 VIP',    url:`${S.TV22}${id}&tmdb=1&s=${season}&e=${episode}`     },
+  { icon:'🎖', name:'SIGMA',   desc:'#23',    url:`${S.TV23}${id}/${season}/${episode}`   },
+  { icon:'🌠', name:'NEXUS-X', desc:'#24 4K', url:`${S.TV24}${id}-${season}-${episode}`   },
+  { icon:'💠', name:'EMBED',   desc:'#25',    url:`${S.TV25}${id}/${season}/${episode}`   },
 ] : [
   { icon:'🎬', name:'PRIME',   desc:'#01 رئيسي', url:`${S.MOV}${id}`,              active:true },
   { icon:'⚡', name:'NEXUS',   desc:'#02',        url:`${S.MOV2}${id}`              },
@@ -569,6 +575,9 @@ const srvs = isAnime ? [
   { icon:'🟡', name:'PULSAR',  desc:'#20',        url:`${S.MOV20}${id}`             },
   { icon:'🟢', name:'LYRA',    desc:'#21',        url:`${S.MOV21}${id}`             },
   { icon:'🏅', name:'VULCAN',  desc:'#22 VIP',    url:`${S.MOV22}${id}&tmdb=1`      },
+  { icon:'🎖', name:'SIGMA',   desc:'#23',    url:`${S.MOV23}${id}` },
+  { icon:'🌠', name:'NEXUS-X', desc:'#24 4K', url:`${S.MOV24}${id}` },
+  { icon:'💠', name:'EMBED',   desc:'#25',    url:`${S.MOV25}${id}` },
 ];
     const srvHTML = srvs.map(s => `
       <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" onclick="wsSelectServer(this)">
