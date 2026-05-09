@@ -664,16 +664,19 @@ function cwTrackTime(id, type, poster, title) {
   let sec = 0;
   _cwTimer = setInterval(() => {
     sec += 10;
-    cwSave(id, type, poster, title, sec, '');
+    const activeCard = document.querySelector('.ws-card.active');
+    const srv = activeCard ? (activeCard.dataset.name || '') : '';
+    const url = activeCard ? (activeCard.dataset.url || '') : '';
+    cwSave(id, type, poster, title, sec, srv, url);
   }, 10000);
 }
 const CW_KEY = 'rox_continue';
 const CW_TTL = 604800000; // 7 أيام
 
-function cwSave(id, type, poster, title, seconds, server) {
+function cwSave(id, type, poster, title, seconds, server, serverUrl) {
   const list = cwGetAll();
   const idx  = list.findIndex(i => i.id === id);
-  const item = { id, type, poster, title, seconds, server, savedAt: Date.now() };
+  const item = { id, type, poster, title, seconds, server, serverUrl, savedAt: Date.now() };
   if (idx > -1) list[idx] = item; else list.unshift(item);
   localStorage.setItem(CW_KEY, JSON.stringify(list.slice(0, 20)));
 }
@@ -697,8 +700,8 @@ function cwRender() {
   loadHomePage();
 }
 
-function cwResume(id, type, seconds, server) {
-  openWatchPage(id, type, 1, 1, seconds, server);
+function cwResume(id, type, seconds, server, serverUrl) {
+  openWatchPage(id, type, 1, 1, seconds, serverUrl);
 }
 // ===== LIBRARY HELPERS =====
 function getLib(key) {
