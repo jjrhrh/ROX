@@ -228,7 +228,7 @@ async function loadHomePage() {
       </div>
       <div id="continueList" class="continue-list">
         ${cwItems.map(i => `
-          <div class="cw-card" onclick="cwResume(${i.id},'${i.type}',${i.seconds},'${i.server}')">
+          <div class="cw-card" onclick="cwResume(${i.id},'${i.type}',${i.seconds},'${i.server}','${i.serverUrl||''}')">
             <img class="cw-thumb" src="${i.poster}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
             <div class="cw-info">
               <div class="cw-title">${i.title}</div>
