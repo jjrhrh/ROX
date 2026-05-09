@@ -702,87 +702,66 @@ html, body {
   50%      { box-shadow: 0 0 40px rgba(229,9,20,0.5); }
 } 
 .hero-info-container {
-  text-align: center !important;
-  padding: 20px 16px !important;
-  position: relative !important;
-  z-index: 1000 !important;
-  width: 100% !important;
-  margin-top: -130px !important;
-  background: rgba(5,0,0,0.65) !important;
-  backdrop-filter: blur(30px) !important;
-  -webkit-backdrop-filter: blur(30px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-radius: 28px 28px 0 0 !important;
-  border-top: 1px solid rgba(229,9,20,1) !important;
-  box-shadow: 0 -1px 12px rgba(229,9,20,0.9), 0 -8px 40px rgba(229,9,20,0.3) !important;
-  animation: laserPulse 2s ease-in-out infinite !important;
-}
-@keyframes laserPulse {
-  0%,100% { box-shadow: 0 -1px 8px rgba(229,9,20,0.5), 0 -8px 20px rgba(229,9,20,0.15); }
-  50%      { box-shadow: 0 -1px 18px rgba(229,9,20,1), 0 -8px 50px rgba(229,9,20,0.5); }
-}
-@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-.hero-info-year {
-  display: inline-block;
-  font-size: 0.58rem;
-  color: #ff2233 !important;
-  text-align: center;
-  font-weight: 800;
-  margin-bottom: 4px;
-  letter-spacing: 7px;
-  background: transparent;
-  border: none;
-  padding: 0;
-  text-shadow:
-    0 0 4px #ff0000,
-    0 0 12px rgba(229,9,20,0.8),
-    0 0 24px rgba(229,9,20,0.4);
+.hero-info-container {
+  position: relative;
+  z-index: 10;
+  padding: 20px 20px 24px;
+  margin-top: -120px;
+  background: rgba(5,0,0,0.6);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border-radius: 28px 28px 0 0;
+  border-top: 1px solid rgba(229,9,20,0.8);
+  box-shadow: 0 -4px 30px rgba(229,9,20,0.35);
+  text-align: right;
 }
 .hero-info-title {
-  display: block;
-  text-align: center !important;
-  font-size: 2.2rem; font-weight: 900;
-  color: transparent !important;
-  -webkit-text-stroke: 2px #ffffff;
-  text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.3) !important;
-  -webkit-text-stroke: 1.5px rgba(255,255,255,0.95);
-  margin-bottom: 14px;
-  letter-spacing: 2px;
-  text-shadow: 0 0 40px rgba(255,255,255,0.6);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  font-size: 1.9rem; font-weight: 900;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.2;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.8);
+  transition: opacity 0.5s ease;
 }
-.hero-cap {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(229,9,20,0.5);
-  color: #ffffff;
-  font-size: 0.72rem; font-weight: 600;
+.hero-info-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  justify-content: flex-end;
+}
+.hero-glass-badge {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 0.78rem; font-weight: 700;
   padding: 5px 14px;
   border-radius: var(--radius-full);
-  box-shadow: 0 0 8px rgba(229,9,20,0.2);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
-.hero-cap-rating {
-  background: rgba(0,0,0,0.5) !important;
-  border: 1px solid rgba(245,197,24,0.45) !important;
+.hero-glass-rating {
+  background: rgba(245,197,24,0.12) !important;
+  border-color: rgba(245,197,24,0.4) !important;
   color: var(--gold) !important;
-  font-size: 0.88rem !important;
-  padding: 4px 10px !important;
-  box-shadow: 0 0 14px rgba(245,197,24,0.2) !important;
 }
-.hero-info-rating {
-  display: flex; justify-content: flex-end;
-  margin-top: 12px; padding-right: 12px;
+.hero-view-btn {
+  width: 100%;
+  padding: 13px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-full);
+  color: #fff;
+  font-family: 'Cairo', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
 }
-.hero-cap-rating {
-  background: rgba(0,0,0,0.55) !important;
-  border: 1px solid rgba(245,197,24,0.4) !important;
-  color: var(--gold) !important;
-  font-size: 0.85rem !important;
-  padding: 4px 10px !important;
-  border-radius: var(--radius-full) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
+.hero-view-btn:active {
+  background: rgba(229,9,20,0.3);
+  border-color: var(--accent);
 }
 /* ===== PREMIUM GRID — تقييم وسنة داخل البوستر ===== */
 .movie-year-badge {
