@@ -226,7 +226,41 @@ function toggleOtakuMode() {
   }
   window.scrollTo(0, 0);
 }
-
+async function loadOtakuPage() {
+  const page = document.getElementById('homePage');
+  if (!page) return;
+  loadOtakuHero();
+  const SECTIONS = [
+    { id: 'sec_otaku1', title: '🔥 صدارة الموسم',          endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku2', title: '🏆 أساطير الأوتـاكو',      endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'200' } },
+    { id: 'sec_otaku3', title: '🎬 سينما الأنمي العالمية', endpoint: '/discover/movie', type: 'movie', cardClass: 'anime-card', params: { with_genres:'16', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku4', title: '🌸 أنمي الرومانسية',        endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16,10749', with_origin_country:'JP', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku5', title: '⚔️ أنمي الأكشن والقتال',   endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16,28', with_origin_country:'JP', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku6', title: '👻 أنمي الرعب والغموض',    endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16,27', with_origin_country:'JP', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku7', title: '🚀 أنمي الخيال العلمي',    endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16,878', with_origin_country:'JP', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku8', title: '📅 أحدث إصدارات الأنمي',   endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'first_air_date.desc' } },
+  ];
+  page.innerHTML = SECTIONS.map(s => `
+    <div class="home-section" id="${s.id}">
+      <div class="section-header">
+        <span class="section-bar"></span>
+        <h2 class="section-title">${s.title}</h2>
+      </div>
+      <div class="movies-row" id="${s.id}_row">
+        ${Array(6).fill('<div class="movie-card skeleton-card"></div>').join('')}
+      </div>
+    </div>`).join('');
+  SECTIONS.forEach(async s => {
+    try {
+      const movies = await fetchMovies(s.endpoint, { type: s.type, params: s.params || {} });
+      const row = document.getElementById(`${s.id}_row`);
+      const container = document.getElementById(s.id);
+      if (!row || !container) return;
+      if (!movies.length) { container.remove(); return; }
+      row.innerHTML = movies.map(m => buildMovieCard(m, s.type, s.cardClass || '')).join('');
+    } catch { document.getElementById(s.id)?.remove(); }
+  });
+    }
 async function loadOtakuHero() {
   const url = buildTMDBUrl('/discover/tv', { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' });
   const [data] = await Promise.all([fetch(url).then(r => r.json())]);
