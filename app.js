@@ -262,7 +262,7 @@ async function loadOtakuPage() {
         ${Array(6).fill('<div class="movie-card skeleton-card"></div>').join('')}
       </div>
     </div>`).join('');
-  for (const s of SECTIONS.slice(0,4)) {
+  for (const s of SECTIONS) {
     try {
       const movies = await fetchMovies(s.endpoint, { type: s.type, params: s.params || {} });
       const row = document.getElementById(`${s.id}_row`);
