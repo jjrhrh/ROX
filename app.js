@@ -128,7 +128,7 @@ function updateHeroInfo(movies, index) {
     backdrop.classList.remove('loaded');
     setTimeout(() => backdrop.classList.add('loaded'), 80);
   }
-  const bdUrl = m.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}` : '';
+  const bdUrl = m.backdrop_path ? `${CONFIG.IMAGES.POSTER_XL}${m.backdrop_path}` : '';
 document.body.style.backgroundImage = '';
   document.body.style.backgroundSize = 'cover';
   document.body.style.backgroundPosition = 'center';
