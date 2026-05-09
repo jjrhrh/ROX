@@ -526,8 +526,10 @@ async function openWatchPage(id, type, season = 1, episode = 1, resumeSec = 0, r
 const isAnime = (det.genres||[]).some(g => g.id === 16)
              && (det.origin_country||[]).includes('JP');
 
+const animeParams = '&ds_lang=jp&audio=ja&sub_pref=Arabic';
+const animeCC = `https://vidsrc.cc/v2/embed/tv/${id}/${season}/${episode}/sub`;
 const srvs = isAnime ? [
-  { icon:'🎌', name:'PRIME',   desc:'#01 رئيسي', url:`${S.ANIME}${id}/${season}/${episode}`,              active:true },
+  { icon:'🎌', name:'PRIME',   desc:'#01 رئيسي', url:`${S.ANIME}${id}/${season}/${episode}${animeParams}`,  active:true },
   { icon:'⚡', name:'NEXUS',   desc:'#02',        url:`${S.ANIME2}${id}/${season}/${episode}`              },
   { icon:'💎', name:'TITAN',   desc:'#03',        url:`${S.ANIME3}${id}/${season}/${episode}`              },
   { icon:'🌌', name:'COSMOS',  desc:'#04',        url:`${S.ANIME4}${id}/${season}/${episode}`              },
@@ -622,6 +624,7 @@ const srvs = isAnime ? [
             <div class="ws-play-btn">▶</div>
             <span class="ws-play-lbl">اضغط للمشاهدة</span>
           </div>
+          ${isAnime ? `<button class="ws-jp-btn" onclick="document.getElementById('wsFrame').src='${animeCC}'">🇯🇵 النسخة اليابانية الأصلية</button>` : ''}
           <iframe id="wsFrame" class="ws-frame" src="" allowfullscreen allow="autoplay"
             onload="if(this.src)cwTrackTime(${id},'${type}','${cwPoster}','${cwTitle}')">
           </iframe>
