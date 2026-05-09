@@ -144,24 +144,27 @@ document.body.style.backgroundImage = '';
   const yearEl   = document.getElementById('heroInfoYear');
   const titleEl  = document.getElementById('heroInfoTitle');
   const genresEl = document.getElementById('heroInfoGenres');
+  const typeEl   = document.getElementById('heroInfoType');
   const ratingEl = document.getElementById('heroInfoRating');
+  const viewBtn  = document.getElementById('heroViewBtn');
 
-  if (yearEl) yearEl.textContent = m.release_date ? m.release_date.slice(0,4) : '';
-
+  if (yearEl)   yearEl.textContent  = m.release_date ? m.release_date.slice(0,4) : (m.first_air_date ? m.first_air_date.slice(0,4) : '');
+  if (typeEl)   typeEl.textContent  = m.media_type === 'tv' ? 'Series' : 'Movie';
+  if (ratingEl) ratingEl.textContent = m.vote_average ? '⭐ ' + m.vote_average.toFixed(1) : '';
+  if (genresEl) {
+    const names = (m.genre_ids || []).slice(0,2).map(id => GENRES[id]).filter(Boolean);
+    genresEl.textContent = names.join(' · ');
+  }
   if (titleEl) {
     titleEl.style.opacity = '0';
-    titleEl.style.transform = 'translateY(12px)';
     setTimeout(() => {
-      titleEl.textContent = m.title || m.original_title || '';
-      titleEl.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      titleEl.textContent = m.title || m.original_title || m.name || '';
+      titleEl.style.transition = 'opacity 0.5s ease';
       titleEl.style.opacity = '1';
-      titleEl.style.transform = 'translateY(0)';
-    }, 200);
+    }, 150);
   }
-
-  if (genresEl) {
-    const names = (m.genre_ids || []).slice(0,3).map(id => GENRES[id]).filter(Boolean);
-    genresEl.innerHTML = names.map(n => `<span class="hero-cap">${n}</span>`).join('');
+  if (viewBtn) {
+    viewBtn.onclick = () => openDetail(m.id, m.media_type || 'movie');
   }
   if (ratingEl) {
     const rating = m.vote_average ? m.vote_average.toFixed(1) : '';
