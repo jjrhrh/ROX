@@ -807,7 +807,6 @@ html, body {
 }
 
 .hero-cap {
-  animation: neonPulse 4s ease-in-out infinite;
 }
 /* ===== TRENDING BADGE ===== */
 .hero-trending-badge {
