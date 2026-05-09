@@ -173,7 +173,7 @@ document.body.style.backgroundImage = '';
     ? (movie.title || movie.original_title)
     : (movie.name  || movie.original_name);
   const poster = movie.poster_path
-    ? `${CONFIG.IMAGES.POSTER_MD}${movie.poster_path}`
+    ? `${CONFIG.IMAGES.POSTER_SM}${movie.poster_path}`
     : CONFIG.IMAGES.PLACEHOLDER;
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
   const year   = (movie.release_date || movie.first_air_date || '').slice(0,4);
