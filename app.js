@@ -329,7 +329,7 @@ async function loadHomePage() {
     { id: 'sec_popular',  title: 'الأفلام الرائجة',   endpoint: '/movie/popular',   type: 'movie' },
     { id: 'sec_toprated', title: 'الأعلى تقييماً',    endpoint: '/movie/top_rated', type: 'movie' },
     { id: 'sec_tvseries', title: 'أحدث المسلسلات',    endpoint: '/tv/popular',      type: 'tv'    },
-    { id: 'sec_upcoming', title: '🎬 قادم قريباً',     endpoint: '/movie/upcoming',  type: 'movie' },
+    { id: 'sec_upcoming', title: '🎬 قادم قريباً', endpoint: '/movie/upcoming', type: 'movie', params: { region: 'US' } },
   ];
 
   // عرض الـ Skeleton فوراً بدون انتظار
