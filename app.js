@@ -88,29 +88,21 @@ let movies = await fetchMovies('/trending/movie/week', { limit: CONFIG.HERO.LIMI
 }).join('');
 
   heroSwiper = new Swiper('#heroSwiper', {
-    effect: 'coverflow',
-    grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: 1.5,
-    spaceBetween: 20,
-    loop: true,
-    autoplay: {
-      delay: CONFIG.HERO?.AUTOPLAY_MS || 6500,
-      disableOnInteraction: false,
-    },
-    speed: CONFIG.HERO?.TRANSITION_MS || 1000,
-    coverflowEffect: {
-      rotate: 50,
-      stretch: -100,
-      depth: 400,
-      modifier: 1,
-      slideShadows: false,
-    },
-    on: {
-      init: function() { updateHeroInfo(movies, 0); },
-      slideChange: function() { updateHeroInfo(movies, this.realIndex); }
-    }
-  });
+  effect: 'fade',
+  fadeEffect: { crossFade: true },
+  loop: true,
+  slidesPerView: 1,
+  autoplay: {
+    delay: CONFIG.HERO?.AUTOPLAY_MS || 6500,
+    disableOnInteraction: false,
+  },
+  speed: CONFIG.HERO?.TRANSITION_MS || 1000,
+  pagination: { el: '.swiper-pagination', clickable: true },
+  on: {
+    init: function() { updateHeroInfo(movies, 0); },
+    slideChange: function() { updateHeroInfo(movies, this.realIndex); }
+  }
+});
 }
 
 function updateHeroInfo(movies, index) {
