@@ -264,14 +264,16 @@ async function openDetail(id, type = 'movie') {
 
   try {
     const ep = type === 'tv' ? `/tv/${id}` : `/movie/${id}`;
-    const [dRes, vRes, cRes] = await Promise.all([
+    const [dRes, vRes, cRes, rRes] = await Promise.all([
       fetch(buildTMDBUrl(ep)),
       fetch(buildTMDBUrl(`${ep}/videos`)),
       fetch(buildTMDBUrl(`${ep}/credits`)),
+      fetch(buildTMDBUrl(`${ep}/reviews`)),
     ]);
     const detail  = await dRes.json();
     const videos  = await vRes.json();
     const credits = await cRes.json();
+    const revData = await rRes.json();
 
     const trailer = (videos.results || []).find(v => v.type === 'Trailer' && v.site === 'YouTube')
                  || (videos.results || [])[0];
@@ -302,14 +304,41 @@ async function openDetail(id, type = 'movie') {
         <div class="cast-row">
           ${cast.map(a => `
             <div class="cast-card">
-              <img src="${a.profile_path ? CONFIG.IMAGES.POSTER_SM + a.profile_path : CONFIG.IMAGES.PLACEHOLDER}"
-                   alt="${a.name}" loading="lazy" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+              <img data-src="${a.profile_path ? CONFIG.IMAGES.POSTER_SM+a.profile_path : CONFIG.IMAGES.PLACEHOLDER}"
+                   src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                   alt="${a.name}" class="lazy-img cast-img"
+                   onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
               <span class="cast-name">${a.name}</span>
-              <span class="cast-char">${a.character || ''}</span>
+              <span class="cast-char">${a.character||''}</span>
+            </div>`).join('')}
+        </div>
+      </div>` : '';
+const reviewsHTML = reviews.length ? `
+      <div class="detail-section">
+        <h3 class="detail-section-title">💬 التعليقات</h3>
+        <div class="reviews-list">
+          ${reviews.map(r=>`
+            <div class="review-card">
+              <div class="review-author">✍️ ${r.author}</div>
+              <p class="review-content">${r.content.slice(0,250)}${r.content.length>250?'…':''}</p>
             </div>`).join('')}
         </div>
       </div>` : '';
 
+    const seasonsHTML = tvSeasons.length ? `
+      <div class="seasons-glass">
+        <div class="seasons-header">
+          <h3 class="detail-section-title" style="margin:0">📺 المواسم والحلقات</h3>
+          <select class="season-select" onchange="loadSeasonEps(${id},+this.value)">
+            ${tvSeasons.map(s=>`<option value="${s.season_number}">الموسم ${s.season_number}</option>`).join('')}
+          </select>
+        </div>
+        <div class="swiper eps-swiper" id="epsSwiper_${id}">
+          <div class="swiper-wrapper" id="epsWrap_${id}">
+            <div class="loading" style="padding:16px">⏳</div>
+          </div>
+        </div>
+      </div>` : '';
     const trailerBtn = trailer
       ? `<button class="detail-btn detail-btn-trailer" onclick="playTrailer('${trailer.key}')">▶ المقطع الدعائي</button>`
       : '';
@@ -325,11 +354,15 @@ async function openDetail(id, type = 'movie') {
                onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
           <div class="detail-info">
             <h1 class="detail-title">${title}</h1>
+            <div class="detail-stats-bar">
+              <span class="stat-cap">👁 ${detail.popularity?Math.round(detail.popularity).toLocaleString():'—'}</span>
+              <span class="stat-cap stat-gold">⭐ ${rating}</span>
+              ${detail.vote_count?`<span class="stat-cap">🗳 ${detail.vote_count.toLocaleString()}</span>`:''}
+            </div>
             <div class="detail-meta">
-              ${year    ? `<span class="detail-badge">📅 ${year}</span>`    : ''}
-              ${runtime ? `<span class="detail-badge">⏱ ${runtime}</span>` : ''}
-              <span class="detail-badge detail-rating">⭐ ${rating}</span>
-              <span class="detail-badge">${type === 'tv' ? '📺 مسلسل' : '🎬 فيلم'}</span>
+              ${year    ?`<span class="detail-badge">📅 ${year}</span>`:''}
+              ${runtime ?`<span class="detail-badge">⏱ ${runtime}</span>`:''}
+              <span class="detail-badge">${type==='tv'?'📺 مسلسل':'🎬 فيلم'}</span>
             </div>
             <div class="detail-genres">${genres}</div>
             <div class="detail-actions">
@@ -340,18 +373,28 @@ async function openDetail(id, type = 'movie') {
             </div>
           </div>
         </div>
+        ${seasonsHTML}
         <div class="detail-section">
           <h3 class="detail-section-title">📖 القصة</h3>
           <p class="detail-overview">${overview}</p>
         </div>
         <div class="detail-section detail-prod-grid">
-          ${detail.budget  ? `<div class="detail-prod-item"><span class="prod-label">💰 الميزانية</span><span class="prod-val">$${(detail.budget/1e6).toFixed(1)}M</span></div>`   : ''}
-          ${detail.revenue ? `<div class="detail-prod-item"><span class="prod-label">✅ الإيرادات</span><span class="prod-val">$${(detail.revenue/1e6).toFixed(1)}M</span></div>` : ''}
-          ${detail.vote_count ? `<div class="detail-prod-item"><span class="prod-label">🗳 التقييمات</span><span class="prod-val">${detail.vote_count.toLocaleString()}</span></div>` : ''}
-          ${detail.status     ? `<div class="detail-prod-item"><span class="prod-label">📌 الحالة</span><span class="prod-val">${detail.status}</span></div>` : ''}
+          ${detail.budget  ?`<div class="detail-prod-item"><span class="prod-label">💰 الميزانية</span><span class="prod-val">$${(detail.budget/1e6).toFixed(1)}M</span></div>`:''}
+          ${detail.revenue ?`<div class="detail-prod-item"><span class="prod-label">✅ الإيرادات</span><span class="prod-val">$${(detail.revenue/1e6).toFixed(1)}M</span></div>`:''}
+          ${detail.vote_count?`<div class="detail-prod-item"><span class="prod-label">🗳 التقييمات</span><span class="prod-val">${detail.vote_count.toLocaleString()}</span></div>`:''}
+          ${detail.status    ?`<div class="detail-prod-item"><span class="prod-label">📌 الحالة</span><span class="prod-val">${detail.status}</span></div>`:''}
         </div>
         ${castHTML}
+        ${reviewsHTML}
       </div>`;
+
+    // IntersectionObserver للصور الكسولة
+    const lazyObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.src=e.target.dataset.src; lazyObs.unobserve(e.target); }});
+    });
+    page.querySelectorAll('.lazy-img').forEach(img => lazyObs.observe(img));
+
+    if (type === 'tv' && tvSeasons.length) loadSeasonEps(id, tvSeasons[0].season_number);
 
   } catch (err) {
     page.innerHTML = `
@@ -361,7 +404,25 @@ async function openDetail(id, type = 'movie') {
       </div>`;
   }
 }
-
+async function loadSeasonEps(tvId, seasonNum) {
+  const wrap = document.getElementById(`epsWrap_${tvId}`);
+  if (!wrap) return;
+  wrap.innerHTML = '<div class="loading" style="padding:16px">⏳</div>';
+  try {
+    const data = await fetch(buildTMDBUrl(`/tv/${tvId}/season/${seasonNum}`)).then(r=>r.json());
+    wrap.innerHTML = (data.episodes||[]).map(e=>`
+      <div class="swiper-slide ep-card" onclick="openWatchPage(${tvId},'tv',${seasonNum},${e.episode_number})">
+        <img data-src="${e.still_path?CONFIG.IMAGES.POSTER_MD+e.still_path:CONFIG.IMAGES.PLACEHOLDER}"
+             src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+             class="lazy-img ep-thumb" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+        <div class="ep-num">ح ${e.episode_number}</div>
+        <div class="ep-title">${(e.name||'').slice(0,22)}</div>
+      </div>`).join('');
+    const o2 = new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.src=e.target.dataset.src;o2.unobserve(e.target);}});});
+    wrap.querySelectorAll('.lazy-img').forEach(i=>o2.observe(i));
+    if(window.Swiper) new Swiper(`#epsSwiper_${tvId}`,{slidesPerView:2.3,spaceBetween:10,freeMode:true,grabCursor:true});
+  } catch{ wrap.innerHTML='<div class="loading">⚠️ خطأ</div>'; }
+}
 function playTrailer(key) {
   const overlay = document.getElementById('trailerOverlay');
   const frame   = document.getElementById('trailerFrame');
@@ -413,7 +474,7 @@ function wsGoBack() {
   } else { goBack(); }
   window.scrollTo(0, 0);
 }
-async function openWatchPage(id, type) {
+async function openWatchPage(id, type, season = 1, episode = 1) {
   const page = document.getElementById('watchPage');
   if (!page) return;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
