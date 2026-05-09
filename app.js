@@ -25,8 +25,8 @@ function bnavGo(tab) {
   document.getElementById(pageMap[tab])?.classList.add('active');
   document.getElementById(btnMap[tab])?.classList.add('active');
   if (hero) {
-    hero.style.display = tab === 'home' ? '' : 'none';
-    hero.style.visibility = tab === 'home' ? '' : 'hidden';
+    hero.style.display = (tab === 'home' || tab === 'otaku') ? '' : 'none';
+    hero.style.visibility = (tab === 'home' || tab === 'otaku') ? '' : 'hidden';
   }
   if (tab === 'home') { loadHeroSwiper(); loadHomePage(); }
   if (tab === 'library') loadLibraryPage();
