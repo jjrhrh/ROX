@@ -694,7 +694,6 @@ function cwDelete(id) {
 }
 
 function cwRender() {
-function cwRender() {
   loadHomePage();
 }
 
