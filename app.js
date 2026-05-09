@@ -968,3 +968,23 @@ cwRender();
   }
 });
 bnavGo('home');
+async function loadNewsSection(containerId, feedUrl, color) {
+  const sec = document.getElementById('newsSection');
+  const el  = document.getElementById(containerId);
+  if (!el || !sec) return;
+  sec.style.display = 'block';
+  el.innerHTML = '<p class="lib-empty">⏳ جاري تحميل الأخبار...</p>';
+  try {
+    const res  = await fetch(CONFIG.NEWS.PROXY + encodeURIComponent(feedUrl));
+    const data = await res.json();
+    if (data.status !== 'ok') throw new Error();
+    el.innerHTML = data.items.slice(0, 6).map(item => `
+      <a class="news-card news-${color}" href="${item.link}" target="_blank" rel="noopener">
+        ${item.thumbnail ? `<img class="news-thumb" src="${item.thumbnail}" onerror="this.style.display='none'">` : ''}
+        <div class="news-body">
+          <div class="news-title">${item.title}</div>
+          <div class="news-meta">${(item.pubDate||'').slice(0,10)}</div>
+        </div>
+      </a>`).join('');
+  } catch { el.innerHTML = '<p class="lib-empty">⚠️ تعذّر تحميل الأخبار</p>'; }
+}
