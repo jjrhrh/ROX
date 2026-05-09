@@ -909,7 +909,7 @@ html, body {
 } 
 .hero-info-caps {
   background: transparent !important;
-  border-top: none !important;
+  border: none !important;
   box-shadow: none !important;
 }
 @keyframes neonPulseRed {
