@@ -271,6 +271,7 @@ async function loadOtakuPage() {
       if (!movies.length) { container.remove(); continue; }
       row.innerHTML = movies.map(m => buildMovieCard(m, s.type, s.cardClass || '')).join('');
       await new Promise(r => setTimeout(r, 100));
+      await new Promise(r => setTimeout(r, 150));
     } catch { document.getElementById(s.id)?.remove(); }
   }
     }
