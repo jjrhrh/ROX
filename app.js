@@ -209,12 +209,11 @@ function buildSection(title, movies, type = 'movie') {
 // ===== OTAKU MODE =====
 let _otakuOn = false;
 function toggleOtakuMode() {
-  _otakuOn = !_otakuOn;
-  document.getElementById('htmlRoot').classList.toggle('otaku-mode', _otakuOn);
-  document.getElementById('bnavOtaku').classList.toggle('active', _otakuOn);
+  _otakuOn = true;
+  document.getElementById('htmlRoot').classList.add('otaku-mode');
+  bnavGo('otaku');
   loadHomePage();
-  if (_otakuOn) loadOtakuHero();
-  else loadHeroSwiper();
+  loadOtakuHero();
 }
 
 async function loadOtakuHero() {
