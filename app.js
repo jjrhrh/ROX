@@ -10,7 +10,7 @@ function bnavGo(tab) {
   document.getElementById(pageMap[tab])?.classList.add('active');
   document.getElementById(btnMap[tab])?.classList.add('active');
   if (tab === 'library') loadLibraryPage();
-  if (tab === 'home' && _otakuOn) { _otakuOn = false; document.getElementById('htmlRoot').classList.remove('otaku-mode'); loadHomePage(); loadHeroSwiper(); }
+  if (tab === 'home' && _otakuOn) { _otakuOn = false; document.getElementById('htmlRoot').classList.remove('otaku-mode'); loadHomePage(); }
   window.scrollTo(0, 0);
 }
 
