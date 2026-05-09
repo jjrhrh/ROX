@@ -997,16 +997,22 @@ html, body {
 .ws-card:nth-child(5) .ws-icon { filter:drop-shadow(0 0 8px #ffffff); }
 .ws-card:nth-child(6) .ws-icon { filter:drop-shadow(0 0 8px #ff8800); }
 /* ===== STATS BAR ===== */
-.detail-stats-bar { display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
-.stat-cap {
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.12);
-  padding: 4px 12px; border-radius: 999px;
-  font-size: 0.72rem; font-weight: 800; color: var(--text2);
+.detail-stats-bar {
+  display: flex; gap: 10px; margin: 10px 0 14px;
+  flex-wrap: wrap; justify-content: flex-end;
 }
-.stat-gold { color: var(--gold); border-color: rgba(245,197,24,0.35); }
-
+.stat-cap {
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.13);
+  padding: 6px 14px; border-radius: 999px;
+  font-size: 0.82rem; font-weight: 900; color: var(--text2);
+}
+.stat-cap span { font-size: 0.85rem; font-weight: 900; }
+.stat-gold { color: var(--gold); border-color: rgba(245,197,24,0.4); background: rgba(245,197,24,0.08); }
+.stat-views { color: #60a5fa; border-color: rgba(96,165,250,0.3); background: rgba(96,165,250,0.08); }
+.stat-votes { color: #a78bfa; border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.08); }
 /* ===== SEASONS GLASS ===== */
 .seasons-glass {
   margin-top: 22px;
@@ -1049,3 +1055,10 @@ html, body {
 }
 .review-author { font-size:0.75rem; font-weight:900; color:var(--accent); margin-bottom:8px; }
 .review-content { font-size:0.82rem; color:var(--text2); line-height:1.7; }
+.review-empty {
+  text-align: center; padding: 20px;
+  color: var(--text3); font-size: 0.85rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed rgba(255,255,255,0.08);
+  border-radius: 14px;
+} 
