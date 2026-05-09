@@ -700,8 +700,8 @@ html, body {
   width: 100% !important;
   margin-top: -130px !important;
   background: rgba(5,0,0,0.65) !important;
-  backdrop-filter: blur(30px) !important;
-  -webkit-backdrop-filter: blur(30px) !important;
+  backdrop-filter: blur(8px) !important;
+-webkit-backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   border-radius: 28px 28px 0 0 !important;
 }
