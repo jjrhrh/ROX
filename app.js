@@ -752,8 +752,7 @@ const srvs = isAnime ? [
           </div>
           <iframe id="wsFrame" class="ws-frame" src="" 
             allowfullscreen 
-            allow="autoplay; fullscreen; encrypted-media; picture-in-picture; clipboard-write; scripts"
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-top-navigation-by-user-activation"
+            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
             onload="if(this.src)cwTrackTime(${id},'${type}','${cwPoster}','${cwTitle}')">
           </iframe>
           <script>
