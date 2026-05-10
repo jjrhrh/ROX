@@ -144,6 +144,8 @@ HERO: Object.freeze({
   ANIME21: 'https://vidsrc.me/embed/tv/',
   ANIME22: 'https://vidsrc.to/embed/tv/',
   ANIME23: 'https://embed.su/embed/tv/',
+  FILEMOON: 'https://filemoon.sx/e/',
+  FM_KEY : '123298s5edxhw6cbv44pzc',
 }),
   // ─────────────────────────────────────────
   //  🎬  إعدادات عرض المحتوى
