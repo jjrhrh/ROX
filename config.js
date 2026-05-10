@@ -125,7 +125,7 @@ HERO: Object.freeze({
   ANIME2 : 'https://vidsrc-embed.su/embed/tv/',
   ANIME3 : 'https://vidsrc.icu/embed/tv/',
   ANIME4 : 'https://vidsrc.cc/v2/embed/tv/',
-  ANIME5 : 'https://moviesapi.club/tv/',
+  ANIME5 : 'https://vidsrc.cc/v2/embed/tv/',
   ANIME6 : 'https://www.2embed.online/embed/tv/',
   ANIME7 : 'https://vidlink.pro/tv/',
   ANIME8 : 'https://www.NontonGo.win/embed/tv/',
