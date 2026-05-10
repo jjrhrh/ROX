@@ -241,6 +241,7 @@ function toggleOtakuMode() {
 async function loadOtakuPage() {
   const page = document.getElementById('homePage');
   if (!page) return;
+  const jsonData = await loadDataJSON();
   loadOtakuHero();
   const SECTIONS = [
     { id: 'sec_otaku1', title: '🔥 صدارة الموسم',          endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
