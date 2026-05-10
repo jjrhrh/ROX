@@ -144,6 +144,10 @@ HERO: Object.freeze({
   ANIME21: 'https://vidsrc.me/embed/tv/',
   ANIME22: 'https://vidsrc.to/embed/tv/',
   ANIME23: 'https://embed.su/embed/tv/',
+  ANIME24: 'https://vidsrc.xyz/embed/tv/',
+  ANIME25: 'https://embed.smashystream.com/playere.php?tmdb=',
+  ANIME26: 'https://vidsrc.dev/embed/tv/',
+  ANIME27: 'https://moviesapi.club/tv/',
 }),
   // ─────────────────────────────────────────
   //  🎬  إعدادات عرض المحتوى
