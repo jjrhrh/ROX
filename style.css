@@ -786,9 +786,6 @@ html, body {
   0%, 100% { border-color: rgba(255, 255, 255, 0.9); box-shadow: none; }
   50%       { border-color: rgba(255, 255, 255, 1);   box-shadow: 0 0 10px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.3); }
 }
-
-.hero-cap {
-}
 /* ===== TRENDING BADGE ===== */
 .hero-trending-badge {
   display: block;
