@@ -28,7 +28,7 @@ function bnavGo(tab) {
     hero.style.display = (tab === 'home' || tab === 'otaku') ? '' : 'none';
     hero.style.visibility = (tab === 'home' || tab === 'otaku') ? '' : 'hidden';
   }
-  if (tab === 'home') { loadHeroSwiper(); loadHomePage(); loadNewsSection('newsFeed', CONFIG.NEWS.CINEMA, 'red'); }
+  if (tab === 'home') { loadHeroSwiper(); loadHomePage(); loadNewsSection('newsFeed', CONFIG.NEWS.CINEMA, 'red'); document.getElementById('newsSectionTitle').textContent = '📰 أخبار السينما الحية'; }
   if (tab === 'library') loadLibraryPage();
   if (tab === 'otaku') { hero.style.display = ''; hero.style.visibility = ''; loadOtakuPage(); loadNewsSection('newsFeed', CONFIG.NEWS.ANIME, 'purple'); }
   window.scrollTo(0, 0);
