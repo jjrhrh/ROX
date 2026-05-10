@@ -727,9 +727,9 @@ const srvs = isAnime ? [
   { icon:'🎖', name:'SIGMA',   desc:'#23',        url:`${S.MOV23}${id}` },
   { icon:'🌠', name:'NEXUS-X', desc:'#24 4K',     url:`${S.MOV24}${id}` },
   { icon:'💠', name:'EMBED',   desc:'#25',        url:`${S.MOV25}${id}` },
-  { icon:'🎴', name:'RONIN',   desc:'#28',        url:`${S.ANIME28}${id}/${season}/${episode}` },
-  { icon:'🌺', name:'HANABI',  desc:'#29',        url:`${S.ANIME29}${id}/${season}/${episode}` },
-  { icon:'🏯', name:'SHOGUN',  desc:'#30',        url:`${S.ANIME30}${id}/${season}/${episode}` },
+  { icon:'🎴', name:'RONIN',   desc:'#26',        url:`${S.ANIME26}${id}/${season}/${episode}` },
+  { icon:'🌺', name:'HANABI',  desc:'#27',        url:`${S.ANIME27}${id}/${season}/${episode}` },
+  { icon:'🏯', name:'SHOGUN',  desc:'#28',        url:`${S.ANIME28}${id}/${season}/${episode}` },
 ];
     const srvHTML = srvs.map(s => `
       <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" data-name="${s.name}" onclick="wsSelectServer(this)">
