@@ -1,3 +1,16 @@
+(function() {
+  const allowed = ['PPLLMMOOKKNN99'];
+  const saved = localStorage.getItem('rox_pass');
+  if (!allowed.includes(saved)) {
+    const pass = prompt('🔐 أدخل كلمة المرور للدخول:');
+    if (!allowed.includes(pass)) {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#fff;font-size:1.5rem;font-family:Cairo">⛔ غير مصرح لك بالدخول</div>';
+      return;
+    }
+    localStorage.setItem('rox_pass', pass);
+  }
+})();
+// ===== NAVIGATION =====
 // ===== NAVIGATION =====
 function bnavGo(tab) {
   const hero = document.getElementById('heroSection');
