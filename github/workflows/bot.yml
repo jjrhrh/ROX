@@ -15,7 +15,7 @@ jobs:
       - run: pip install requests
       - run: python bot.py
         env:
-          FM_KEY: ${{ secrets.FM_KEY }}
+          TMDB_KEY: ${{ secrets.TMDB_KEY }}
       - run: |
           git config user.name "Cinema-ROX Bot"
           git config user.email "bot@cinema-rox.com"
