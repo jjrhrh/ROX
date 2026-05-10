@@ -368,6 +368,7 @@ async function loadHomePage() {
 }
 // ===== DETAIL PAGE =====
 async function openDetail(id, type = 'movie') {
+  document.getElementById('newsSection').style.display = 'none';
   const page = document.getElementById('detailPage');
   if (!page) return;
 
