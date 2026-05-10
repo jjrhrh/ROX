@@ -962,12 +962,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   bnavGo('home');
   try {
     await Promise.all([loadHeroSwiper(), loadHomePage()]);
-cwRender();
+    cwRender();
   } catch(e) {
     console.error('خطأ في التحميل:', e);
   }
 });
-bnavGo('home');
 async function loadNewsSection(containerId, feedUrl, color) {
   const sec = document.getElementById('newsSection');
   const el  = document.getElementById(containerId);
