@@ -1097,3 +1097,14 @@ html, body {
 .news-thumb { width: 80px; height: 60px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
 .news-title { font-size: .85rem; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
 .news-meta  { font-size: .72rem; color: #aaa; }
+.ep-badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 20px;
+  display: inline-block;
+  margin: 0 8px 8px;
+  box-shadow: 0 0 8px var(--accent-glow);
+} 
