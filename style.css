@@ -679,8 +679,16 @@ html, body {
   padding: 10px 0 0 !important;
   overflow: visible !important;
 }
+.swiper-slide-active.hero-swiper-slide,
 .hero-swiper-slide.swiper-slide-active {
-  box-shadow: 0 0 0 1px rgba(229,9,20,0.8), 0 0 40px rgba(229,9,20,0.5), 0 0 80px rgba(229,9,20,0.2) !important;
+  border-radius: 30px !important;
+  border: 1px solid red !important;
+  box-shadow:
+    0 0 0 1px rgba(229,9,20,0.8),
+    0 0 40px rgba(229,9,20,0.5),
+    0 0 80px rgba(229,9,20,0.2),
+    0 24px 72px rgba(0,0,0,1) !important;
+  animation: neonPulseRed 4s ease-in-out infinite !important;
 }
 .hero-info-container {
   text-align: center !important;
