@@ -160,7 +160,7 @@ HERO: Object.freeze({
   ANIME24: 'https://autoembed.co/tv/tmdb/',
   ANIME25: 'https://embed.smashystream.com/playere.php?tmdb=',
   ANIME26: 'https://vidsrc.dev/embed/tv/',
-  ANIME27: 'https://moviesapi.club/tv/',
+  ANIME27: 'https://vidsrc.cc/v2/embed/tv/',
   ANIME28: 'https://player.autoembed.cc/embed/tv/',
   ANIME29: 'https://hnembed.com/embed/tv/',
   ANIME30: 'https://superembed.stream/embed/tv/',
