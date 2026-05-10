@@ -30,7 +30,7 @@ function bnavGo(tab) {
   }
   if (tab === 'home') { loadHeroSwiper(); loadHomePage(); loadNewsSection('newsFeed', CONFIG.NEWS.CINEMA, 'red'); }
   if (tab === 'library') loadLibraryPage();
-  if (tab === 'otaku') { hero.style.display = ''; hero.style.visibility = ''; loadOtakuPage(); }
+  if (tab === 'otaku') { hero.style.display = ''; hero.style.visibility = ''; loadOtakuPage(); loadNewsSection('newsFeed', CONFIG.NEWS.ANIME, 'purple'); }
   window.scrollTo(0, 0);
 }
 
