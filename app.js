@@ -354,7 +354,15 @@ if (jsonData?.latest_episodes?.length) {
       </div>
     </div>` : '';
 
-  page.innerHTML = cwHTML + SECTIONS.map(s => `
+  const latestEpsHTML = `
+    <div class="home-section" id="sec_latest_eps">
+      <div class="section-header">
+        <span class="section-bar"></span>
+        <h2 class="section-title">🔴 أحدث الحلقات</h2>
+      </div>
+      <div class="movies-row" id="sec_latest_eps_row"></div>
+    </div>`;
+  page.innerHTML = cwHTML + latestEpsHTML + SECTIONS.map(s => `
     <div class="home-section" id="${s.id}">
       <div class="section-header">
         <span class="section-bar"></span>
