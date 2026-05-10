@@ -891,9 +891,6 @@ html, body {
     box-shadow: 0 0 14px rgba(229,9,20,0.9), 0 0 28px rgba(229,9,20,0.4), 0 36px 96px rgba(0,0,0,1);
   }
 }
-.swiper-slide-active.hero-swiper-slide {
-  animation: neonPulseRed 4s ease-in-out infinite !important;
-}
 /* ===== HERO: إخفاء عند غير الرئيسية ===== */
 #heroSection[style*="display: none"] { display: none !important; }
 /* ===== WATCH PAGE ===== */
