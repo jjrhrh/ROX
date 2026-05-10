@@ -205,6 +205,13 @@ NEWS: Object.freeze({
     PROXY  : 'https://api.rss2json.com/v1/api.json?rss_url=',
     CINEMA : 'https://www.aljazeera.net/rss/culture-arts',
     ANIME  : 'https://myanimelist.net/rss/news.xml',
+}),
+  FILEMOON: Object.freeze({
+    API_BASE  : 'https://api.byse.sx',
+    EMBED_BASE: 'https://filemoon.sx/e/',
+  }),
+  DATA: Object.freeze({
+    JSON_URL: 'data.json',
   }),
 });
 
