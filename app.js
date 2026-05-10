@@ -30,7 +30,7 @@ function bnavGo(tab) {
   }
   if (tab === 'home') { loadHeroSwiper(); loadHomePage(); loadNewsSection('newsFeed', CONFIG.NEWS.CINEMA, 'red'); document.getElementById('newsSectionTitle').textContent = '📰 أخبار السينما الحية'; }
   if (tab === 'library') loadLibraryPage();
-  if (tab === 'otaku') { hero.style.display = ''; hero.style.visibility = ''; loadOtakuPage(); loadNewsSection('newsFeed', CONFIG.NEWS.ANIME, 'purple'); }
+  if (tab === 'otaku') { hero.style.display = ''; hero.style.visibility = ''; loadOtakuPage(); loadNewsSection('newsFeed', CONFIG.NEWS.ANIME, 'purple'); document.getElementById('newsSectionTitle').textContent = '📰 أخبار الأنمي'; }
   window.scrollTo(0, 0);
 }
 
