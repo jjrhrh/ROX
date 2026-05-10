@@ -789,8 +789,8 @@ const srvs = isAnime ? [
           <span class="ws-srv-sub">🔒 السيرفرات الخاصة</span>
         </div>
         <div class="ws-quick-btns">
-          ${srvs.slice(0,10).map((s,i)=>`
-            <button class="ws-quick-btn" onclick="document.getElementById('wsFrame').src='${s.url}';document.querySelectorAll('.ws-quick-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active')">${i+1}</button>
+          ${(QUICK_SERVERS[isAnime?'anime':type]||[]).map((s,i)=>`
+            <button class="ws-quick-btn" onclick="document.getElementById('wsFrame').src='${s.url(id,season,episode)}';document.querySelectorAll('.ws-quick-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active')">${s.label}</button>
           `).join('')}
         </div>
         <div class="ws-grid">${srvHTML}</div>
