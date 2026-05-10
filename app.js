@@ -1,10 +1,3 @@
-async function loadDataJSON() {
-  try {
-    const r = await fetch(`${CONFIG.DATA.JSON_URL}?t=${Date.now()}`);
-    if (!r.ok) return null;
-    return await r.json();
-  } catch { return null; }
-}
 // ===== NAVIGATION =====
 function bnavGo(tab) {
   const hero = document.getElementById('heroSection');
@@ -248,7 +241,6 @@ function toggleOtakuMode() {
 async function loadOtakuPage() {
   const page = document.getElementById('homePage');
   if (!page) return;
-  const jsonData = await loadDataJSON();
   loadOtakuHero();
   const SECTIONS = [
     { id: 'sec_otaku1', title: '🔥 صدارة الموسم',          endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
@@ -314,17 +306,7 @@ async function loadOtakuHero() {
 async function loadHomePage() {
   const page = document.getElementById('homePage');
   if (!page) return;
-if (jsonData?.latest_episodes?.length) {
-    const row = document.getElementById('sec_latest_eps_row');
-    if (row) row.innerHTML = jsonData.latest_episodes.map(ep => `
-      <div class="movie-card" onclick="openDetail(${ep.tmdb_id},'${ep.type}')">
-        <img src="${ep.poster}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'" class="movie-thumb">
-        <div class="movie-card-info">
-          <div class="movie-title">${ep.title}</div>
-          <div class="ep-badge">ح ${ep.episode}</div>
-        </div>
-      </div>`).join('');
-  }
+
   const SECTIONS = [
     { id: 'sec_popular',  title: 'الأفلام الرائجة',   endpoint: '/movie/popular',   type: 'movie' },
     { id: 'sec_toprated', title: 'الأعلى تقييماً',    endpoint: '/movie/top_rated', type: 'movie' },
@@ -354,15 +336,7 @@ if (jsonData?.latest_episodes?.length) {
       </div>
     </div>` : '';
 
-  const latestEpsHTML = `
-    <div class="home-section" id="sec_latest_eps">
-      <div class="section-header">
-        <span class="section-bar"></span>
-        <h2 class="section-title">🔴 أحدث الحلقات</h2>
-      </div>
-      <div class="movies-row" id="sec_latest_eps_row"></div>
-    </div>`;
-  page.innerHTML = cwHTML + latestEpsHTML + SECTIONS.map(s => `
+  page.innerHTML = cwHTML + SECTIONS.map(s => `
     <div class="home-section" id="${s.id}">
       <div class="section-header">
         <span class="section-bar"></span>
