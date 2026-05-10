@@ -144,8 +144,6 @@ HERO: Object.freeze({
   ANIME21: 'https://vidsrc.me/embed/tv/',
   ANIME22: 'https://vidsrc.to/embed/tv/',
   ANIME23: 'https://embed.su/embed/tv/',
-  FILEMOON: 'https://filemoon.sx/e/',
-  FM_KEY : '123298s5edxhw6cbv44pzc',
 }),
   // ─────────────────────────────────────────
   //  🎬  إعدادات عرض المحتوى
@@ -205,13 +203,6 @@ NEWS: Object.freeze({
     PROXY  : 'https://api.rss2json.com/v1/api.json?rss_url=',
     CINEMA : 'https://www.aljazeera.net/rss/culture-arts',
     ANIME  : 'https://myanimelist.net/rss/news.xml',
-}),
-  FILEMOON: Object.freeze({
-    API_BASE  : 'https://api.byse.sx',
-    EMBED_BASE: 'https://filemoon.sx/e/',
-  }),
-  DATA: Object.freeze({
-    JSON_URL: 'data.json',
   }),
 });
 
