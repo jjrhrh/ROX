@@ -981,6 +981,8 @@ async function loadNewsSection(containerId, feedUrl, color) {
   const el  = document.getElementById(containerId);
   if (!el || !sec) return;
   sec.style.display = 'block';
+  sec.style.position = 'relative';
+  sec.style.zIndex = '1';
   el.innerHTML = '<p class="lib-empty">⏳ جاري تحميل الأخبار...</p>';
   try {
     const res  = await fetch(CONFIG.NEWS.PROXY + encodeURIComponent(feedUrl));
