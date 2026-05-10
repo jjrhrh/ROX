@@ -1080,7 +1080,7 @@ html, body {
   box-shadow: 0 4px 20px rgba(147,51,234,0.3) !important;
 }
 /* ===== NEWS ===== */
-.news-section { padding: 0 12px 16px; }
+.news-section { padding: 0 12px 16px; order: 99; margin-top: 16px; }
 .news-feed { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
 .news-card {
   display: flex; gap: 10px; align-items: center;
