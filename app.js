@@ -976,7 +976,7 @@ async function loadNewsSection(containerId, feedUrl, color) {
   try {
     const res  = await fetch(CONFIG.NEWS.PROXY + encodeURIComponent(feedUrl));
     const data = await res.json();
-    if (data.status !== 'ok') throw new Error();
+    if (!data.items || !data.items.length) throw new Error();
     el.innerHTML = data.items.slice(0, 6).map(item => `
       <a class="news-card news-${color}" href="${item.link}" target="_blank" rel="noopener">
         ${item.thumbnail ? `<img class="news-thumb" src="${item.thumbnail}" onerror="this.style.display='none'">` : ''}
