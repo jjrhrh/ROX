@@ -702,7 +702,7 @@ const srvs = isAnime ? [
   { icon:'🌠', name:'NEXUS-X', desc:'#24 4K', url:`${S.TV24}${id}-${season}-${episode}`   },
   { icon:'💠', name:'EMBED',   desc:'#25',    url:`${S.TV25}${id}/${season}/${episode}`   },
 ] : [
-  { icon:'🎬', name:'PRIME',   desc:'#01 رئيسي', url:`${S.MOV}${id}`,              active:true },
+  { icon:'🎬', name:'PRIME',   desc:'#01 رئيسي',   url:`${S.MOV}${id}`,              active:true },
   { icon:'⚡', name:'NEXUS',   desc:'#02',        url:`${S.MOV2}${id}`              },
   { icon:'💎', name:'TITAN',   desc:'#03',        url:`${S.MOV3}${id}`              },
   { icon:'🌅', name:'AURORA',  desc:'#04',        url:`${S.MOV4}${id}`              },
@@ -724,9 +724,12 @@ const srvs = isAnime ? [
   { icon:'🟡', name:'PULSAR',  desc:'#20',        url:`${S.MOV20}${id}`             },
   { icon:'🟢', name:'LYRA',    desc:'#21',        url:`${S.MOV21}${id}`             },
   { icon:'🏅', name:'VULCAN',  desc:'#22 VIP',    url:`${S.MOV22}${id}&tmdb=1`      },
-  { icon:'🎖', name:'SIGMA',   desc:'#23',    url:`${S.MOV23}${id}` },
-  { icon:'🌠', name:'NEXUS-X', desc:'#24 4K', url:`${S.MOV24}${id}` },
-  { icon:'💠', name:'EMBED',   desc:'#25',    url:`${S.MOV25}${id}` },
+  { icon:'🎖', name:'SIGMA',   desc:'#23',        url:`${S.MOV23}${id}` },
+  { icon:'🌠', name:'NEXUS-X', desc:'#24 4K',     url:`${S.MOV24}${id}` },
+  { icon:'💠', name:'EMBED',   desc:'#25',        url:`${S.MOV25}${id}` },
+  { icon:'🎴', name:'RONIN',   desc:'#28',        url:`${S.ANIME28}${id}/${season}/${episode}` },
+  { icon:'🌺', name:'HANABI',  desc:'#29',        url:`${S.ANIME29}${id}/${season}/${episode}` },
+  { icon:'🏯', name:'SHOGUN',  desc:'#30',        url:`${S.ANIME30}${id}/${season}/${episode}` },
 ];
     const srvHTML = srvs.map(s => `
       <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" data-name="${s.name}" onclick="wsSelectServer(this)">
