@@ -2,31 +2,46 @@
    السيرفرات
 ═══════════════════════════════════════════ */
 const SERVERS = [
-  { id:'gogo-sub',   label:'GogoAnime SUB',   icon:'🟢', type:'consumet', lang:'مترجم',        dub:false },
-  { id:'gogo-dub',   label:'GogoAnime DUB',   icon:'🟣', type:'consumet', lang:'مدبلج',        dub:true  },
-  { id:'anime4up',   label:'Anime4up AR',     icon:'🎬', type:'iframe',   lang:'🇸🇦 عربي',
+  { id:'gogo-sub',   label:'GogoAnime SUB',  icon:'🟢', type:'consumet', lang:'مترجم',       dub:false },
+  { id:'gogo-dub',   label:'GogoAnime DUB',  icon:'🟣', type:'consumet', lang:'مدبلج',       dub:true  },
+  { id:'pahe-sub',   label:'AnimePahe SUB',  icon:'⚡', type:'pahe',     lang:'مترجم مباشر', dub:false },
+  { id:'anime4up',   label:'Anime4up AR',    icon:'🎬', type:'iframe',   lang:'🇸🇦 عربي',
     buildUrl:(slug,ep)=>`https://anime4up.cam/episode/${slug}-${ep}/` },
-  { id:'witanime',   label:'WitAnime AR',     icon:'🧡', type:'iframe',   lang:'🇸🇦 عربي',
+  { id:'witanime',   label:'WitAnime AR',    icon:'🧡', type:'iframe',   lang:'🇸🇦 عربي',
     buildUrl:(slug,ep)=>`https://witanime.cyou/episode/${slug}-${ep}/` },
-  { id:'anime3rb',   label:'Anime3rb AR',     icon:'🌙', type:'iframe',   lang:'🇸🇦 عربي',
+  { id:'anime3rb',   label:'Anime3rb AR',    icon:'🌙', type:'iframe',   lang:'🇸🇦 عربي',
     buildUrl:(slug,ep)=>`https://anime3rb.com/episodes/${slug}-${ep}` },
-  { id:'shahiid',    label:'Shahiid AR',      icon:'👑', type:'iframe',   lang:'🇸🇦 مدبلج',
+  { id:'shahiid',    label:'Shahiid AR',     icon:'👑', type:'iframe',   lang:'🇸🇦 مدبلج',
     buildUrl:(slug,ep)=>`https://shahiid-anime.net/episode/${slug}-episode-${ep}/` },
-  { id:'anislayer',  label:'AnimeSlayer AR',  icon:'⚔️', type:'iframe',   lang:'🇸🇦 عربي',
+  { id:'anislayer',  label:'AnimeSlayer AR', icon:'⚔️', type:'iframe',   lang:'🇸🇦 عربي',
     buildUrl:(slug,ep)=>`https://www.animeslayer.com/episode/${slug}-episode-${ep}/` },
-  { id:'risto',      label:'Ristoanime AR',   icon:'🟥', type:'iframe',   lang:'🇸🇦 عربي',
+  { id:'risto',      label:'Ristoanime AR',  icon:'🟥', type:'iframe',   lang:'🇸🇦 عربي',
     buildUrl:(slug,ep)=>`https://ristoanime.co/episode/${slug}-episode-${ep}/` },
-  { id:'aniwatch',   label:'AniWatch',        icon:'🟦', type:'iframe',   lang:'مترجم',
+  { id:'aniwatch',   label:'AniWatch',       icon:'🟦', type:'iframe',   lang:'مترجم',
     buildUrl:(slug,ep)=>`https://aniwatch.to/watch/${slug}?ep=${ep}` },
-  { id:'animeowl',   label:'AnimeOwl',        icon:'🦉', type:'iframe',   lang:'مترجم',
+  { id:'animeowl',   label:'AnimeOwl',       icon:'🦉', type:'iframe',   lang:'مترجم',
     buildUrl:(slug,ep)=>`https://animeowl.me/anime/${slug}/episode-${ep}/` },
-  { id:'aniwave',    label:'AniWave',         icon:'🌊', type:'iframe',   lang:'مترجم',
+  { id:'aniwave',    label:'AniWave',        icon:'🌊', type:'iframe',   lang:'مترجم',
     buildUrl:(slug,ep)=>`https://aniwave.to/watch/${slug}/ep-${ep}` },
-  { id:'anix',       label:'Anix',            icon:'🔵', type:'iframe',   lang:'مترجم',
+  { id:'anix',       label:'Anix',           icon:'🔵', type:'iframe',   lang:'مترجم',
     buildUrl:(slug,ep)=>`https://anix.to/watch/${slug}?ep=${ep}` },
-  { id:'anime-sama', label:'Anime-Sama FR',   icon:'🇫🇷', type:'iframe',  lang:'فرنسي',
+  { id:'anime-sama', label:'Anime-Sama FR',  icon:'🇫🇷', type:'iframe',  lang:'فرنسي',
     buildUrl:(slug,ep)=>`https://anime-sama.fr/catalogue/${slug}/ep${ep}/vostfr.html` },
 ];
+
+/* ═══════════════════════════════════════════
+   Consumet APIs — fallbacks مرتبة
+═══════════════════════════════════════════ */
+const CONSUMET_APIS = [
+  'https://api.consumet.org/anime/gogoanime',
+  'https://consumet-api.onrender.com/anime/gogoanime',
+  'https://api-consumet.vercel.app/anime/gogoanime',
+];
+const PAHE_APIS = [
+  'https://api.consumet.org/anime/animepahe',
+  'https://consumet-api.onrender.com/anime/animepahe',
+];
+let activeCONSUMET = CONSUMET_APIS[0];
 
 /* ═══════════════════════════════════════════
    STATE
@@ -37,7 +52,8 @@ let currentEp      = 1;
 let currentServer  = SERVERS[0];
 let currentQuality = 'auto';
 let allSlugs       = [];
-let gogoId         = null; // Consumet episode ID
+let gogoId         = null;
+let paheId         = null;
 
 /* ═══════════════════════════════════════════
    INIT
@@ -68,7 +84,6 @@ async function initPlayer() {
     renderEpisodes();
     renderServers();
 
-    // ابحث في Consumet مسبقاً
     await prefetchGogoId();
 
   } catch(e) {
@@ -108,27 +123,45 @@ function buildAllSlugs(a) {
 }
 
 /* ═══════════════════════════════════════════
-   Consumet — بحث مسبق
+   Consumet — بحث مسبق (SUB أولاً + AnimePahe كـ fallback)
 ═══════════════════════════════════════════ */
-const CONSUMET = 'https://api.consumet.org/anime/gogoanime';
-
 async function prefetchGogoId() {
-  const queries = [
+  const titles = [
     currentAnime.title.english,
     currentAnime.title.romaji,
   ].filter(Boolean);
 
-  for (const q of queries) {
-    try {
-      const res  = await fetch(`${CONSUMET}/${encodeURIComponent(q)}`);
-      const data = await res.json();
-      const results = data.results || [];
-      if (results.length) {
-        gogoId = results[0].id;
-        console.log('✅ Consumet ID:', gogoId);
-        return;
-      }
-    } catch {}
+  // GogoAnime — يفضّل SUB
+  for (const api of CONSUMET_APIS) {
+    for (const q of titles) {
+      try {
+        const r = await fetch(`${api}/${encodeURIComponent(q)}`);
+        const d = await r.json();
+        const hit = (d.results||[]).find(x => !x.id.includes('-dub'))
+                 || (d.results||[])[0];
+        if (hit) {
+          gogoId = hit.id;
+          activeCONSUMET = api;
+          console.log('✅ GogoAnime ID:', gogoId, 'via', api);
+          return;
+        }
+      } catch {}
+    }
+  }
+
+  // AnimePahe — fallback
+  for (const api of PAHE_APIS) {
+    for (const q of titles) {
+      try {
+        const r = await fetch(`${api}/${encodeURIComponent(q)}`);
+        const d = await r.json();
+        if ((d.results||[]).length) {
+          paheId = d.results[0].id;
+          console.log('✅ AnimePahe ID:', paheId);
+          return;
+        }
+      } catch {}
+    }
   }
 }
 
@@ -144,6 +177,8 @@ async function loadServer(srv) {
   try {
     if (srv.type === 'consumet') {
       await loadConsumetSmart(srv);
+    } else if (srv.type === 'pahe') {
+      await loadPaheSmart();
     } else {
       await loadIframeSmart(srv, 0);
     }
@@ -155,51 +190,61 @@ async function loadServer(srv) {
   }
 }
 
-/* ─── Consumet الذكي ─── */
+/* ─── Consumet الذكي (GogoAnime) ─── */
 async function loadConsumetSmart(srv) {
   const wrap = document.getElementById('videoWrap');
+  if (!gogoId && !paheId) await prefetchGogoId();
+  if (!gogoId) throw new Error('لم يتم العثور على الأنمي في GogoAnime');
 
-  // حاول بـ ID المحفوظ أولاً
-  let episodeId = null;
+  const epSlug = srv.dub ? `${gogoId}-dub` : gogoId;
+  const epId   = `${epSlug}-episode-${currentEp}`;
 
-  if (gogoId) {
-    const epSlug = srv.dub ? `${gogoId}-dub` : gogoId;
-    episodeId = `${epSlug}-episode-${currentEp}`;
-  } else {
-    // ابحث من جديد
-    await prefetchGogoId();
-    if (gogoId) {
-      const epSlug = srv.dub ? `${gogoId}-dub` : gogoId;
-      episodeId = `${epSlug}-episode-${currentEp}`;
-    }
+  for (const api of CONSUMET_APIS) {
+    try {
+      const r = await fetch(`${api}/watch/${encodeURIComponent(epId)}`);
+      const d = await r.json();
+      const sources = d.sources || [];
+      if (sources.length) { injectStream(sources, srv.label, wrap); return; }
+    } catch {}
   }
 
-  if (!episodeId) throw new Error('لم يتم العثور على الأنمي في Consumet');
+  throw new Error('لا توجد مصادر في GogoAnime');
+}
 
-  const res    = await fetch(`${CONSUMET}/watch/${encodeURIComponent(episodeId)}`);
-  const data   = await res.json();
-  const sources = data.sources || [];
-  if (!sources.length) throw new Error('لا توجد مصادر');
+/* ─── AnimePahe الذكي ─── */
+async function loadPaheSmart() {
+  const wrap = document.getElementById('videoWrap');
+  if (!paheId && !gogoId) await prefetchGogoId();
+  if (!paheId) throw new Error('لم يتم العثور على الأنمي في AnimePahe');
 
-  let chosen = sources.find(s=>s.quality===currentQuality)
-            || sources.find(s=>s.quality==='1080p')
-            || sources.find(s=>s.quality==='default')
-            || sources[0];
-
-  wrap.innerHTML = `<div class="src-info">✅ ${srv.label} · الحلقة ${currentEp} · ${chosen.quality||'auto'}</div>`;
-
-  if (chosen.isM3U8) {
-    playHLS(chosen.url, wrap);
-  } else {
-    playMP4(chosen.url, wrap);
+  for (const api of PAHE_APIS) {
+    try {
+      const r = await fetch(`${api}/watch?id=${paheId}&ep=${currentEp}`);
+      const d = await r.json();
+      const sources = d.sources || [];
+      if (sources.length) { injectStream(sources, 'AnimePahe', wrap); return; }
+    } catch {}
   }
+
+  throw new Error('لا توجد مصادر في AnimePahe');
+}
+
+/* ─── حقن الفيديو في المشغّل ─── */
+function injectStream(sources, label, wrap) {
+  const chosen = sources.find(s => s.quality === currentQuality)
+               || sources.find(s => s.quality === '1080p')
+               || sources.find(s => s.quality === 'default')
+               || sources[0];
+
+  wrap.innerHTML = `<div class="src-info">✅ ${label} · ح${currentEp} · ${chosen.quality||'auto'}</div>`;
+  chosen.isM3U8 ? playHLS(chosen.url, wrap) : playMP4(chosen.url, wrap);
 }
 
 /* ─── iframe الذكي مع retry ─── */
 async function loadIframeSmart(srv, slugIdx) {
-  const wrap  = document.getElementById('videoWrap');
-  const slug  = allSlugs[slugIdx] || allSlugs[0];
-  const url   = srv.buildUrl(slug, currentEp);
+  const wrap    = document.getElementById('videoWrap');
+  const slug    = allSlugs[slugIdx] || allSlugs[0];
+  const url     = srv.buildUrl(slug, currentEp);
   const hasNext = slugIdx + 1 < allSlugs.length;
 
   wrap.innerHTML = `
