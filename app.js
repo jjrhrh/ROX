@@ -38,8 +38,8 @@ function bnavGo(tab) {
   document.getElementById(pageMap[tab])?.classList.add('active');
   document.getElementById(btnMap[tab])?.classList.add('active');
   if (hero) {
-    hero.style.display = (tab === 'home' || tab === 'otaku') ? '' : 'none';
-    hero.style.visibility = (tab === 'home' || tab === 'otaku') ? '' : 'hidden';
+    hero.style.display = tab === 'home' ? '' : 'none';
+hero.style.visibility = tab === 'home' ? '' : 'hidden';
   }
   if (tab === 'home') { loadHeroSwiper(); loadHomePage(); loadNewsSection('newsFeed', CONFIG.NEWS.CINEMA, 'red'); document.getElementById('newsSectionTitle').textContent = '📰 أخبار السينما الحية'; }
   if (tab === 'library') loadLibraryPage();
