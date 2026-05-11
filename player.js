@@ -92,7 +92,51 @@ const SERVERS = [
     buildUrl: (slug, ep) =>
       `https://anime-sama.fr/catalogue/${slug}/ep${ep}/vostfr.html`
   },
-
+{
+    id:    'aniwatch',
+    label: 'AniWatch',
+    icon:  '🟦',
+    type:  'iframe',
+    lang:  'مترجم',
+    buildUrl: (slug, ep) =>
+      `https://aniwatch.to/watch/${slug}?ep=${ep}`
+  },
+  {
+    id:    'shahiid',
+    label: 'Shahiid AR',
+    icon:  '👑',
+    type:  'iframe',
+    lang:  '🇸🇦 مدبلج',
+    buildUrl: (slug, ep) =>
+      `https://shahiid-anime.net/episode/${slug}-episode-${ep}/`
+  },
+  {
+    id:    'anime3rb',
+    label: 'Anime3rb AR',
+    icon:  '🌙',
+    type:  'iframe',
+    lang:  '🇸🇦 عربي',
+    buildUrl: (slug, ep) =>
+      `https://anime3rb.com/episodes/${slug}-${ep}`
+  },
+  {
+    id:    'animeowl',
+    label: 'AnimeOwl',
+    icon:  '🦉',
+    type:  'iframe',
+    lang:  'مترجم',
+    buildUrl: (slug, ep) =>
+      `https://animeowl.me/anime/${slug}/episode-${ep}/`
+  },
+  {
+    id:    'anislayer',
+    label: 'AnimeSlayer AR',
+    icon:  '⚔️',
+    type:  'iframe',
+    lang:  '🇸🇦 عربي',
+    buildUrl: (slug, ep) =>
+      `https://www.animeslayer.com/episode/${slug}-episode-${ep}/`
+  },
   // ─── سيرفرات مباشرة (Consumet API) ───
   /*
     Consumet هو API مفتوح يجلب روابط
