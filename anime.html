@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アニメ·KO — أنمي كو</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">アニメ·<em>KO</em></div>
+  <div class="nav-search">
+    <input type="text" id="navSearch" placeholder="ابحث عن أنمي..." oninput="liveSearch(this.value)"/>
+    <button onclick="triggerSearch()">🔍</button>
+  </div>
+</nav>
+
+<!-- SEARCH DROPDOWN -->
+<div id="searchResults"></div>
+
+<!-- HERO SLIDER -->
+<div class="hero" id="heroSlider">
+  <div class="hero-slide active" id="slide0">
+    <img class="hero-bg" id="heroBg0" src="" alt=""/>
+    <div class="hero-grad"></div>
+    <div class="hero-info">
+      <div class="hero-badge">🔥 الأكثر مشاهدة</div>
+      <div class="hero-title" id="heroT0">هجوم العمالقة</div>
+      <div class="hero-meta" id="heroM0">أكشن · دراما · 2013</div>
+      <button class="hero-btn" onclick="goPlayer(16498)">▶ شاهد الآن</button>
+    </div>
+  </div>
+  <div class="hero-slide" id="slide1">
+    <img class="hero-bg" id="heroBg1" src="" alt=""/>
+    <div class="hero-grad"></div>
+    <div class="hero-info">
+      <div class="hero-badge">🏴‍☠️ مستمر</div>
+      <div class="hero-title" id="heroT1">ون بيس</div>
+      <div class="hero-meta" id="heroM1">أكشن · مغامرة · 1999</div>
+      <button class="hero-btn" onclick="goPlayer(20)">▶ شاهد الآن</button>
+    </div>
+  </div>
+  <div class="hero-slide" id="slide2">
+    <img class="hero-bg" id="heroBg2" src="" alt=""/>
+    <div class="hero-grad"></div>
+    <div class="hero-info">
+      <div class="hero-badge">⭐ الأفضل تقييماً</div>
+      <div class="hero-title" id="heroT2">ديمون سلاير</div>
+      <div class="hero-meta" id="heroM2">أكشن · فانتازيا · 2019</div>
+      <button class="hero-btn" onclick="goPlayer(101922)">▶ شاهد الآن</button>
+    </div>
+  </div>
+  <div class="hero-arrows">
+    <div class="hero-arrow" onclick="prevSlide()">‹</div>
+    <div class="hero-arrow" onclick="nextSlide()">›</div>
+  </div>
+  <div class="hero-dots" id="heroDots"></div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filt active" onclick="filterGenre('all',this)">الكل 🌟</button>
+  <button class="filt" onclick="filterGenre('Action',this)">أكشن ⚔️</button>
+  <button class="filt" onclick="filterGenre('Romance',this)">رومانسي 🌸</button>
+  <button class="filt" onclick="filterGenre('Fantasy',this)">فانتازيا 🔮</button>
+  <button class="filt" onclick="filterGenre('Horror',this)">رعب 👻</button>
+  <button class="filt" onclick="filterGenre('Sports',this)">رياضي ⚽</button>
+  <button class="filt" onclick="filterGenre('Sci-Fi',this)">خيال علمي 🚀</button>
+  <button class="filt" onclick="filterGenre('Comedy',this)">كوميدي 😄</button>
+</div>
+
+<!-- SECTIONS -->
+<div class="sec">
+  <div class="sec-head">
+    <div class="sec-title">🔥 الأكثر مشاهدة</div>
+  </div>
+  <div class="grid" id="trendingGrid">
+    <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head">
+    <div class="sec-title">⭐ الأعلى تقييماً</div>
+  </div>
+  <div class="grid" id="topGrid">
+    <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
+  </div>
+</div>
+
+<div class="sec" style="padding-bottom:40px">
+  <div class="sec-head">
+    <div class="sec-title">🆕 أضيف حديثاً</div>
+  </div>
+  <div class="grid" id="newGrid">
+    <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
+  </div>
+</div>
+
+<footer>
+  アニメ·KO — البيانات من AniList API · جميع الحقوق لأصحابها
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+  </html>
