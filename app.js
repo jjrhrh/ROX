@@ -43,7 +43,7 @@ function bnavGo(tab) {
   }
   if (tab === 'home') { loadHeroSwiper(); loadHomePage(); loadNewsSection('newsFeed', CONFIG.NEWS.CINEMA, 'red'); document.getElementById('newsSectionTitle').textContent = '📰 أخبار السينما الحية'; }
   if (tab === 'library') loadLibraryPage();
-  if (tab === 'otaku') { hero.style.display = ''; hero.style.visibility = ''; loadOtakuPage(); loadNewsSection('newsFeed', CONFIG.NEWS.ANIME, 'purple'); document.getElementById('newsSectionTitle').textContent = '📰 أخبار الأنمي'; }
+  if (tab === 'otaku') { loadOtakuPage(); }
   window.scrollTo(0, 0);
 }
 
@@ -244,77 +244,10 @@ function buildSection(title, movies, type = 'movie') {
       </div>
     </div>`;
 }
-// ===== OTAKU MODE =====
-let _otakuOn = false;
-function toggleOtakuMode() {
-  _otakuOn = true;
-  document.getElementById('htmlRoot').classList.add('otaku-mode');
-  bnavGo('otaku');
-}
 async function loadOtakuPage() {
   const page = document.getElementById('homePage');
   if (!page) return;
-  const SECTIONS = [
-    { id: 'sec_otaku1', title: '🔥 صدارة الموسم',          endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
-    { id: 'sec_otaku2', title: '🏆 أساطير الأوتـاكو',      endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'200' } },
-    { id: 'sec_otaku8', title: '📅 أحدث إصدارات الأنمي',   endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'first_air_date.desc' } },
-  ];
-  page.innerHTML = SECTIONS.map(s => `
-    <div class="home-section" id="${s.id}">
-      <div class="section-header">
-        <span class="section-bar"></span>
-        <h2 class="section-title">${s.title}</h2>
-      </div>
-      <div class="movies-row" id="${s.id}_row">
-        ${Array(6).fill('<div class="movie-card skeleton-card"></div>').join('')}
-      </div>
-    </div>`).join('');
-  for (const s of SECTIONS) {
-    try {
-      const movies = await fetchMovies(s.endpoint, { type: s.type, params: s.params || {} });
-      const row = document.getElementById(`${s.id}_row`);
-      const container = document.getElementById(s.id);
-      if (!row || !container) return;
-      if (!movies.length) { container.remove(); continue; }
-      row.innerHTML = movies.map(m => buildMovieCard(m, s.type, s.cardClass || '')).join('');
-      await new Promise(r => setTimeout(r, 100));
-      await new Promise(r => setTimeout(r, 150));
-    } catch { document.getElementById(s.id)?.remove(); }
-  }
-    }
-async function loadOtakuHero() {
-  const url = buildTMDBUrl('/discover/tv', { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' });
-  const data = await fetch(url).then(r => r.json());
-  const movies = (data.results || []).filter(m => m.poster_path).slice(0, CONFIG.HERO.LIMIT);
-  const wrapper = document.getElementById('heroSwiperWrapper');
-  if (!wrapper) return;
-  wrapper.innerHTML = movies.map(m => {
-    const poster = `${CONFIG.IMAGES.POSTER_XL}${m.poster_path}`;
-    return `<div class="swiper-slide hero-swiper-slide" onclick="openDetail(${m.id},'tv')">
-      <img src="${poster}" alt="${m.name || m.original_name}"
-           onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-    </div>`;
-  }).join('');
-  if (heroSwiper) {
-    heroSwiper.destroy(true, true);
-    heroSwiper = null;
-  }
-  heroSwiper = new Swiper('#heroSwiper', {
-    effect: 'coverflow',
-    grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: 1.5,
-    spaceBetween: 20,
-    loop: true,
-    autoplay: { delay: 5000, disableOnInteraction: false },
-    speed: 400,
-    coverflowEffect: { rotate: 50, stretch: -100, depth: 400, modifier: 1, slideShadows: false },
-    on: {
-      init: function() { updateHeroInfo(movies, 0); },
-      slideChange: function() { updateHeroInfo(movies, this.realIndex); }
-    }
-  });
-}
+  } 
 async function loadHomePage() {
   const page = document.getElementById('homePage');
   if (!page) return;
