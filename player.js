@@ -346,11 +346,20 @@ function playHLS(url, wrap) {
   wrap.appendChild(v);
   if (typeof Hls!=='undefined' && Hls.isSupported()) {
     const hls = new Hls({ enableWorker:true, lowLatencyMode:true });
-    hls.loadSource(url);
-    hls.attachMedia(v);
-    hls.on(Hls.Events.ERROR,(_,d)=>{
-      if(d.fatal) wrap.innerHTML='<div class="video-placeholder"><p>⚠️ فشل تحميل الفيديو</p></div>';
-    });
+hls.loadSource(url);
+hls.attachMedia(v);
+hls.on(Hls.Events.ERROR, (_, d) => {
+  if (d.fatal) {
+    proxyIndex++;
+    const nextProxy = M3U8_PROXIES[proxyIndex];
+    if (nextProxy && rawUrl) {
+      hls.destroy();
+      playHLS(nextProxy + encodeURIComponent(rawUrl), rawUrl, wrap);
+    } else {
+      wrap.innerHTML = '<div class="video-placeholder"><p>⚠️ فشلت جميع الـ Proxies</p></div>';
+    }
+  }
+});
   } else if (v.canPlayType('application/vnd.apple.mpegurl')) {
     v.src = url;
   }
