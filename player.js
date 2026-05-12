@@ -311,8 +311,8 @@ function renderServers() {
    EPISODES
 ═══════════════════════════════════════════ */
 function renderEpisodes() {
-  const total = currentAnime.episodes || 12;
-  const count = Math.min(total, 120);
+const total = currentAnime.episodes || 9999;
+const count = Math.min(total, 9999);
   let html = '';
   for (let i=1; i<=count; i++) {
     html += `<div class="ep-num ${i===1?'active':''}" onclick="selectEp(${i},this)">${i}</div>`;
