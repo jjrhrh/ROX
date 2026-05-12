@@ -41,7 +41,12 @@ const PAHE_APIS = [
   'https://consumet-api.onrender.com/anime/animepahe',
 ];
 let activeCONSUMET = CONSUMET_APIS[0];
-
+const M3U8_PROXIES = [
+  'https://m3u8-proxy.vercel.app/proxy?url=',
+  'https://cors-anywhere.herokuapp.com/',
+  'https://api.allorigins.win/raw?url=',
+];
+let proxyIndex = 0;
 /* ═══════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════ */
@@ -236,7 +241,11 @@ function injectStream(sources, label, wrap) {
                || sources[0];
 
   wrap.innerHTML = `<div class="src-info">✅ ${label} · ح${currentEp} · ${chosen.quality||'auto'}</div>`;
-  chosen.isM3U8 ? playHLS(chosen.url, wrap) : playMP4(chosen.url, wrap);
+  if (chosen.isM3U8) {
+  const proxiedUrl = M3U8_PROXIES[0] + encodeURIComponent(chosen.url);
+  playHLS(proxiedUrl, chosen.url, wrap);
+} else {
+  playMP4(chosen.url, wrap);
 }
 
 /* ─── iframe الذكي مع retry ─── */
@@ -339,7 +348,7 @@ function translateStatus(s) {
 /* ═══════════════════════════════════════════
    HLS / MP4
 ═══════════════════════════════════════════ */
-function playHLS(url, wrap) {
+function playHLS(url, rawUrl, wrap) {
   const v = document.createElement('video');
   v.controls = v.autoplay = true;
   v.style.cssText = 'width:100%;height:100%;background:#000';
