@@ -31,15 +31,7 @@ const SERVERS = [
 /* ═══════════════════════════════════════════
    Consumet APIs — fallbacks مرتبة
 ═══════════════════════════════════════════ */
-const CONSUMET_APIS = [
-  'https://cinema-rox.vercel.app/api/stream',
-  'https://api.consumet.org/anime/gogoanime',
-];
-const PAHE_APIS = [
-  'https://api.consumet.org/anime/animepahe',
-  'https://consumet-api.onrender.com/anime/animepahe',
-];
-let activeCONSUMET = CONSUMET_APIS[0];
+const AA_STREAM = 'https://cinema-rox.vercel.app/api/stream';
 const M3U8_PROXIES = [
   'https://m3u8-proxy.vercel.app/proxy?url=',
   'https://cors-anywhere.herokuapp.com/',
