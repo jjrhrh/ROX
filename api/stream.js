@@ -5,9 +5,13 @@ export default async function handler(req, res) {
   const { title, ep, scrape, mode } = req.query;
   /* ══ وضع الـ Scrape: جلب رابط M3U8 من صفحة iframe ══ */
   if (scrape) {
-    return await scrapeVideoUrl(scrape, res);
-  }
+  return await scrapeVideoUrl(scrape, res);
+}
 
+if (mode === 'servers') {
+  const servers = await fetchAllServers(title, String(ep || 1));
+  return res.status(200).json({ servers });
+}
   if (!title) return res.status(400).json({ error: 'title required' });
 
   const epNum = String(ep || 1);
