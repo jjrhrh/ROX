@@ -2,9 +2,8 @@
    السيرفرات
 ═══════════════════════════════════════════ */
 const SERVERS = [
-  { id:'gogo-sub',   label:'GogoAnime SUB',  icon:'🟢', type:'consumet', lang:'مترجم',       dub:false },
-  { id:'gogo-dub',   label:'GogoAnime DUB',  icon:'🟣', type:'consumet', lang:'مدبلج',       dub:true  },
-  { id:'pahe-sub',   label:'AnimePahe SUB',  icon:'⚡', type:'pahe',     lang:'مترجم مباشر', dub:false },
+  { id:'aa-sub', label:'AllAnime SUB', icon:'🟢', type:'allanime', lang:'مترجم', dub:false },
+  { id:'aa-dub', label:'AllAnime DUB', icon:'🟣', type:'allanime', lang:'مدبلج', dub:true  },
   { id:'anime4up',   label:'Anime4up AR',    icon:'🎬', type:'iframe',   lang:'🇸🇦 عربي',
     buildUrl:(slug,ep)=>`https://anime4up.cam/episode/${slug}-${ep}/` },
   { id:'witanime',   label:'WitAnime AR',    icon:'🧡', type:'iframe',   lang:'🇸🇦 عربي',
