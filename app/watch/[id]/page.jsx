@@ -33,7 +33,15 @@ export default function WatchPage({ params, searchParams }) {
       }),
     })
     .then(r => r.json())
-    .then(data => { setSources(data); setStream(pickBest(data)); })
+    .then(data => {
+  setSources(data);
+  const best = pickBest(data);
+  if (best?.type === 'hls') {
+    best.rawUrl = best.url;
+    best.url = `https://m3u8-proxy.vercel.app/proxy?url=${encodeURIComponent(best.url)}`;
+  }
+  setStream(best);
+})
     .catch(e  => setError(e.message))
     .finally(() => setLoading(false));
   }, [showId, ep, lang]);
