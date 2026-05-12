@@ -47,8 +47,6 @@ let currentEp      = 1;
 let currentServer  = SERVERS[0];
 let currentQuality = 'auto';
 let allSlugs       = [];
-let gogoId         = null;
-let paheId         = null;
 
 /* ═══════════════════════════════════════════
    INIT
