@@ -15,6 +15,7 @@ export default function WatchPage({ params, searchParams }) {
   const [ep,      setEp]      = useState(initEp);
   const [sources, setSources] = useState([]);
   const [stream,  setStream]  = useState(null);
+  const [proxyIndex, setProxyIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState(null);
 
