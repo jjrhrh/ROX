@@ -274,11 +274,34 @@ function injectStream(sources, label, wrap) {
 async function loadIframeSmart(srv, slugIdx) {
   const wrap    = document.getElementById('videoWrap');
   const slug    = allSlugs[slugIdx] || allSlugs[0];
-  const url     = srv.buildUrl(slug, currentEp);
+  const pageUrl = srv.buildUrl(slug, currentEp);
   const hasNext = slugIdx + 1 < allSlugs.length;
 
+  wrap.innerHTML = `<div class="video-placeholder">
+    <div class="loading"><div class="spinner"></div>
+    جاري استخراج الفيديو من ${srv.label}...</div>
+  </div>`;
+
+  try {
+    const scrapeRes = await fetch(
+      `https://cinema-rox.vercel.app/api/stream?scrape=${encodeURIComponent(pageUrl)}`,
+      { signal: AbortSignal.timeout(15000) }
+    );
+    const data = await scrapeRes.json();
+    if (data.url) {
+      if (data.type === 'hls') {
+        playHLS(M3U8_PROXIES[0] + encodeURIComponent(data.url), data.url, wrap);
+      } else {
+        playMP4(data.url, wrap);
+      }
+      return;
+    }
+  } catch(e) {
+    console.log('[player] Scrape فشل:', e.message);
+  }
+
   wrap.innerHTML = `
-    <iframe src="${url}" allowfullscreen
+    <iframe src="${pageUrl}" allowfullscreen
       allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
       sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"
       referrerpolicy="no-referrer" loading="lazy">
