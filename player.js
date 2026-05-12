@@ -64,6 +64,7 @@ async function initPlayer() {
           synonyms
           coverImage { large }
           averageScore episodes status genres
+          nextAiringEpisode { episode }
           description(asHtml:false)
           startDate { year }
           studios(isMain:true) { nodes { name } }
@@ -71,6 +72,9 @@ async function initPlayer() {
       }`, { id: parseInt(id) });
 
     currentAnime = data.Media;
+     if (!currentAnime.episodes && currentAnime.nextAiringEpisode) {
+  currentAnime.episodes = currentAnime.nextAiringEpisode.episode - 1;
+     }
     allSlugs     = buildAllSlugs(currentAnime);
     currentSlug  = allSlugs[0];
 
