@@ -234,18 +234,26 @@ async function loadPaheSmart() {
 }
 
 /* ─── حقن الفيديو في المشغّل ─── */
+// السطور 237-249 — استبدل injectStream كاملاً
 function injectStream(sources, label, wrap) {
   const chosen = sources.find(s => s.quality === currentQuality)
                || sources.find(s => s.quality === '1080p')
                || sources.find(s => s.quality === 'default')
                || sources[0];
 
+  // ← إظهار الرابط في خانة Custom URL
+  const displayUrl = chosen.url || '';
+  const customInput = document.getElementById('customUrl');
+  if (customInput) customInput.value = displayUrl;
+
   wrap.innerHTML = `<div class="src-info">✅ ${label} · ح${currentEp} · ${chosen.quality||'auto'}</div>`;
+
   if (chosen.isM3U8) {
-  const proxiedUrl = M3U8_PROXIES[0] + encodeURIComponent(chosen.url);
-  playHLS(proxiedUrl, chosen.url, wrap);
-} else {
-  playMP4(chosen.url, wrap);
+    const proxiedUrl = M3U8_PROXIES[0] + encodeURIComponent(chosen.url);
+    playHLS(proxiedUrl, chosen.url, wrap);
+  } else {
+    playMP4(chosen.url, wrap);
+  }
 }
 
 /* ─── iframe الذكي مع retry ─── */
