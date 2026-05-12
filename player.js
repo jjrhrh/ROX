@@ -397,7 +397,8 @@ function loadCustomUrl() {
   const url  = document.getElementById('customUrl')?.value?.trim();
   const wrap = document.getElementById('videoWrap');
   if (!url||!wrap) return;
-  if (url.includes('.m3u8')) playHLS(url, wrap);
+  // السطر 400 — استبدل هذا السطر فقط
+if (url.includes('.m3u8')) playHLS(url, url, wrap);
   else if (url.includes('.mp4')||url.includes('.webm')) playMP4(url, wrap);
   else wrap.innerHTML = `<iframe src="${url}" allowfullscreen
     allow="autoplay; fullscreen"
