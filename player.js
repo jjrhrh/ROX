@@ -183,11 +183,9 @@ async function loadServer(srv) {
   </div>`;
 
   try {
-    if (srv.type === 'consumet') {
-      await loadConsumetSmart(srv);
-    } else if (srv.type === 'pahe') {
-      await loadPaheSmart();
-    } else {
+    if (srv.type === 'allanime') {
+  await loadAllAnimeSmart(srv);
+} else {
       await loadIframeSmart(srv, 0);
     }
   } catch(e) {
