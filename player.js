@@ -81,7 +81,7 @@ async function initPlayer() {
     renderAnimeInfo();
     renderEpisodes();
     renderServers();
-
+fetchAndRenderServers();
 
   } catch(e) {
     document.getElementById('animeCardBig').innerHTML =
