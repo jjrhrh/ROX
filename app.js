@@ -219,6 +219,7 @@ document.body.style.backgroundImage = '';
   const year   = (movie.release_date || movie.first_air_date || '').slice(0,4);
   return `
     <div class="movie-card ${extraClass}" onclick="openDetail(${movie.id},'${type}')">
+      ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
       <div class="movie-poster-wrap">
         <img class="movie-poster" src="${poster}" alt="${title}" loading="lazy"
              onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
