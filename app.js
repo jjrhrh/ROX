@@ -273,33 +273,36 @@ async function loadOtakuPage() {
   if (!page) return;
   loadOtakuHero();
   const SECTIONS = [
-    { id: 'sec_otaku1', title: '🔥 صدارة الموسم',          endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
-    { id: 'sec_otaku2', title: '🏆 أساطير الأوتـاكو',      endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'200' } },
-    { id: 'sec_otaku8', title: '📅 أحدث إصدارات الأنمي',   endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'first_air_date.desc' } },
+    { id: 'sec_otaku1', title: '🔥 أفضل 10 أفلام أنمي', endpoint: '/discover/movie', type: 'movie', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku2', title: '📺 أفضل 10 مسلسلات أنمي', endpoint: '/discover/tv', type: 'tv', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
   ];
   page.innerHTML = SECTIONS.map(s => `
-    <div class="home-section" id="${s.id}">
+    <div class="home-section otaku-section" id="${s.id}">
       <div class="section-header">
         <span class="section-bar"></span>
-        <h2 class="section-title">${s.title}</h2>
+        <h2 class="section-title otaku-sec-title">${s.title}</h2>
+        <button class="browse-all-btn" onclick="alert('Browse all')">Browse all ›</button>
       </div>
-      <div class="movies-row" id="${s.id}_row">
-        ${Array(6).fill('<div class="movie-card skeleton-card"></div>').join('')}
+      <div class="otaku-slider-wrap">
+        <button class="otaku-arrow otaku-arrow-left" onclick="otakuSlide('${s.id}_row',-1)">‹</button>
+        <div class="otaku-row" id="${s.id}_row"></div>
+        <button class="otaku-arrow otaku-arrow-right" onclick="otakuSlide('${s.id}_row',1)">›</button>
       </div>
     </div>`).join('');
   for (const s of SECTIONS) {
     try {
-      const movies = await fetchMovies(s.endpoint, { type: s.type, limit: s.limit || 6, params: s.params || {} });
+      const movies = await fetchMovies(s.endpoint, { type: s.type, limit: 10, params: s.params || {} });
       const row = document.getElementById(`${s.id}_row`);
-      const container = document.getElementById(s.id);
-      if (!row || !container) return;
-      if (!movies.length) { container.remove(); continue; }
-      row.innerHTML = movies.map((m, idx) => buildAnimeCard(m, idx + 1)).join('');
-      await new Promise(r => setTimeout(r, 100));
-      await new Promise(r => setTimeout(r, 150));
+      if (!row) return;
+      row.innerHTML = movies.map((m, idx) => buildAnimeCard(m, idx + 1, s.type)).join('');
     } catch { document.getElementById(s.id)?.remove(); }
   }
-    }
+}
+function otakuSlide(rowId, dir) {
+  const row = document.getElementById(rowId);
+  if (!row) return;
+  row.scrollBy({ left: dir * 340, behavior: 'smooth' });
+}
 async function loadOtakuHero() {
   const url = buildTMDBUrl('/discover/tv', { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' });
   const data = await fetch(url).then(r => r.json());
