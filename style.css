@@ -261,16 +261,15 @@ html, body {
   align-items: flex-end;
   transition: transform 0.25s;
 }
-.anime-card:hover { transform: translateY(-4px); }
 .anime-poster-wrap {
   position: relative;
   aspect-ratio: 16 / 9;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  margin-left: 32px;
+  margin-left: -35px;
   z-index: 2;
-  border: none;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  flex: 1;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.7);
 }
 .anime-poster-wrap:hover {
   border-color: rgba(167,71,254,0.9);
