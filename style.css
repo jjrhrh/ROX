@@ -102,6 +102,7 @@ html, body {
 #bnavProfile.active { --rox-laser: #00e5ff; color: #00e5ff; }
 #bnavOtaku.active   { --rox-laser: #ff4d00; color: #ff4d00; } 
 .bnav-icon  { font-size: 1.3rem; line-height: 1; }
+.bnav-icon svg { width: 1.4rem; height: 1.4rem; } 
 .bnav-label { font-size: 0.7rem; font-weight: 700; }
 .bnav-center {
   width: 56px; height: 56px;
