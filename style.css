@@ -63,7 +63,7 @@ html, body {
   align-items: center; justify-content: center;
   gap: 4px; background: none; border: none;
   color: var(--text3); cursor: pointer;
-  padding: 8px 4px; border-radius: var(--radius-md);
+  padding: 8px 4px; border-radius: 0; position: relative; overflow: visible;
   transition: color 0.2s;
   font-family: 'Cairo', sans-serif;
 }
