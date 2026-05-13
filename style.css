@@ -226,11 +226,14 @@ html, body {
   -webkit-overflow-scrolling: touch;
 }
 .otaku-mode .movies-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   overflow-x: unset;
   padding: 8px 12px 12px;
+}
+.otaku-mode .movies-row .anime-card {
+  width: calc(50% - 5px);
 }
 .movies-row::-webkit-scrollbar { display: none; }
 
