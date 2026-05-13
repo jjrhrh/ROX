@@ -229,7 +229,7 @@ document.body.style.backgroundImage = '';
 <div class="movie-meta-bar"><span>${type === 'tv' ? 'SERIES' : 'MOVIE'} · ${year}</span><span>⭐ ${rating}</span></div>
     </div>`;
 }
-function buildAnimeCard(movie, rank = 0) {
+function buildAnimeCard(movie, rank = 0, type = 'tv') {
   const title = movie.name || movie.original_name || movie.title || '';
   const poster = movie.backdrop_path
     ? `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}`
