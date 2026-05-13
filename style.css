@@ -1277,8 +1277,8 @@ html, body {
 }
 .otaku-row::-webkit-scrollbar { display: none; }
 .otaku-row .anime-card {
-  flex: 0 0 calc(45% - 5px);
-  width: calc(45% - 5px);
+  flex: 0 0 calc(50% - 5px);
+  width: calc(50% - 5px);
   scroll-snap-align: start;
 }
 .otaku-arrow {
