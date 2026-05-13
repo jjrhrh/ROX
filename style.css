@@ -1241,3 +1241,58 @@ html, body {
   box-shadow: 0 0 12px rgba(255,255,255,0.15);
   background: rgba(255,255,255,0.1);
 } 
+.otaku-sec-title {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.7);
+  font-weight: 700;
+}
+.browse-all-btn {
+  margin-right: auto;
+  margin-left: 0;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+.otaku-slider-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.otaku-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 4px 12px;
+  flex: 1;
+}
+.otaku-row::-webkit-scrollbar { display: none; }
+.otaku-row .anime-card {
+  flex: 0 0 calc(50% - 5px);
+  width: calc(50% - 5px);
+  scroll-snap-align: start;
+}
+.otaku-arrow {
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.otaku-arrow-left { margin-left: -4px; }
+.otaku-arrow-right { margin-right: -4px; } 
