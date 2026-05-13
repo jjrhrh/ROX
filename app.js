@@ -243,11 +243,10 @@ function buildAnimeCard(movie, rank = 0) {
         <img class="anime-poster" src="${poster}" loading="lazy"
              onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
         <div class="anime-overlay"><span class="play-icon">▶</span></div>
+        <div class="anime-title-bar">${title.length > 22 ? title.slice(0,22)+'...' : title}</div>
+        <div class="anime-meta-bar"><span>ANIME · ${year}</span>${rating ? `<span>⭐ ${rating}</span>` : ''}</div>
       </div>
-      <div class="anime-title-bar">${title.length > 22 ? title.slice(0,22)+'...' : title}</div>
-      <div class="anime-meta-bar"><span>ANIME · ${year}</span>${rating ? `<span>⭐ ${rating}</span>` : ''}</div>
     </div>`;
-}
 function buildSection(title, movies, type = 'movie') {
   if (!movies.length) return '';
   return `
