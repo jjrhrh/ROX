@@ -249,6 +249,9 @@ function buildAnimeCard(movie, rank = 0, type = 'tv') {
       <div class="anime-meta-bar"><span>أنمي · ${toArabicNums(year)}</span>${rating ? `<span>⭐ ${rating}</span>` : ''}</div>
     </div>`;
 }
+function toArabicNums(str) {
+  return String(str).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
 function buildSection(title, movies, type = 'movie') {
   if (!movies.length) return '';
   return `
