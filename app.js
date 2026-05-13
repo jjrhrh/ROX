@@ -276,7 +276,7 @@ async function loadOtakuPage() {
       const container = document.getElementById(s.id);
       if (!row || !container) return;
       if (!movies.length) { container.remove(); continue; }
-      row.innerHTML = movies.map(m => buildMovieCard(m, s.type, s.cardClass || '')).join('');
+      row.innerHTML = movies.map((m, idx) => buildAnimeCard(m, idx + 1)).join('');
       await new Promise(r => setTimeout(r, 100));
       await new Promise(r => setTimeout(r, 150));
     } catch { document.getElementById(s.id)?.remove(); }
