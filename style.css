@@ -82,6 +82,12 @@ html, body {
               0 0 36px var(--rox-laser,transparent);
   transition: all 0.35s ease;
 }
+@keyframes clickBounce {
+  0%   { transform: translateY(0)    scale(1); }
+  40%  { transform: translateY(-8px) scale(1.2); }
+  70%  { transform: translateY(-3px) scale(1.1); }
+  100% { transform: translateY(0)    scale(1.15); }
+}
 @keyframes rox-breathe {
   0%,100% { filter: drop-shadow(0 0 5px var(--rox-laser)) drop-shadow(0 0 12px var(--rox-laser)); }
   50%     { filter: drop-shadow(0 0 16px var(--rox-laser)) drop-shadow(0 0 32px var(--rox-laser)); opacity:.75; }
