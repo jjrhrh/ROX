@@ -247,6 +247,7 @@ function buildAnimeCard(movie, rank = 0) {
         <div class="anime-meta-bar"><span>ANIME · ${year}</span>${rating ? `<span>⭐ ${rating}</span>` : ''}</div>
       </div>
     </div>`;
+}
 function buildSection(title, movies, type = 'movie') {
   if (!movies.length) return '';
   return `
