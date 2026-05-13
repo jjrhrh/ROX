@@ -54,6 +54,9 @@ function goBack() {
   if (_otakuOn) {
     document.getElementById('bnavOtaku').classList.add('active');
     if (hero) { hero.style.display = ''; hero.style.visibility = ''; }
+    document.getElementById('studioBar').style.display = 'block';
+    document.getElementById('newsSection').style.display = 'block';
+    document.getElementById('newsSectionTitle').textContent = '📰 أخبار الأنمي';
   } else {
     document.getElementById('bnavHome').classList.add('active');
     if (hero) { hero.style.display = ''; hero.style.visibility = ''; }
