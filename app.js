@@ -985,6 +985,7 @@ function saveLib(key, arr) {
   localStorage.setItem(key, JSON.stringify(arr));
 }
 function addToWatchlist(id, type) {
+  if (!window.ROX_USER) { showToast('🔐 سجّل دخولك أولاً'); bnavGo('profile'); return; }
   const list = getLib('rox_watchlist');
   if (list.find(i => i.id === id)) { showToast('✅ موجود في قائمتك مسبقاً'); return; }
   list.unshift({ id, type, addedAt: Date.now() });
