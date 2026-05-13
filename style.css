@@ -1302,3 +1302,8 @@ html, body {
   transform: scale(1.05);
   transform-origin: center top;
 } 
+.otaku-all-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+} 
