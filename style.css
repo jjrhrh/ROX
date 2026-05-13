@@ -27,7 +27,6 @@
 /* ===== BASE ===== */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html, body {
-  font-size: 14px;
   background: #0a0000;
   color: var(--text);
   font-family: 'Cairo', sans-serif;
