@@ -84,7 +84,9 @@ function roxSignIn() {
 function roxSignOut() {
   ROX_AUTH.signOut();
   saveLib('rox_watchlist', []);
-  if (document.getElementById('libraryPage')?.classList.contains('active')) loadLibraryPage();
+  saveLib('rox_watchlater', []);
+  showToast('👋 تم تسجيل الخروج');
+  setTimeout(() => loadProfilePage(), 500);
 }
 if (window.ROX_AUTH) {
   ROX_AUTH.onAuthStateChanged(user => {
