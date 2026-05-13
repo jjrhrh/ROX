@@ -229,7 +229,25 @@ document.body.style.backgroundImage = '';
 <div class="movie-meta-bar"><span>${type === 'tv' ? 'SERIES' : 'MOVIE'} · ${year}</span><span>⭐ ${rating}</span></div>
     </div>`;
 }
-
+function buildAnimeCard(movie, rank = 0) {
+  const title = movie.name || movie.original_name || movie.title || '';
+  const poster = movie.backdrop_path
+    ? `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}`
+    : movie.poster_path ? `${CONFIG.IMAGES.POSTER_LG}${movie.poster_path}` : CONFIG.IMAGES.PLACEHOLDER;
+  const year = (movie.first_air_date || movie.release_date || '').slice(0,4);
+  const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
+  return `
+    <div class="anime-card" onclick="openDetail(${movie.id},'tv')">
+      ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
+      <div class="anime-poster-wrap">
+        <img class="anime-poster" src="${poster}" loading="lazy"
+             onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+        <div class="anime-overlay"><span class="play-icon">▶</span></div>
+      </div>
+      <div class="anime-title-bar">${title.length > 22 ? title.slice(0,22)+'...' : title}</div>
+      <div class="anime-meta-bar"><span>ANIME · ${year}</span>${rating ? `<span>⭐ ${rating}</span>` : ''}</div>
+    </div>`;
+}
 function buildSection(title, movies, type = 'movie') {
   if (!movies.length) return '';
   return `
