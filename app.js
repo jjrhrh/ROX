@@ -85,10 +85,12 @@ function roxSignOut() {
   saveLib('rox_watchlist', []);
   if (document.getElementById('libraryPage')?.classList.contains('active')) loadLibraryPage();
 }
-ROX_AUTH.onAuthStateChanged(user => {
-  window.ROX_USER = user || null;
-  if (document.getElementById('profilePage')?.classList.contains('active')) loadProfilePage();
-});
+if (window.ROX_AUTH) {
+  ROX_AUTH.onAuthStateChanged(user => {
+    window.ROX_USER = user || null;
+    if (document.getElementById('profilePage')?.classList.contains('active')) loadProfilePage();
+  });
+}
 async function fetchMovies(endpoint = '/movie/popular', options = {}) {
   const {
     page            = 1,
