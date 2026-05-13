@@ -75,6 +75,19 @@ function toggleRoxMenu() {
 }
 
 // ===== FETCH =====
+// ===== GOOGLE AUTH =====
+function roxSignIn() {
+  ROX_AUTH.signInWithPopup(ROX_PROVIDER).catch(e => console.error(e));
+}
+function roxSignOut() {
+  ROX_AUTH.signOut();
+  saveLib('rox_watchlist', []);
+  if (document.getElementById('libraryPage')?.classList.contains('active')) loadLibraryPage();
+}
+ROX_AUTH.onAuthStateChanged(user => {
+  window.ROX_USER = user || null;
+  if (document.getElementById('profilePage')?.classList.contains('active')) loadProfilePage();
+});
 async function fetchMovies(endpoint = '/movie/popular', options = {}) {
   const {
     page            = 1,
