@@ -838,6 +838,13 @@ html, body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.movie-meta-bar {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.4);
+  padding: 0 6px 5px;
+  display: flex;
+  justify-content: space-between;
+} 
 .hero-swiper-slide {
   border-radius: 30px !important;
   overflow: hidden !important;
