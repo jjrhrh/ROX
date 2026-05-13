@@ -1297,3 +1297,7 @@ html, body {
 }
 .otaku-arrow-left { margin-left: -4px; }
 .otaku-arrow-right { margin-right: -4px; } 
+.home-section {
+  transform: scale(1.05);
+  transform-origin: center top;
+} 
