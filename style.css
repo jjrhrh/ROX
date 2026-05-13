@@ -67,10 +67,31 @@ html, body {
   transition: color 0.2s;
   font-family: 'Cairo', sans-serif;
 }
-.bnav-btn.active { color: var(--accent); }
-.bnav-btn.active .bnav-icon {
-  filter: none;
+.bnav-btn.active { color: var(--rox-laser, #00e5ff); }
+.bnav-btn.active .bnav-icon { filter: none; }
+.bnav-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%; transform: translateX(-50%);
+  width: 36px; height: 3px;
+  border-radius: 50%;
+  background: var(--rox-laser, transparent);
+  box-shadow: 0 0 6px var(--rox-laser,transparent),
+              0 0 18px var(--rox-laser,transparent),
+              0 0 36px var(--rox-laser,transparent);
+  transition: all 0.35s ease;
 }
+@keyframes rox-breathe {
+  0%,100% { filter: drop-shadow(0 0 5px var(--rox-laser)) drop-shadow(0 0 12px var(--rox-laser)); }
+  50%     { filter: drop-shadow(0 0 16px var(--rox-laser)) drop-shadow(0 0 32px var(--rox-laser)); opacity:.75; }
+}
+.bnav-btn.active .bnav-icon { animation: rox-breathe 2.8s ease-in-out infinite; }
+#bnavHome.active,
+#bnavSearch.active,
+#bnavLibrary.active,
+#bnavProfile.active { --rox-laser: #00e5ff; color: #00e5ff; }
+#bnavOtaku.active   { --rox-laser: #ff4d00; color: #ff4d00; } 
 .bnav-icon  { font-size: 1.3rem; line-height: 1; }
 .bnav-label { font-size: 0.7rem; font-weight: 700; }
 .bnav-center {
