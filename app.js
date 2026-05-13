@@ -237,7 +237,7 @@ function buildAnimeCard(movie, rank = 0, type = 'tv') {
   const year = (movie.first_air_date || movie.release_date || '').slice(0,4);
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
   return `
-    <div class="anime-card" onclick="openDetail(${movie.id},'tv')">
+    <div class="anime-card" onclick="openDetail(${movie.id},'${type}')">
       <div class="anime-poster-wrap">
         <img class="anime-poster" src="${poster}" loading="lazy"
              onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
