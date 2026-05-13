@@ -230,7 +230,7 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-  flex: 0 0 130px;
+  flex: 0 0 220px;
   scroll-snap-align: start;
   cursor: pointer;
   border-radius: 18px;
