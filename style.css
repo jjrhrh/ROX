@@ -290,9 +290,19 @@ html, body {
 }
 .anime-card:hover .anime-overlay { opacity: 1; }
 .anime-title-bar {
-  font-size: 0.75rem; font-weight: 700;
-  color: #fff; padding: 5px 6px 2px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+  padding: 6px 4px 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: absolute;
+  bottom: 22px;
+  left: 20px;
+  right: 4px;
+  z-index: 3;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
 }
 .anime-meta-bar {
   font-size: 0.62rem; color: rgba(255,255,255,0.4);
