@@ -304,11 +304,16 @@ html, body {
   text-overflow: ellipsis;
 }
 .anime-meta-bar {
-  font-size: 0.62rem;
-  color: rgba(255,255,255,0.45);
-  padding: 0 4px 5px;
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.5);
+  padding: 0 4px 6px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.anime-meta-bar span:last-child {
+  color: #f5c518;
+  font-weight: 700;
 }
 .anime-card .movie-poster-wrap {
   aspect-ratio: 16 / 9;
