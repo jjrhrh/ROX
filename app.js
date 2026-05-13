@@ -281,7 +281,7 @@ async function loadOtakuPage() {
       <div class="section-header">
         <span class="section-bar"></span>
         <h2 class="section-title otaku-sec-title">${s.title}</h2>
-        <button class="browse-all-btn">عرض الكل ›</button>
+        <button class="browse-all-btn" onclick="bnavGo('search')">عرض الكل ›</button>
       </div>
       <div class="otaku-slider-wrap">
         <button class="otaku-arrow otaku-arrow-left" onclick="otakuSlide('${s.id}_row',-1)">‹</button>
