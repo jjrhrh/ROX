@@ -2,262 +2,240 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
 
-  const { title, ep, scrape, mode } = req.query;
-  /* ══ وضع الـ Scrape: جلب رابط M3U8 من صفحة iframe ══ */
-  if (scrape) {
-  return await scrapeVideoUrl(scrape, res);
-}
+  const { title, ep, scrape } = req.query;
 
-if (mode === 'servers') {
-  const servers = await fetchAllServers(title, String(ep || 1));
-  return res.status(200).json({ servers });
-}
-  if (!title) return res.status(400).json({ error: 'title required' });
+  if (scrape) return scrapeVideoUrl(scrape, res);
+  if (!title)  return res.status(400).json({ error: 'title required' });
 
   const epNum = String(ep || 1);
-  console.log(`[stream] جلب: ${title} — حلقة ${epNum}`);
+  console.log(`[stream] ${title} — ح${epNum}`);
 
-  const HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0',
-    'Referer':    'https://allmanga.to/',
-  };
+  // جمع السيرفرات من كل المصادر بالتوازي
+  const [aaServers, aniwatchServers, arabicServers] = await Promise.allSettled([
+    fetchAllAnime(title, epNum),
+    fetchAniwatch(title, epNum),
+    fetchArabicScrape(title, epNum),
+  ]);
 
-  let showId = null;
-  try {
-    const body = JSON.stringify({
-      query: `query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType){
-        shows(search:$search,limit:$limit,page:$page,translationType:$translationType){
-          edges{ _id name englishName }
-        }
-      }`,
-      variables: {
-        search: { allowAdult: false, query: title },
-        limit: 5, page: 1, translationType: 'sub',
-      },
-    });
-    const sr  = await fetch('https://api.allanime.day/api', {
-      method: 'POST',
-      headers: { ...HEADERS, 'Content-Type': 'application/json' },
-      body, signal: AbortSignal.timeout(10000),
-    });
-    const sd  = await sr.json();
-    const hit = (sd?.data?.shows?.edges || [])[0];
-    if (hit) { showId = hit._id; }
-  } catch(e) { console.log('[stream] فشل البحث:', e.message); }
+  const servers = [
+    ...(aaServers.value       || []),
+    ...(aniwatchServers.value || []),
+    ...(arabicServers.value   || []),
+  ].filter(s => s?.url);
 
-  if (!showId) return res.status(404).json({ error: 'anime not found', title });
+  console.log(`[stream] ✅ إجمالي: ${servers.length} سيرفر`);
 
-  try {
-    const body = JSON.stringify({
-      query: `query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){
-        episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){
-          episodeString
-          sourceUrls{ sourceUrl sourceName priority type }
-        }
-      }`,
-      variables: { showId, translationType: 'sub', episodeString: epNum },
-    });
-    const er = await fetch('https://api.allanime.day/api', {
-      method: 'POST',
-      headers: { ...HEADERS, 'Content-Type': 'application/json' },
-      body, signal: AbortSignal.timeout(10000),
-    });
-    const ed         = await er.json();
-    const rawSources = ed?.data?.episode?.sourceUrls || [];
+  if (!servers.length)
+    return res.status(404).json({ error: 'no sources found', title });
 
-    if (!rawSources.length) return res.status(404).json({ error: 'no sources', showId });
-
-    const sources = rawSources
-      .map(s => ({
-        url:      decodeAaUrl(s.sourceUrl),
-        quality:  s.priority >= 10 ? '1080p' : s.priority >= 5 ? '720p' : 'auto',
-        isM3U8:   s.sourceUrl?.includes('.m3u8') || false,
-        priority: s.priority || 0,
-        name:     s.sourceName || '',
-      }))
-      .filter(s => s.url?.startsWith('http'))
-      .sort((a, b) => b.priority - a.priority);
-
-    return res.status(200).json({ sources, showId });
-  } catch(e) {
-    return res.status(500).json({ error: e.message });
-  }
+  return res.status(200).json({ sources: servers, servers });
 }
 
-/* ══ Scrape رابط الفيديو من صفحة الموقع ══ */
-async function scrapeVideoUrl(pageUrl, res) {
-  try {
-    console.log('[scrape] جلب:', pageUrl);
-
-    const r = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(pageUrl)}`, {
-      headers: { 'User-Agent': 'Mozilla/5.0 Chrome/124.0' },
-      signal: AbortSignal.timeout(12000),
-    });
-
-    const html = await r.text();
-
-    // ابحث عن M3U8
-    const m3u8Match = html.match(/https?:\/\/[^\s"']+\.m3u8[^\s"']*/);
-    if (m3u8Match) {
-      console.log('[scrape] ✅ M3U8:', m3u8Match[0]);
-      return res.status(200).json({ url: m3u8Match[0], type: 'hls' });
-    }
-
-    // ابحث عن MP4
-    const mp4Match = html.match(/https?:\/\/[^\s"']+\.mp4[^\s"']*/);
-    if (mp4Match) {
-      console.log('[scrape] ✅ MP4:', mp4Match[0]);
-      return res.status(200).json({ url: mp4Match[0], type: 'mp4' });
-    }
-
-    // ابحث عن <video src=
-    const videoSrc = html.match(/<video[^>]+src=["']([^"']+)["']/i);
-    if (videoSrc) {
-      return res.status(200).json({ url: videoSrc[1], type: 'mp4' });
-    }
-
-    // ابحث عن jwplayer أو player setup
-    const jwMatch = html.match(/file["']?\s*:\s*["']([^"']+\.m3u8[^"']*)/);
-    if (jwMatch) {
-      return res.status(200).json({ url: jwMatch[1], type: 'hls' });
-    }
-
-    console.log('[scrape] ❌ لم يُعثر على رابط فيديو');
-    return res.status(404).json({ error: 'no video found in page' });
-
-  } catch(e) {
-    console.log('[scrape] خطأ:', e.message);
-    return res.status(500).json({ error: e.message });
-  }
-}
-/* ══ جلب سيرفرات من مصادر متعددة ══ */
-async function fetchAllServers(title, epNum) {
+/* ════════════════════════════════
+   1. AllAnime API
+════════════════════════════════ */
+async function fetchAllAnime(title, epNum) {
   const servers = [];
-  const HEADERS = {
+  const H = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0',
     'Referer':    'https://allmanga.to/',
+    'Content-Type': 'application/json',
   };
 
-  // ── المصدر 1: AllAnime ──
-  try {
-    const body1 = JSON.stringify({
-      query: `query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType){
-        shows(search:$search,limit:$limit,page:$page,translationType:$translationType){
+  // بحث
+  const sr = await fetch('https://api.allanime.day/api', {
+    method: 'POST', headers: H,
+    body: JSON.stringify({
+      query: `query($s:SearchInput,$l:Int,$p:Int,$t:VaildTranslationTypeEnumType){
+        shows(search:$s,limit:$l,page:$p,translationType:$t){
           edges{ _id name englishName }
         }
       }`,
-      variables: { search:{ allowAdult:false, query:title }, limit:3, page:1, translationType:'sub' },
-    });
-    const sr  = await fetch('https://api.allanime.day/api', {
-      method:'POST', headers:{...HEADERS,'Content-Type':'application/json'},
-      body:body1, signal:AbortSignal.timeout(8000),
-    });
-    const sd  = await sr.json();
-    const showId = (sd?.data?.shows?.edges||[])[0]?._id;
-    if (showId) {
-      const body2 = JSON.stringify({
-        query:`query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){
-          episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){
-            sourceUrls{ sourceUrl sourceName priority }
-          }
-        }`,
-        variables:{ showId, translationType:'sub', episodeString:epNum },
-      });
+      variables: { s:{ allowAdult:false, query:title }, l:5, p:1, t:'sub' },
+    }),
+    signal: AbortSignal.timeout(9000),
+  });
+  const sd     = await sr.json();
+  const showId = (sd?.data?.shows?.edges||[])[0]?._id;
+  if (!showId) return servers;
+
+  // جلب سورسات SUB
+  for (const lang of ['sub','dub']) {
+    try {
       const er = await fetch('https://api.allanime.day/api', {
-        method:'POST', headers:{...HEADERS,'Content-Type':'application/json'},
-        body:body2, signal:AbortSignal.timeout(8000),
+        method: 'POST', headers: H,
+        body: JSON.stringify({
+          query: `query($id:String!,$t:VaildTranslationTypeEnumType!,$e:String!){
+            episode(showId:$id,translationType:$t,episodeString:$e){
+              sourceUrls{ sourceUrl sourceName priority }
+            }
+          }`,
+          variables: { id:showId, t:lang, e:epNum },
+        }),
+        signal: AbortSignal.timeout(9000),
       });
       const ed = await er.json();
       (ed?.data?.episode?.sourceUrls||[]).forEach(s => {
         const url = decodeAaUrl(s.sourceUrl);
-        if (url?.startsWith('http')) {
-          servers.push({
-            name:    s.sourceName || 'AllAnime',
-            url,
-            type:    url.includes('.m3u8') ? 'hls' : 'iframe',
-            quality: s.priority >= 10 ? '1080p' : s.priority >= 5 ? '720p' : 'auto',
-            source:  'allanime',
-          });
-        }
+        if (!url?.startsWith('http')) return;
+        servers.push({
+          name:    `AllAnime ${lang.toUpperCase()} · ${s.sourceName||''}`,
+          url,
+          type:    url.includes('.m3u8') ? 'hls' : 'iframe',
+          quality: s.priority >= 10 ? '1080p' : s.priority >= 5 ? '720p' : 'auto',
+          lang,
+        });
       });
-      console.log(`[servers] AllAnime: ${servers.length} سيرفر`);
-    }
-  } catch(e) { console.log('[servers] AllAnime فشل:', e.message); }
+    } catch(e) { console.log(`[AA] ${lang} فشل:`, e.message); }
+  }
 
-  // ── المصدر 2: Aniwatch API ──
-  try {
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+$/,'');
-    const epId = `${slug}-episode-${epNum}`;
-    for (const srv of ['vidstreaming','megacloud','streamsb']) {
+  console.log(`[AA] ${servers.length} سيرفر`);
+  return servers;
+}
+
+/* ════════════════════════════════
+   2. Aniwatch (Zoro mirror)
+════════════════════════════════ */
+async function fetchAniwatch(title, epNum) {
+  const servers = [];
+  const slug    = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
+  const epId    = `${slug}-episode-${epNum}`;
+
+  const APIS = [
+    'https://aniwatch-api-one-tau.vercel.app',
+    'https://aniwatch-api-dusky.vercel.app',
+  ];
+
+  for (const api of APIS) {
+    for (const srv of ['vidstreaming','megacloud','streamsb','vidcloud']) {
       try {
         const r = await fetch(
-          `https://aniwatch-api-one-tau.vercel.app/anime/episode-srcs?id=${encodeURIComponent(epId)}&server=${srv}&category=sub`,
-          { signal:AbortSignal.timeout(7000) }
+          `${api}/anime/episode-srcs?id=${encodeURIComponent(epId)}&server=${srv}&category=sub`,
+          { signal: AbortSignal.timeout(7000) }
         );
+        if (!r.ok) continue;
         const d = await r.json();
         (d.sources||[]).forEach(s => {
           servers.push({
-            name:    srv,
+            name:    `Aniwatch · ${srv}`,
             url:     s.url,
             type:    s.isM3U8 ? 'hls' : 'mp4',
             quality: s.quality || 'auto',
-            source:  'aniwatch',
+            lang:    'sub',
           });
         });
-        console.log(`[servers] Aniwatch/${srv}: ${d.sources?.length||0} سيرفر`);
+        if (d.sources?.length) break; // نجح — انتقل للسيرفر التالي
       } catch {}
     }
-  } catch(e) { console.log('[servers] Aniwatch فشل:', e.message); }
+    if (servers.length >= 3) break;
+  }
 
-  // ── المصدر 3: ani.zip API ──
-  try {
-    const r = await fetch(
-      `https://api.ani.zip/mappings?anilist_id=${encodeURIComponent(title)}`,
-      { signal:AbortSignal.timeout(6000) }
-    );
-    const d = await r.json();
-    const ep = d?.episodes?.[epNum];
-    if (ep?.url) {
-      servers.push({
-        name:    'ani.zip',
-        url:     ep.url,
-        type:    ep.url.includes('.m3u8') ? 'hls' : 'iframe',
-        quality: 'auto',
-        source:  'anizip',
-      });
-      console.log('[servers] ani.zip: ✅');
-    }
-  } catch(e) { console.log('[servers] ani.zip فشل:', e.message); }
-
-  // ── المصدر 4: AniList Streaming Links ──
-  try {
-    const r = await fetch('https://graphql.anilist.co', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        query:`query($search:String){Media(search:$search,type:ANIME){streamingEpisodes{title url site}}}`,
-        variables:{ search:title },
-      }),
-      signal:AbortSignal.timeout(6000),
-    });
-    const d = await r.json();
-    (d?.data?.Media?.streamingEpisodes||[])
-      .filter(e => e.title?.includes(epNum))
-      .forEach(e => {
-        servers.push({
-          name:    e.site || 'AniList',
-          url:     e.url,
-          type:    'iframe',
-          quality: 'auto',
-          source:  'anilist',
-        });
-      });
-    console.log(`[servers] AniList streaming: ${servers.length}`);
-  } catch(e) { console.log('[servers] AniList فشل:', e.message); }
-
-  console.log(`[servers] ✅ إجمالي: ${servers.length} سيرفر`);
+  console.log(`[Aniwatch] ${servers.length} سيرفر`);
   return servers;
 }
+
+/* ════════════════════════════════
+   3. المواقع العربية عبر Scrape
+════════════════════════════════ */
+async function fetchArabicScrape(title, epNum) {
+  const servers  = [];
+  const slug     = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
+
+  const ARABIC_SITES = [
+    { name:'Anime4up',    url:`https://anime4up.cam/episode/${slug}-${epNum}/` },
+    { name:'WitAnime',    url:`https://witanime.cyou/episode/${slug}-${epNum}/` },
+    { name:'Anime3rb',    url:`https://anime3rb.com/episodes/${slug}-${epNum}` },
+    { name:'Shahiid',     url:`https://shahiid-anime.net/episode/${slug}-episode-${epNum}/` },
+    { name:'Ristoanime',  url:`https://ristoanime.co/episode/${slug}-episode-${epNum}/` },
+    { name:'AnimeSlayer', url:`https://www.animeslayer.com/episode/${slug}-episode-${epNum}/` },
+  ];
+
+  // جلب بالتوازي لكل المواقع
+  const results = await Promise.allSettled(
+    ARABIC_SITES.map(site => scrapeForVideo(site.url, site.name))
+  );
+
+  results.forEach((r, i) => {
+    if (r.status === 'fulfilled' && r.value) {
+      servers.push({
+        name:    ARABIC_SITES[i].name + ' AR',
+        url:     r.value.url,
+        type:    r.value.type,
+        quality: 'auto',
+        lang:    'ar',
+      });
+    }
+  });
+
+  console.log(`[Arabic] ${servers.length} سيرفر`);
+  return servers;
+}
+
+/* ════════════════════════════════
+   Scrape Helper — يجلب HTML ويستخرج رابط
+════════════════════════════════ */
+const PROXIES = [
+  u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+  u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+  u => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(u)}`,
+];
+
+async function scrapeForVideo(pageUrl, name) {
+  for (const proxy of PROXIES) {
+    try {
+      const r = await fetch(proxy(pageUrl), {
+        headers: { 'User-Agent': 'Mozilla/5.0 Chrome/124.0' },
+        signal:  AbortSignal.timeout(10000),
+      });
+      if (!r.ok) continue;
+      const html = await r.text();
+      const result = extractVideoUrl(html);
+      if (result) {
+        console.log(`[scrape] ✅ ${name}: ${result.url.slice(0,60)}`);
+        return result;
+      }
+    } catch(e) {
+      console.log(`[scrape] ${name} proxy فشل:`, e.message);
+    }
+  }
+  return null;
+}
+
+function extractVideoUrl(html) {
+  const patterns = [
+    // M3U8 مباشر
+    { re: /https?:\/\/[^\s"'<>]+\.m3u8[^\s"'<>]*/,           type: 'hls' },
+    // JWPlayer / Video.js file
+    { re: /file\s*:\s*["']([^"']+\.m3u8[^"']*)/,             type: 'hls', g: 1 },
+    // MP4 مباشر
+    { re: /https?:\/\/[^\s"'<>]+\.mp4[^\s"'<>]*/,            type: 'mp4' },
+    // video src
+    { re: /<video[^>]+src=["']([^"']+)["']/i,                 type: 'mp4', g: 1 },
+    // src: "..." في الـ JS
+    { re: /source\s*:\s*["']([^"']+\.mp4[^"']*)/,            type: 'mp4', g: 1 },
+    // iframe embed
+    { re: /iframe[^>]+src=["'](https?:\/\/[^"']+)["']/i,     type: 'iframe', g: 1 },
+  ];
+
+  for (const p of patterns) {
+    const m = html.match(p.re);
+    if (m) return { url: p.g ? m[p.g] : m[0], type: p.type };
+  }
+  return null;
+}
+
+/* ════════════════════════════════
+   Scrape مخصص (من player.js)
+════════════════════════════════ */
+async function scrapeVideoUrl(pageUrl, res) {
+  const result = await scrapeForVideo(pageUrl, 'custom');
+  if (result) return res.status(200).json(result);
+  return res.status(404).json({ error: 'no video found' });
+}
+
+/* ════════════════════════════════
+   Helpers
+════════════════════════════════ */
 function rot13(str) {
   return str.replace(/[a-zA-Z]/g, c => {
     const b = c <= 'Z' ? 65 : 97;
@@ -267,4 +245,4 @@ function rot13(str) {
 function decodeAaUrl(url = '') {
   if (url.startsWith('--')) return rot13(url.slice(2));
   return url;
-}
+          }
