@@ -1138,3 +1138,38 @@ html, body {
   font-family: 'Cairo', sans-serif;
   letter-spacing: -4px;
 } 
+.studio-bar {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.4);
+}
+.studio-title {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.studio-list {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.studio-chip {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.7);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  backdrop-filter: blur(8px);
+}
+.studio-chip:hover, .studio-chip.active {
+  border-color: rgba(255,255,255,0.6);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.1);
+} 
