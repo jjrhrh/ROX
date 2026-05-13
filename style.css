@@ -86,7 +86,10 @@ html, body {
   0%,100% { filter: drop-shadow(0 0 5px var(--rox-laser)) drop-shadow(0 0 12px var(--rox-laser)); }
   50%     { filter: drop-shadow(0 0 16px var(--rox-laser)) drop-shadow(0 0 32px var(--rox-laser)); opacity:.75; }
 }
-.bnav-btn.active .bnav-icon { animation: rox-breathe 2.8s ease-in-out infinite; }
+.bnav-btn.active .bnav-icon {
+  animation: clickBounce 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards,
+             rox-breathe 2.8s ease-in-out 0.35s infinite;
+}
 #bnavHome.active,
 #bnavSearch.active,
 #bnavLibrary.active,
