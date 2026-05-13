@@ -1012,7 +1012,7 @@ function loadProfilePage() {
   if (!user) {
     page.innerHTML = `
       <div class="prof-wrap">
-        <div class="prof-logo">Cinema-ROX</div>
+        <div class="prof-logo">Cinema<span style="color:var(--accent)">ROX</span></div>
         <p class="prof-sub">سجّل دخولك لحفظ مكتبتك عبر أجهزتك</p>
         <button class="prof-google-btn" onclick="roxSignIn()">
           <svg width="20" height="20" viewBox="0 0 48 48">
@@ -1025,6 +1025,9 @@ function loadProfilePage() {
         </button>
       </div>`;
   } else {
+    const lang    = localStorage.getItem('rox_lang')    || 'ar';
+    const subSize = localStorage.getItem('rox_sub_size')|| 'md';
+    const subClr  = localStorage.getItem('rox_sub_color')|| '#ffffff';
     page.innerHTML = `
       <div class="prof-wrap">
         <div class="prof-avatar-wrap">
@@ -1032,25 +1035,36 @@ function loadProfilePage() {
         </div>
         <div class="prof-name">${user.displayName}</div>
         <div class="prof-email">${user.email}</div>
+
         <div class="prof-settings">
           <div class="prof-hud">
             <div class="prof-hud-title">🌐 اللغة</div>
             <div class="prof-hud-row">
-              <button class="prof-pill active" onclick="setLang('ar',this)">العربية</button>
-              <button class="prof-pill" onclick="setLang('en',this)">English</button>
+              <button class="prof-pill ${lang==='ar'?'active':''}" onclick="setLang('ar',this)">العربية</button>
+              <button class="prof-pill ${lang==='en'?'active':''}" onclick="setLang('en',this)">English</button>
             </div>
           </div>
           <div class="prof-hud">
-            <div class="prof-hud-title">💬 الترجمة</div>
+            <div class="prof-hud-title">💬 حجم الترجمة</div>
             <div class="prof-hud-row">
-              <button class="prof-pill active" onclick="setSubSize('md',this)">متوسط</button>
-              <button class="prof-pill" onclick="setSubSize('lg',this)">كبير</button>
-              <button class="prof-pill" onclick="setSubSize('sm',this)">صغير</button>
+              <button class="prof-pill ${subSize==='sm'?'active':''}" onclick="setSubSize('sm',this)">صغير</button>
+              <button class="prof-pill ${subSize==='md'?'active':''}" onclick="setSubSize('md',this)">متوسط</button>
+              <button class="prof-pill ${subSize==='lg'?'active':''}" onclick="setSubSize('lg',this)">كبير</button>
             </div>
-            <div class="prof-hud-row" style="margin-top:8px">
-              <button class="prof-pill" style="color:#fff" onclick="setSubColor('#ffffff',this)">أبيض</button>
-              <button class="prof-pill" style="color:#ff0" onclick="setSubColor('#ffff00',this)">أصفر</button>
-              <button class="prof-pill" style="color:#00e5ff" onclick="setSubColor('#00e5ff',this)">سيان</button>
+          </div>
+          <div class="prof-hud">
+            <div class="prof-hud-title">🎨 لون الترجمة</div>
+            <div class="prof-hud-row">
+              <button class="prof-pill ${subClr==='#ffffff'?'active':''}" style="color:#fff"   onclick="setSubColor('#ffffff',this)">أبيض</button>
+              <button class="prof-pill ${subClr==='#ffff00'?'active':''}" style="color:#ff0"   onclick="setSubColor('#ffff00',this)">أصفر</button>
+              <button class="prof-pill ${subClr==='#00e5ff'?'active':''}" style="color:#00e5ff" onclick="setSubColor('#00e5ff',this)">سيان</button>
+            </div>
+          </div>
+          <div class="prof-hud">
+            <div class="prof-hud-title">📚 مكتبتي</div>
+            <div class="prof-hud-row">
+              <button class="prof-pill" onclick="bnavGo('library')">عرض المكتبة</button>
+              <button class="prof-pill" style="color:#ff6b6b;border-color:rgba(229,9,20,0.4)" onclick="clearLibraryConfirm()">🗑 مسح الكل</button>
             </div>
           </div>
         </div>
