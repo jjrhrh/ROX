@@ -249,7 +249,7 @@ function buildAnimeCard(movie, rank = 0, type = 'tv') {
         ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
       </div>
       <div class="anime-title-bar">${title.length > 22 ? title.slice(0,22)+'...' : title}</div>
-      <div class="anime-meta-bar"><span>أنمي · ${toArabicNums(year)}</span>${rating ? `<span>⭐ ${rating}</span>` : ''}</div>
+      <div class="anime-meta-bar"><span class="anime-badge-type">أنمي</span><span class="anime-badge-year">${toArabicNums(year)}</span>${rating ? `<span class="anime-badge-rating">⭐ ${rating}</span>` : ''}</div>
     </div>`;
 }
 function toArabicNums(str) {
