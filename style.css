@@ -236,7 +236,7 @@ html, body {
   border-radius: 18px;
   overflow: visible;
   min-width: 0;
-  background: var(--card-bg);
+  background: transparent;
   border: 1px solid rgba(229,9,20,0.32);
   transition: transform 0.25s, box-shadow 0.25s;
   box-shadow: 0 4px 24px rgba(0,0,0,0.9);
