@@ -764,9 +764,10 @@ const srvs = isAnime ? [
             <span class="ws-play-lbl">اضغط للمشاهدة</span>
           </div>
           <iframe id="wsFrame" class="ws-frame" src="" 
-            allowfullscreen 
-            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-            onload="if(this.src)cwTrackTime(${id},'${type}','${cwPoster}','${cwTitle}')">
+          allowfullscreen
+          allow="autoplay; fullscreen; encrypted-media; picture-in-picture; web-share; clipboard-write; gyroscope; accelerometer"
+          referrerpolicy="no-referrer-when-downgrade"
+          onload="if(this.src)cwTrackTime(${id},'${type}','${cwPoster}','${cwTitle}')">
           </iframe>
           <script>
             if('${resumeSrv}') {
