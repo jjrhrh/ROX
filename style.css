@@ -218,13 +218,19 @@ html, body {
 }
 /* ===== MOVIES ROW ===== */
 .movies-row {
-  display: flex; gap: 12px;
-  overflow-x: auto; padding: 0 16px 16px;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 8px 12px 12px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  transform: translateZ(0);
-  will-change: scroll-position;
+}
+.otaku-mode .movies-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  overflow-x: unset;
+  padding: 8px 12px 12px;
 }
 .movies-row::-webkit-scrollbar { display: none; }
 
