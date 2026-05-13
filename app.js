@@ -228,6 +228,7 @@ document.body.style.backgroundImage = '';
         <div class="movie-overlay"><span class="play-icon">▶</span></div>
       </div>
       <div class="movie-title-bar">${title.length > 18 ? title.slice(0,18)+'...' : title}</div>
+<div class="movie-meta-bar"><span>${type === 'tv' ? 'ANIME' : 'MOVIE'} · ${year}</span><span>⭐ ${rating}</span></div>
     </div>`;
 }
 
