@@ -325,7 +325,7 @@ async function openOtakuAll(secId, title, type) {
   });
   page.innerHTML = `
     <div style="padding:16px">
-      <button class="detail-btn" onclick="goBack()" style="margin-bottom:16px">← رجوع</button>
+      <button class="detail-btn" onclick="studioGoBack()" style="margin-bottom:16px">← رجوع</button>
       <h2 style="color:#fff;margin-bottom:16px;font-size:1rem">${title}</h2>
       <div class="otaku-all-grid">
         ${movies.map((m, idx) => buildAnimeCard(m, idx + 1, type)).join('')}
