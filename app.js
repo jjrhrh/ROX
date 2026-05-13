@@ -1072,6 +1072,13 @@ function loadProfilePage() {
       </div>`;
   }
 }
+function clearLibraryConfirm() {
+  if (confirm('⚠️ هل تريد مسح المكتبة كاملاً؟')) {
+    saveLib('rox_watchlist', []);
+    saveLib('rox_watchlater', []);
+    showToast('🗑 تم مسح المكتبة');
+  }
+}
 function setLang(lang,btn){ btn.closest('.prof-hud-row').querySelectorAll('.prof-pill').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); localStorage.setItem('rox_lang',lang); }
 function setSubSize(size,btn){ btn.closest('.prof-hud-row').querySelectorAll('.prof-pill').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); localStorage.setItem('rox_sub_size',size); }
 function setSubColor(color,btn){ btn.closest('.prof-hud-row').querySelectorAll('.prof-pill').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); localStorage.setItem('rox_sub_color',color); }
