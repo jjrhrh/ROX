@@ -1172,18 +1172,18 @@ html, body {
   box-shadow: 0 0 12px var(--accent-glow);
 } 
 .rank-number {
-  position: absolute;
-  bottom: 8px;
-  left: -6px;
-  font-size: 8rem;
+  font-size: 7rem;
   font-weight: 900;
-  z-index: 1;
-  color: transparent;
-  -webkit-text-stroke: 2px rgba(255,255,255,0.25);
-  pointer-events: none;
+  color: rgba(255,255,255,0.18);
   font-family: 'Cairo', sans-serif;
-  letter-spacing: -6px;
+  letter-spacing: -4px;
   line-height: 1;
+  flex-shrink: 0;
+  width: 55px;
+  text-align: center;
+  z-index: 1;
+  pointer-events: none;
+  padding-bottom: 4px;
 }
 .anime-card .movie-poster-wrap {
   z-index: 2;
