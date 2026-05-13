@@ -273,9 +273,9 @@ async function loadOtakuPage() {
   if (!page) return;
   loadOtakuHero();
   const SECTIONS = [
-    { id: 'sec_otaku1', title: '🔥 صدارة الموسم',          endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
-    { id: 'sec_otaku2', title: '🏆 أساطير الأوتـاكو',      endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'200' } },
-    { id: 'sec_otaku8', title: '📅 أحدث إصدارات الأنمي',   endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', params: { with_genres:'16', with_origin_country:'JP', sort_by:'first_air_date.desc' } },
+    { id: 'sec_otaku1', title: '🔥 صدارة الموسم',          endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', limit: 6, params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku2', title: '🏆 أساطير الأوتـاكو',      endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', limit: 6, params: { with_genres:'16', with_origin_country:'JP', sort_by:'vote_average.desc', 'vote_count.gte':'200' } },
+    { id: 'sec_otaku8', title: '📅 أحدث إصدارات الأنمي',   endpoint: '/discover/tv',    type: 'tv',    cardClass: 'anime-card', limit: 6, params: { with_genres:'16', with_origin_country:'JP', sort_by:'first_air_date.desc' } },
   ];
   page.innerHTML = SECTIONS.map(s => `
     <div class="home-section" id="${s.id}">
