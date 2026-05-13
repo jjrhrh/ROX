@@ -302,15 +302,10 @@ html, body {
 }
 .anime-meta-bar {
   font-size: 0.62rem;
-  color: rgba(255,255,255,0.5);
-  padding: 0 4px 4px;
+  color: rgba(255,255,255,0.45);
+  padding: 0 4px 5px;
   display: flex;
   justify-content: space-between;
-  position: absolute;
-  bottom: 4px;
-  left: 20px;
-  right: 4px;
-  z-index: 3;
 }
 .anime-card .movie-poster-wrap {
   aspect-ratio: 16 / 9;
