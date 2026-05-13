@@ -1191,18 +1191,18 @@ html, body {
   box-shadow: 0 0 12px var(--accent-glow);
 } 
 .rank-number {
-  font-size: 6rem;
+  position: absolute;
+  bottom: 30px;
+  left: 6px;
+  font-size: 5.5rem;
   font-weight: 900;
-  color: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.55);
   font-family: 'Cairo', sans-serif;
   letter-spacing: -4px;
   line-height: 1;
-  flex-shrink: 0;
-  width: 50px;
-  text-align: center;
-  z-index: 1;
+  z-index: 3;
   pointer-events: none;
-  padding-bottom: 2px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
 }
 .anime-card .movie-poster-wrap {
   z-index: 2;
