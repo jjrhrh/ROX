@@ -226,12 +226,22 @@ async function openAnimeJikan(malId, encodedTitle) {
             <h3 class="detail-section-title" style="margin:0">🎬 الحلقات</h3>
             <span style="color:rgba(255,255,255,0.4);font-size:0.75rem">${a.episodes||'?'} حلقة</span>
           </div>
+          <div class="eps-header-bar">
+            <button class="eps-view-all-btn" onclick="openAllEpsJikan(${malId},${tmdbId||0},'${encodeURIComponent(a.title)}')">عرض الكل ›</button>
+          </div>
           <div class="swiper eps-swiper" id="epsSwiper_${malId}">
             <div class="swiper-wrapper">
               ${episodes.map(e=>`
-                <div class="swiper-slide ep-card" onclick="openWatchPageAnime(${tmdbId||0},${malId},1,${e.mal_id?e.episode_id||e.mal_id:e.episode_id||1})">
-                  <div class="ep-num">ح ${e.mal_id||e.episode_id||''}</div>
-                  <div class="ep-title">${(e.title||'').slice(0,24)||'حلقة '+e.mal_id}</div>
+                <div class="swiper-slide ep-card" onclick="openWatchPageAnime(${tmdbId||0},${malId},1,${e.episode_id||1})">
+                  <div class="ep-thumb-wrap">
+                    <img data-src="${e.images?.jpg?.image_url||CONFIG.IMAGES.PLACEHOLDER}"
+                         src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                         class="lazy-img ep-thumb" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+                    <div class="ep-num-badge">ح ${e.episode_id||''}</div>
+                  </div>
+                  <div class="ep-info">
+                    <div class="ep-title">${(e.title||'حلقة '+(e.episode_id||'')).slice(0,28)}</div>
+                  </div>
                 </div>`).join('')}
             </div>
           </div>
