@@ -1387,6 +1387,18 @@ async function loadLibraryPage() {
     if (!items.length) return EMPTY;
     const cards = await Promise.all(items.slice(0,12).map(async item => {
       try {
+        if (item.type === 'anime') {
+          const d = await fetch(`${CONFIG.API.JIKAN_BASE}/anime/${item.id}`).then(r=>r.json());
+          const a = d.data;
+          const poster = a?.images?.jpg?.large_image_url || CONFIG.IMAGES.PLACEHOLDER;
+          const rating = a?.score ? a.score.toFixed(1) : '';
+          const title  = a?.title || '';
+          return `<div class="lib-card" onclick="openAnimeJikan(${item.id},'${encodeURIComponent(title)}')">
+            <img class="lib-card-img" src="${poster}" loading="lazy" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+            <div class="lib-card-overlay"><span>▶</span></div>
+            ${rating?`<span class="lib-card-rating">${rating}</span>`:''}
+          </div>`;
+        }
         const ep = item.type==='tv' ? `/tv/${item.id}` : `/movie/${item.id}`;
         const d  = await fetch(buildTMDBUrl(ep)).then(r=>r.json());
         const title  = item.type==='movie' ? (d.title||d.original_title) : (d.name||d.original_name);
