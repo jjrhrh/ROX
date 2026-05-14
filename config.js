@@ -46,7 +46,7 @@ HERO: Object.freeze({
     POSTER_XL   : 'https://image.tmdb.org/t/p/w780',
     BACKDROP    : 'https://image.tmdb.org/t/p/w1280',
     ORIGINAL    : 'https://image.tmdb.org/t/p/original',
-    PLACEHOLDER : '/assets/images/no-poster.png',
+    PLACEHOLDER : 'https://placehold.co/342x513/111/555?text=ROX',
     STILL_SM    : 'https://image.tmdb.org/t/p/w185',
     STILL_MD    : 'https://image.tmdb.org/t/p/w300',
     PROFILE     : 'https://image.tmdb.org/t/p/w185',
