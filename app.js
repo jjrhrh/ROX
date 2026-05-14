@@ -790,6 +790,9 @@ const reviewsHTML = `
             ${tvSeasons.map(s=>`<option value="${s.season_number}">الموسم ${s.season_number} · ${s.episode_count} ح</option>`).join('')}
           </select>
         </div>
+        <div class="eps-header-bar">
+          <button class="eps-view-all-btn" onclick="openAllEps(${id},${tvSeasons[0]?.season_number||1})">عرض الكل ›</button>
+        </div>
         <div class="swiper eps-swiper" id="epsSwiper_${id}">
           <div class="swiper-wrapper" id="epsWrap_${id}">
             <div class="loading" style="padding:16px">⏳</div>
