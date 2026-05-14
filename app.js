@@ -363,7 +363,7 @@ async function openWatchPageAnime(tmdbId, malId, season=1, episode=1) {
     <div class="ws-section">
       <div class="ws-srv-head">
         <h3 class="ws-stitle">🟢 مصادر البث</h3>
-        <span class="ws-srv-sub" style="color:rgba(147,51,234,0.8)">MAL + TMDB أنمي</span>
+        <span class="ws-srv-sub" style="color:rgba(147,51,234,0.8)">TMDB أنمي</span>
       </div>
       <div class="ws-grid">${srvHTML}</div>
       <p class="ws-note">جرب PRIME أولاً — إذا لم يعمل جرب سيرفر آخر</p>
