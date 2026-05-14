@@ -136,29 +136,6 @@ async function fetchAnimeJikan(endpoint, limit = 20) {
     return (data.data || []).slice(0, limit);
   } catch(e) { console.warn('Jikan:', e.message); return []; }
 }
-
-function buildAnimeCardJikan(anime, rank = 0) {
-  const title  = anime.title_arabic || anime.title || anime.title_english || '';
-  const poster = anime.images?.jpg?.large_image_url || CONFIG.IMAGES.PLACEHOLDER;
-  const year   = anime.aired?.prop?.from?.year || '';
-  const rating = anime.score ? anime.score.toFixed(1) : '';
-  const malId  = anime.mal_id;
-  return `
-    <div class="anime-card" onclick="openAnimeJikan(${malId},'${encodeURIComponent(title)}')">
-      <div class="anime-poster-wrap">
-        <img class="anime-poster" src="${poster}" loading="lazy"
-             onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-        <div class="anime-overlay"><span class="play-icon">▶</span></div>
-        ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
-      </div>
-      <div class="anime-title-bar">${title.length>22?title.slice(0,22)+'…':title}</div>
-      <div class="anime-meta-bar">
-        <span class="anime-badge-type">أنمي</span>
-        <span class="anime-badge-year">${toArabicNums(year)}</span>
-        ${rating?`<span class="anime-badge-rating">⭐ ${rating}</span>`:''}
-      </div>
-    </div>`;
-}
   const page = document.getElementById('detailPage');
   if (!page) return;
   page.innerHTML = '<div class="loading">⏳ جاري تحميل الحلقات...</div>';
