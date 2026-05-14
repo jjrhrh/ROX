@@ -306,14 +306,7 @@ async function openWatchPageAnime(tmdbId, malId, season=1, episode=1) {
   window.scrollTo(0,0);
   const S = CONFIG.SERVERS;
   const id = (tmdbId && tmdbId > 0) ? tmdbId : 0;
-  const useAnimeServers = true;
   const allSrvs = [
-    { icon:'🟣', name:'MAL-1',   url:`${S.MAL1}${malId}`  },
-    { icon:'🔵', name:'MAL-2',   url:`${S.MAL2}${malId}`  },
-    { icon:'🟢', name:'MAL-3',   url:`${S.MAL3}${malId}`  },
-    { icon:'🟡', name:'MAL-4',   url:`${S.MAL4}${malId}`  },
-    { icon:'🔴', name:'MAL-5',   url:`${S.MAL5}${malId}`  },
-    ...(useAnimeServers ? [
       { icon:'🎌', name:'PRIME',   url:`${S.ANIME}${id}/${season}/${episode}`   },
       { icon:'⚡', name:'NEXUS',   url:`${S.ANIME2}${id}/${season}/${episode}`  },
       { icon:'💎', name:'TITAN',   url:`${S.ANIME3}${id}/${season}/${episode}`  },
@@ -339,7 +332,7 @@ async function openWatchPageAnime(tmdbId, malId, season=1, episode=1) {
       { icon:'🎐', name:'SAKURA',  url:`${S.ANIME24}${id}/${season}/${episode}` },
       { icon:'🔥', name:'INFERNO', url:`${S.ANIME26}${id}/${season}/${episode}` },
       { icon:'⚔️', name:'KATANA',  url:`${S.ANIME27}${id}/${season}/${episode}` },
-    ] : []),
+    ],
   ];
   const srvHTML = allSrvs.map((s,i)=>`
     <div class="ws-card ${i===0?'active':''}" data-url="${s.url}" data-name="${s.name}" onclick="wsSelectServer(this)">
