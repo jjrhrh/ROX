@@ -1457,3 +1457,29 @@ html, body {
   box-shadow: 0 0 14px rgba(255,109,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
   color: #ff6d00;
 }
+/* === EP CARD REDESIGN === */
+.ep-card { display:flex; flex-direction:column; width:180px !important; background:rgba(255,255,255,0.04); border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); }
+.ep-thumb-wrap { position:relative; width:100%; aspect-ratio:16/9; }
+.ep-thumb { width:100%; height:100%; object-fit:cover; display:block; }
+.ep-num-badge { position:absolute; top:6px; right:6px; background:rgba(220,20,20,0.85); color:#fff; font-size:0.6rem; font-weight:700; padding:2px 7px; border-radius:8px; }
+.ep-info { padding:6px 8px 8px; }
+.ep-title { color:#fff; font-size:0.72rem; font-weight:700; margin-bottom:3px; }
+.ep-overview { color:rgba(255,255,255,0.5); font-size:0.6rem; line-height:1.4; }
+
+/* === EPS HEADER BAR === */
+.eps-header-bar { display:flex; justify-content:flex-end; margin-bottom:8px; }
+.eps-view-all-btn { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#e0e0e0; font-size:0.72rem; padding:4px 14px; border-radius:20px; cursor:pointer; }
+
+/* === ALL EPS PAGE === */
+.all-eps-page { padding:16px; min-height:100vh; }
+.all-eps-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+.all-eps-title { color:#fff; font-size:0.95rem; font-weight:700; }
+.all-eps-grid { display:grid; grid-template-columns:1fr; gap:14px; }
+.all-ep-card { display:flex; gap:12px; background:rgba(255,255,255,0.04); border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); cursor:pointer; }
+.all-ep-thumb-wrap { position:relative; flex-shrink:0; width:140px; }
+.all-ep-thumb { width:140px; height:90px; object-fit:cover; display:block; }
+.all-ep-play { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3); opacity:0; transition:opacity 0.2s; font-size:1.4rem; color:#fff; }
+.all-ep-card:hover .all-ep-play, .all-ep-card:active .all-ep-play { opacity:1; }
+.all-ep-info { padding:10px 10px 10px 0; display:flex; flex-direction:column; gap:5px; }
+.all-ep-title { color:#fff; font-size:0.78rem; font-weight:700; }
+.all-ep-overview { color:rgba(255,255,255,0.5); font-size:0.65rem; line-height:1.5; }
