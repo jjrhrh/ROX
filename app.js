@@ -88,9 +88,10 @@ function roxSignOut() {
 }
 if (window.ROX_AUTH) {
   ROX_AUTH.onAuthStateChanged(user => {
-    window.ROX_USER = user || null;
-    if (document.getElementById('profilePage')?.classList.contains('active')) loadProfilePage();
-  });
+  window.ROX_USER = user || null;
+  if (document.getElementById('profilePage')?.classList.contains('active')) loadProfilePage();
+  if (document.getElementById('libraryPage')?.classList.contains('active')) loadLibraryPage();
+});
 }
 async function fetchMovies(endpoint = '/movie/popular', options = {}) {
   const {
