@@ -227,7 +227,7 @@ async function openAnimeJikan(malId, encodedTitle) {
     page.innerHTML = `<div class="loading">❌ خطأ<br><button class="detail-btn" onclick="goBack()">← رجوع</button></div>`;
   }
 }
-async function openWatchPageAnime(tmdbId, malId) {
+async function openWatchPageAnime(tmdbId, malId, season=1, episode=1) {
   const page = document.getElementById('watchPage');
   if (!page) return;
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -236,22 +236,41 @@ async function openWatchPageAnime(tmdbId, malId) {
   page.innerHTML = '<div class="loading">⏳ جاري التحميل...</div>';
   window.scrollTo(0,0);
   const S = CONFIG.SERVERS;
-  const malSrvs = [
-    { icon:'🟣', name:'MAL-1',  url:`${S.MAL1}${malId}`  },
-    { icon:'🔵', name:'MAL-2',  url:`${S.MAL2}${malId}`  },
-    { icon:'🟢', name:'MAL-3',  url:`${S.MAL3}${malId}`  },
-    { icon:'🟡', name:'MAL-4',  url:`${S.MAL4}${malId}`  },
-    { icon:'🔴', name:'MAL-5',  url:`${S.MAL5}${malId}`  },
+  const id = tmdbId || 0;
+  const allSrvs = [
+    { icon:'🟣', name:'MAL-1',   url:`${S.MAL1}${malId}`  },
+    { icon:'🔵', name:'MAL-2',   url:`${S.MAL2}${malId}`  },
+    { icon:'🟢', name:'MAL-3',   url:`${S.MAL3}${malId}`  },
+    { icon:'🟡', name:'MAL-4',   url:`${S.MAL4}${malId}`  },
+    { icon:'🔴', name:'MAL-5',   url:`${S.MAL5}${malId}`  },
+    ...(id ? [
+      { icon:'🎌', name:'PRIME',   url:`${S.ANIME}${id}/${season}/${episode}`   },
+      { icon:'⚡', name:'NEXUS',   url:`${S.ANIME2}${id}/${season}/${episode}`  },
+      { icon:'💎', name:'TITAN',   url:`${S.ANIME3}${id}/${season}/${episode}`  },
+      { icon:'🌌', name:'COSMOS',  url:`${S.ANIME4}${id}/${season}/${episode}`  },
+      { icon:'👑', name:'ZENITH',  url:`${S.ANIME5}${id}/${season}/${episode}`  },
+      { icon:'🌅', name:'AURORA',  url:`${S.ANIME6}${id}/${season}/${episode}`  },
+      { icon:'⭐', name:'STELLAR', url:`${S.ANIME7}${id}/${season}/${episode}`  },
+      { icon:'🔮', name:'PHANTOM', url:`${S.ANIME8}${id}/${season}/${episode}`  },
+      { icon:'🌙', name:'ECLIPSE', url:`${S.ANIME9}${id}/${season}/${episode}`  },
+      { icon:'✨', name:'NOVA',    url:`${S.ANIME10}${id}/${season}/${episode}` },
+      { icon:'🔵', name:'CRYSTAL', url:`${S.ANIME11}${id}&s=${season}&e=${episode}` },
+      { icon:'🟣', name:'CIPHER',  url:`${S.ANIME12}${id}/${season}/${episode}` },
+      { icon:'🎯', name:'ORION',   url:`${S.ANIME13}${id}/${season}/${episode}` },
+      { icon:'💫', name:'NEBULA',  url:`${S.ANIME14}${id}/${season}/${episode}` },
+      { icon:'🖤', name:'ONYX',    url:`${S.ANIME15}${id}/${season}/${episode}` },
+      { icon:'🌟', name:'VEGA',    url:`${S.ANIME16}${id}/${season}/${episode}` },
+      { icon:'🔴', name:'QUASAR',  url:`${S.ANIME17}${id}/${season}/${episode}` },
+      { icon:'🟡', name:'PULSAR',  url:`${S.ANIME18}${id}/${season}/${episode}` },
+      { icon:'🟢', name:'LYRA',    url:`${S.ANIME19}${id}/${season}/${episode}` },
+      { icon:'🏅', name:'VULCAN',  url:`${S.ANIME20}${id}&tmdb=1&s=${season}&e=${episode}` },
+      { icon:'🎖', name:'SIGMA',   url:`${S.ANIME21}${id}/${season}/${episode}` },
+      { icon:'💠', name:'EMBED',   url:`${S.ANIME23}${id}/${season}/${episode}` },
+      { icon:'🎐', name:'SAKURA',  url:`${S.ANIME24}${id}/${season}/${episode}` },
+      { icon:'🔥', name:'INFERNO', url:`${S.ANIME26}${id}/${season}/${episode}` },
+      { icon:'⚔️', name:'KATANA',  url:`${S.ANIME27}${id}/${season}/${episode}` },
+    ] : []),
   ];
-  const tmdbSrvs = tmdbId ? [
-    { icon:'⚡', name:'NOVA',   url:`${S.TV}${tmdbId}/1/1`  },
-    { icon:'🌟', name:'TITAN',  url:`${S.TV2}${tmdbId}/1/1` },
-    { icon:'💎', name:'ZENITH', url:`${S.TV3}${tmdbId}/1/1` },
-    { icon:'🔥', name:'ORBIT',  url:`${S.TV5}${tmdbId}/1/1` },
-    { icon:'🏆', name:'NEXUS',  url:`${S.TV8}${tmdbId}/1/1` },
-  ] : [];
-  const allSrvs = [...malSrvs, ...tmdbSrvs];
-  const firstUrl = allSrvs[0]?.url || '';
   const srvHTML = allSrvs.map((s,i)=>`
     <div class="ws-card ${i===0?'active':''}" data-url="${s.url}" data-name="${s.name}" onclick="wsSelectServer(this)">
       ${i===0?'<span class="ws-check">✔</span>':''}
@@ -274,10 +293,10 @@ async function openWatchPageAnime(tmdbId, malId) {
     <div class="ws-section">
       <div class="ws-srv-head">
         <h3 class="ws-stitle">🟢 مصادر البث</h3>
-        <span class="ws-srv-sub" style="color:rgba(147,51,234,0.8)">MAL + TMDB</span>
+        <span class="ws-srv-sub" style="color:rgba(147,51,234,0.8)">MAL + TMDB أنمي</span>
       </div>
       <div class="ws-grid">${srvHTML}</div>
-      <p class="ws-note">سيرفرات MAL تعمل بـ MAL ID — سيرفرات TMDB تعمل بـ TMDB ID</p>
+      <p class="ws-note">جرب MAL أولاً — إذا لم يعمل جرب TMDB</p>
     </div>`;
 }
 // ===== HERO SWIPER =====
