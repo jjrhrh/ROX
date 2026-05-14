@@ -129,13 +129,6 @@ async function fetchMovies(endpoint = '/movie/popular', options = {}) {
     return [];
   }
 }
-async function fetchAnimeJikan(endpoint, limit = 20) {
-  try {
-    const res  = await fetch(`${CONFIG.API.JIKAN_BASE}${endpoint}`);
-    const data = await res.json();
-    return (data.data || []).slice(0, limit);
-  } catch(e) { console.warn('Jikan:', e.message); return []; }
-}
   const page = document.getElementById('detailPage');
   if (!page) return;
   page.innerHTML = '<div class="loading">⏳ جاري تحميل الحلقات...</div>';
