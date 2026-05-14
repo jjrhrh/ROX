@@ -1358,7 +1358,31 @@ async function loadLibraryPage() {
 }
 const TRAKT_CLIENT = CONFIG.KEYS.TRAKT;
 const TRAKT_REDIRECT = location.origin + location.pathname;
-
+async function libShowAll(listKey) {
+  const page = document.getElementById('libraryPage');
+  const items = getLib(listKey);
+  page.innerHTML = '<div class="loading">⏳ جاري التحميل...</div>';
+  const cards = await Promise.all(items.map(async item => {
+    try {
+      const ep = (item.type==='tv'||item.type==='anime') ? `/tv/${item.id}` : `/movie/${item.id}`;
+      const d  = await fetch(buildTMDBUrl(ep)).then(r=>r.json());
+      const poster = d.poster_path ? `${CONFIG.IMAGES.POSTER_SM}${d.poster_path}` : CONFIG.IMAGES.PLACEHOLDER;
+      const rating = d.vote_average ? d.vote_average.toFixed(1) : '';
+      return `<div class="lib-card" onclick="openDetail(${item.id},'${item.type==='anime'?'tv':item.type}')">
+        <img class="lib-card-img" src="${poster}" loading="lazy" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+        <div class="lib-card-overlay"><span>▶</span></div>
+        ${rating?`<span class="lib-card-rating">${rating}</span>`:''}
+        <button class="lib-del-btn" onclick="libRemove('${listKey}',${item.id},'${item.type}')">✕</button>
+      </div>`;
+    } catch { return ''; }
+  }));
+  page.innerHTML = `
+    <div style="padding:16px">
+      <button class="detail-btn" onclick="loadLibraryPage()" style="margin-bottom:16px">← رجوع</button>
+      <h2 style="color:#fff;margin-bottom:16px">${items.length} عنصر</h2>
+      <div class="lib-grid">${cards.join('')}</div>
+    </div>`;
+}
 function traktConnect() {
   const url = `https://trakt.tv/oauth/authorize?response_type=code&client_id=${TRAKT_CLIENT}&redirect_uri=${encodeURIComponent(TRAKT_REDIRECT)}`;
   window.location.href = url;
