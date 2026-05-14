@@ -129,46 +129,6 @@ async function fetchMovies(endpoint = '/movie/popular', options = {}) {
     return [];
   }
 }
-  const page = document.getElementById('detailPage');
-  if (!page) return;
-  page.innerHTML = '<div class="loading">⏳ جاري تحميل الحلقات...</div>';
-  try {
-    // جلب كل حلقات MAL
-    let allEps = [], page1 = 1, hasNext = true;
-    while (hasNext && page1 <= 10) {
-      const d = await fetch(`${CONFIG.API.JIKAN_BASE}/anime/${malId}/episodes?page=${page1}`).then(r=>r.json());
-      allEps = allEps.concat(d.data||[]);
-      hasNext = d.pagination?.has_next_page || false;
-      page1++;
-    }
-    const title = decodeURIComponent(encodedTitle);
-    page.innerHTML = `
-      <div class="all-eps-page">
-        <div class="all-eps-header">
-          <button class="detail-back-btn" onclick="openAnimeJikan(${malId},'${encodedTitle}')">← رجوع</button>
-          <h2 class="all-eps-title">🎌 ${title} — ${allEps.length} حلقة</h2>
-        </div>
-        <div class="all-eps-grid">
-          ${allEps.map((e,i)=>{
-            const epNum = e.episode_id||i+1;
-            const img = e.images?.jpg?.image_url || animePoster || CONFIG.IMAGES.PLACEHOLDER;
-            return `
-            <div class="all-ep-card" onclick="openWatchPageAnime(-1,${malId},1,${epNum})">
-              <div class="all-ep-thumb-wrap">
-                <img src="${img}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'" class="all-ep-thumb">
-                <div class="ep-num-badge">ح ${epNum}</div>
-                <div class="all-ep-play">▶</div>
-              </div>
-              <div class="all-ep-info">
-                <div class="all-ep-title">${(e.title||'حلقة '+epNum).slice(0,32)}</div>
-                <div class="all-ep-overview">${(e.title_japanese||'').slice(0,60)}</div>
-              </div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>`;
-  } catch { page.innerHTML = '<div class="loading">⚠️ خطأ في تحميل الحلقات</div>'; }
-}
 async function openAnimeJikan(malId, encodedTitle) {
   const title = decodeURIComponent(encodedTitle);
   const page  = document.getElementById('detailPage');
