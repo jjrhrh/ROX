@@ -799,6 +799,8 @@ html, body {
 } 
 /* ===== HERO SWIPER NEW ===== */
 .hero-swiper {
+  position: relative !important;
+  z-index: 2 !important;
   width: 100% !important;
   height: 420px !important;
   margin-bottom: 0 !important;
