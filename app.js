@@ -322,6 +322,7 @@ async function openWatchPageAnime(tmdbId, malId, season=1, episode=1) {
 let heroSwiper = null;
 
 async function loadHeroSwiper() {
+  if (heroSwiper) { heroSwiper.destroy(true, true); heroSwiper = null; }
   const wrapper = document.getElementById('heroSwiperWrapper');
   if (!wrapper) return;
 
