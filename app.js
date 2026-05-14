@@ -252,7 +252,7 @@ async function openAnimeJikan(malId, encodedTitle) {
             <div class="detail-genres">${genres}</div>
             <div class="detail-actions">
               ${watchBtn}${trailerBtn}
-              <button class="detail-btn detail-btn-watch" onclick="addToWatchlist(${tmdbId||malId},'tv')">❤️ قائمتي</button>
+              <button class="detail-btn detail-btn-watch" onclick="addToWatchlist(${malId},'anime')">❤️ قائمتي</button>
             </div>
           </div>
         </div>
