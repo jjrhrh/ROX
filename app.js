@@ -172,9 +172,10 @@ async function openAnimeJikan(malId, encodedTitle) {
   page.innerHTML = '<div class="loading">⏳ جاري تحميل التفاصيل...</div>';
   window.scrollTo(0,0);
   try {
-    const [detRes, tmdbRes] = await Promise.all([
+    const [detRes, tmdbRes, epsRes] = await Promise.all([
       fetch(`${CONFIG.API.JIKAN_BASE}/anime/${malId}/full`).then(r=>r.json()),
       fetch(buildTMDBUrl('/search/tv', { query: title, page:1 })).then(r=>r.json()),
+      fetch(`${CONFIG.API.JIKAN_BASE}/anime/${malId}/episodes?page=1`).then(r=>r.json()),
     ]);
     const a       = detRes.data;
     const tmdbHit = (tmdbRes.results||[])[0];
