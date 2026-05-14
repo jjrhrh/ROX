@@ -180,9 +180,9 @@ async function openAllEpsJikan(malId, tmdbId, encodedTitle) {
         </div>
         <div class="all-eps-grid">
           ${allEps.map((e,i)=>`
-            <div class="all-ep-card" onclick="openWatchPageAnime(0,${malId},1,${e.episode_id||i+1})">
+            <div class="all-ep-card" onclick="openWatchPageAnime(-1,${malId},1,${e.episode_id||i+1})">
               <div class="all-ep-thumb-wrap">
-                <img src="${e.images?.jpg?.image_url||`https://api.dicebear.com/7.x/shapes/svg?seed=${malId}${i}`}"
+                <img src="${e.images?.jpg?.image_url||CONFIG.IMAGES.PLACEHOLDER}"
                      onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'" class="all-ep-thumb">
                 <div class="ep-num-badge">ح ${e.episode_id||i+1}</div>
                 <div class="all-ep-play">▶</div>
@@ -268,7 +268,7 @@ async function openAnimeJikan(malId, encodedTitle) {
           <div class="swiper eps-swiper" id="epsSwiper_${malId}">
             <div class="swiper-wrapper">
               ${episodes.map((e,i)=>`
-                <div class="swiper-slide ep-card" onclick="openWatchPageAnime(0,${malId},1,${e.episode_id||i+1})">
+                <div class="swiper-slide ep-card" onclick="openWatchPageAnime(-1,${malId},1,${e.episode_id||i+1})">
                   <div class="ep-thumb-wrap">
                     <img data-src="${e.images?.jpg?.image_url||poster}"
                          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
@@ -301,14 +301,15 @@ async function openWatchPageAnime(tmdbId, malId, season=1, episode=1) {
   page.innerHTML = '<div class="loading">⏳ جاري التحميل...</div>';
   window.scrollTo(0,0);
   const S = CONFIG.SERVERS;
-  const id = tmdbId || 0;
+  const id = (tmdbId && tmdbId > 0) ? tmdbId : 0;
+  const useAnimeServers = true;
   const allSrvs = [
     { icon:'🟣', name:'MAL-1',   url:`${S.MAL1}${malId}`  },
     { icon:'🔵', name:'MAL-2',   url:`${S.MAL2}${malId}`  },
     { icon:'🟢', name:'MAL-3',   url:`${S.MAL3}${malId}`  },
     { icon:'🟡', name:'MAL-4',   url:`${S.MAL4}${malId}`  },
     { icon:'🔴', name:'MAL-5',   url:`${S.MAL5}${malId}`  },
-    ...(id ? [
+    ...(useAnimeServers ? [
       { icon:'🎌', name:'PRIME',   url:`${S.ANIME}${id}/${season}/${episode}`   },
       { icon:'⚡', name:'NEXUS',   url:`${S.ANIME2}${id}/${season}/${episode}`  },
       { icon:'💎', name:'TITAN',   url:`${S.ANIME3}${id}/${season}/${episode}`  },
