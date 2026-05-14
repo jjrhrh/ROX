@@ -1467,8 +1467,8 @@ async function traktLoadLibrary() {
     // مسح القديم وحقن الجديد نظيف
     saveLib('rox_watchlater', []);
     saveLib('rox_watchlist',  []);
-    wlItems .forEach(i => addToLib('rox_watchlater', i));
-    colItems.forEach(i => addToLib('rox_watchlist',  i));
+    saveLib('trakt_watchlist',   wlItems);
+    saveLib('trakt_collection',  colItems);
 
     showToast(`📥 ${wlItems.length + colItems.length} عنصر من Trakt`);
     if (document.getElementById('libraryPage')?.classList.contains('active')) loadLibraryPage();
