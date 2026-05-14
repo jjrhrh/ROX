@@ -1091,6 +1091,10 @@ function setSubColor(color,btn){ btn.closest('.prof-hud-row').querySelectorAll('
 async function loadLibraryPage() {
   const page = document.getElementById('libraryPage');
   if (!page) return;
+  if (!window.ROX_USER) {
+    page.innerHTML = `<div class="prof-wrap"><div class="prof-logo">Cinema<span style="color:var(--accent)">ROX</span></div><p class="prof-sub">🔐 سجّل دخولك لعرض مكتبتك</p><button class="prof-google-btn" onclick="bnavGo('profile')">تسجيل الدخول</button></div>`;
+    return;
+  }
   page.innerHTML = '<div class="loading">⏳ جاري تحميل المكتبة...</div>';
 
   const watchlist  = getLib('rox_watchlist');
