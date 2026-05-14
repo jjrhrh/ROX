@@ -976,11 +976,15 @@ function cwResume(id, type, seconds, server, serverUrl) {
   openWatchPage(id, type, 1, 1, seconds, serverUrl);
 }
 // ===== LIBRARY HELPERS =====
+function libKey(base) {
+  const uid = window.ROX_USER?.uid || 'guest';
+  return `${base}_${uid}`;
+}
 function getLib(key) {
-  try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
+  try { return JSON.parse(localStorage.getItem(libKey(key)) || '[]'); } catch { return []; }
 }
 function saveLib(key, arr) {
-  localStorage.setItem(key, JSON.stringify(arr));
+  localStorage.setItem(libKey(key), JSON.stringify(arr));
 }
 function addToWatchlist(id, type) {
   if (!window.ROX_USER) { showToast('🔐 سجّل دخولك أولاً'); bnavGo('profile'); return; }
