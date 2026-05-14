@@ -240,6 +240,7 @@ async function openAnimeJikan(malId, encodedTitle) {
           <h3 class="detail-section-title">📖 القصة</h3>
           <p class="detail-overview">${synopsis}</p>
         </div>
+        if(window.Swiper && episodes.length) new Swiper(`#epsSwiper_${malId}`,{slidesPerView:2.3,spaceBetween:10,freeMode:true,grabCursor:true});
       </div>`;
   } catch(e) {
     page.innerHTML = `<div class="loading">❌ خطأ<br><button class="detail-btn" onclick="goBack()">← رجوع</button></div>`;
