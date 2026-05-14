@@ -366,7 +366,7 @@ async function openWatchPageAnime(tmdbId, malId, season=1, episode=1) {
         <span class="ws-srv-sub" style="color:rgba(147,51,234,0.8)">MAL + TMDB أنمي</span>
       </div>
       <div class="ws-grid">${srvHTML}</div>
-      <p class="ws-note">جرب MAL أولاً — إذا لم يعمل جرب TMDB</p>
+      <p class="ws-note">جرب PRIME أولاً — إذا لم يعمل جرب سيرفر آخر</p>
     </div>`;
 }
 // ===== HERO SWIPER =====
