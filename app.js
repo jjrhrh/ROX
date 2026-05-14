@@ -1260,6 +1260,15 @@ function loadProfilePage() {
             </div>
           </div>
           <div class="prof-hud">
+            <div class="prof-hud-title"><svg class="hud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> مزامنة الحسابات</div>
+            <div class="prof-hud-row" id="traktHudRow">
+              ${localStorage.getItem('trakt_token')
+                ? `<span style="color:#00e5ff;font-size:0.78rem;font-weight:700">🟢 متصل بـ Trakt</span>
+                   <button class="prof-pill" style="color:#ff6b6b" onclick="traktDisconnect()">قطع الاتصال</button>`
+                : `<button class="prof-pill active" onclick="traktConnect()">🔗 ربط Trakt TV</button>`}
+            </div>
+          </div>
+          <div class="prof-hud">
             <div class="prof-hud-title"><svg class="hud-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> مكتبتي</div>
             <div class="prof-hud-row">
               <button class="prof-pill" onclick="bnavGo('library')">عرض المكتبة</button>
@@ -1432,6 +1441,7 @@ async function openAllEpsTMDB(id, season) {
       </div>`;
   } catch { page.innerHTML = '<div class="loading">⚠️ خطأ في تحميل الحلقات</div>'; }
 }
+traktHandleCallback();
 // ===== SEARCH =====
 let searchDebounce = null;
 function handleSearch(val) {
