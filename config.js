@@ -32,6 +32,7 @@ HERO: Object.freeze({
     OMDB_BASE   : 'https://www.omdbapi.com',
     TRAKT_BASE  : 'https://api.trakt.tv',
     FANART_BASE : 'https://webservice.fanart.tv/v3',
+    JIKAN_BASE  : 'https://api.jikan.moe/v4',
     NEWS_BASE   : 'https://newsapi.org/v2',
   }),
 
