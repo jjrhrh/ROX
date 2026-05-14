@@ -332,7 +332,6 @@ async function openWatchPageAnime(tmdbId, malId, season=1, episode=1) {
       { icon:'🎐', name:'SAKURA',  url:`${S.ANIME24}${id}/${season}/${episode}` },
       { icon:'🔥', name:'INFERNO', url:`${S.ANIME26}${id}/${season}/${episode}` },
       { icon:'⚔️', name:'KATANA',  url:`${S.ANIME27}${id}/${season}/${episode}` },
-    ],
   ];
   const srvHTML = allSrvs.map((s,i)=>`
     <div class="ws-card ${i===0?'active':''}" data-url="${s.url}" data-name="${s.name}" onclick="wsSelectServer(this)">
