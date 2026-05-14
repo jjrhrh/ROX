@@ -164,12 +164,31 @@ async function openAllEpsJikan(malId, tmdbId, encodedTitle) {
   if (!page) return;
   page.innerHTML = '<div class="loading">⏳ جاري تحميل الحلقات...</div>';
   try {
+    // جلب كل حلقات MAL
     let allEps = [], page1 = 1, hasNext = true;
     while (hasNext && page1 <= 10) {
       const d = await fetch(`${CONFIG.API.JIKAN_BASE}/anime/${malId}/episodes?page=${page1}`).then(r=>r.json());
       allEps = allEps.concat(d.data||[]);
       hasNext = d.pagination?.has_next_page || false;
       page1++;
+    }
+    // جلب صور كل الحلقات من كل مواسم TMDB
+    let tmdbStills = {};
+    if (tmdbId && tmdbId > 0) {
+      try {
+        const tvData = await fetch(buildTMDBUrl(`/tv/${tmdbId}`)).then(r=>r.json());
+        const seasons = (tvData.seasons||[]).filter(s=>s.season_number>0);
+        let globalEp = 1;
+        for (const s of seasons) {
+          try {
+            const sd = await fetch(buildTMDBUrl(`/tv/${tmdbId}/season/${s.season_number}`)).then(r=>r.json());
+            (sd.episodes||[]).forEach(e => {
+              if (e.still_path) tmdbStills[globalEp] = CONFIG.IMAGES.STILL_MD + e.still_path;
+              globalEp++;
+            });
+          } catch {}
+        }
+      } catch {}
     }
     // جلب صور TMDB إذا متوفر tmdbId
     let tmdbStills = {};
