@@ -1393,19 +1393,35 @@ async function traktHandleCallback() {
 async function traktLoadLibrary() {
   const token = localStorage.getItem('trakt_token');
   if (!token) return;
+  const H = {
+    'trakt-api-key': TRAKT_CLIENT,
+    'Authorization': `Bearer ${token}`,
+    'trakt-api-version': '2',
+    'Content-Type': 'application/json'
+  };
   try {
-    const [wl, col] = await Promise.all([
-      fetch('https://api.trakt.tv/sync/watchlist', { headers: { 'trakt-api-key': TRAKT_CLIENT, Authorization: `Bearer ${token}`, 'trakt-api-version':'2', 'Content-Type':'application/json' }}).then(r=>r.json()),
-      fetch('https://api.trakt.tv/sync/collection/movies', { headers: { 'trakt-api-key': TRAKT_CLIENT, Authorization: `Bearer ${token}`, 'trakt-api-version':'2', 'Content-Type':'application/json' }}).then(r=>r.json()),
+    const [wlMovies, wlShows, colMovies, colShows] = await Promise.all([
+      fetch('https://api.trakt.tv/users/me/watchlist/movies', { headers: H }).then(r=>r.json()),
+      fetch('https://api.trakt.tv/users/me/watchlist/shows',  { headers: H }).then(r=>r.json()),
+      fetch('https://api.trakt.tv/users/me/collection/movies',{ headers: H }).then(r=>r.json()),
+      fetch('https://api.trakt.tv/users/me/collection/shows', { headers: H }).then(r=>r.json()),
     ]);
-    const toItem = i => ({ id: i.movie?.ids?.tmdb || i.show?.ids?.tmdb, type: i.movie ? 'movie' : 'tv' });
-    const wlItems  = (wl  || []).map(toItem).filter(i=>i.id);
-    const colItems = (col || []).map(toItem).filter(i=>i.id);
+
+    const toMovie = i => ({ id: i.movie?.ids?.tmdb, type: 'movie' });
+    const toShow  = i => ({ id: i.show?.ids?.tmdb,  type: 'tv'    });
+
+    const wlItems  = [...(wlMovies||[]).map(toMovie), ...(wlShows||[]).map(toShow) ].filter(i=>i.id);
+    const colItems = [...(colMovies||[]).map(toMovie), ...(colShows||[]).map(toShow)].filter(i=>i.id);
+
+    // مسح القديم وحقن الجديد نظيف
+    saveLib('rox_watchlater', []);
+    saveLib('rox_watchlist',  []);
     wlItems .forEach(i => addToLib('rox_watchlater', i));
     colItems.forEach(i => addToLib('rox_watchlist',  i));
-    showToast(`📥 تم استيراد ${wlItems.length + colItems.length} عنصر من Trakt`);
+
+    showToast(`📥 ${wlItems.length + colItems.length} عنصر من Trakt`);
     if (document.getElementById('libraryPage')?.classList.contains('active')) loadLibraryPage();
-  } catch { showToast('⚠️ خطأ في جلب بيانات Trakt'); }
+  } catch(e) { showToast('⚠️ خطأ في جلب بيانات Trakt'); console.error(e); }
 }
 function addToLib(key, item) {
   const list = getLib(key);
