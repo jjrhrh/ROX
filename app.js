@@ -179,16 +179,16 @@ async function openAllEpsJikan(malId, tmdbId, encodedTitle) {
           <h2 class="all-eps-title">🎌 ${title} — ${allEps.length} حلقة</h2>
         </div>
         <div class="all-eps-grid">
-          ${allEps.map(e=>`
-            <div class="all-ep-card" onclick="openWatchPageAnime(${tmdbId},${malId},1,${e.episode_id||1})">
+          ${allEps.map((e,i)=>`
+            <div class="all-ep-card" onclick="openWatchPageAnime(0,${malId},1,${e.episode_id||i+1})">
               <div class="all-ep-thumb-wrap">
-                <img src="${e.images?.jpg?.image_url||CONFIG.IMAGES.PLACEHOLDER}"
+                <img src="${e.images?.jpg?.image_url||`https://api.dicebear.com/7.x/shapes/svg?seed=${malId}${i}`}"
                      onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'" class="all-ep-thumb">
-                <div class="ep-num-badge">ح ${e.episode_id||''}</div>
+                <div class="ep-num-badge">ح ${e.episode_id||i+1}</div>
                 <div class="all-ep-play">▶</div>
               </div>
               <div class="all-ep-info">
-                <div class="all-ep-title">${(e.title||'حلقة '+(e.episode_id||'')).slice(0,32)}</div>
+                <div class="all-ep-title">${(e.title||'حلقة '+(e.episode_id||i+1)).slice(0,32)}</div>
                 <div class="all-ep-overview">${(e.title_japanese||'').slice(0,60)}</div>
               </div>
             </div>`).join('')}
