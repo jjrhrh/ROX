@@ -398,8 +398,9 @@ async function loadOtakuPage() {
   if (!page) return;
   loadOtakuHero();
   const SECTIONS = [
-    { id: 'sec_otaku1', title: '🔥 أفضل 10 أفلام أنمي', endpoint: '/discover/movie', type: 'movie', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
-    { id: 'sec_otaku2', title: '📺 أفضل 10 مسلسلات أنمي', endpoint: '/discover/tv', type: 'tv', params: { with_genres:'16', with_origin_country:'JP', sort_by:'popularity.desc' } },
+    { id: 'sec_otaku1', title: 'الأكثر شعبية', jikan: '/top/anime?filter=bypopularity&limit=10' },
+    { id: 'sec_otaku2', title: 'الأعلى تقييماً', jikan: '/top/anime?filter=favorite&limit=10'   },
+    { id: 'sec_otaku3', title: 'موسم هذا العام', jikan: '/seasons/now?limit=10'                  },
   ];
   page.innerHTML = SECTIONS.map(s => `
     <div class="home-section otaku-section" id="${s.id}">
