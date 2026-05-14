@@ -190,16 +190,6 @@ async function openAllEpsJikan(malId, tmdbId, encodedTitle) {
         }
       } catch {}
     }
-    // جلب صور TMDB إذا متوفر tmdbId
-    let tmdbStills = {};
-    if (tmdbId && tmdbId > 0) {
-      try {
-        const s1 = await fetch(buildTMDBUrl(`/tv/${tmdbId}/season/1`)).then(r=>r.json());
-        (s1.episodes||[]).forEach(e => {
-          if (e.still_path) tmdbStills[e.episode_number] = CONFIG.IMAGES.STILL_MD + e.still_path;
-        });
-      } catch {}
-    }
     const title = decodeURIComponent(encodedTitle);
     page.innerHTML = `
       <div class="all-eps-page">
