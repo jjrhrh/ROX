@@ -1347,6 +1347,64 @@ async function loadLibraryPage() {
       ${cwHTML}
     </div>`;
 }
+const TRAKT_CLIENT = CONFIG.KEYS.TRAKT;
+const TRAKT_REDIRECT = location.origin + location.pathname;
+
+function traktConnect() {
+  const url = `https://trakt.tv/oauth/authorize?response_type=code&client_id=${TRAKT_CLIENT}&redirect_uri=${encodeURIComponent(TRAKT_REDIRECT)}`;
+  window.location.href = url;
+}
+function traktDisconnect() {
+  localStorage.removeItem('trakt_token');
+  showToast('🔌 تم قطع الاتصال بـ Trakt');
+  loadProfilePage();
+}
+async function traktHandleCallback() {
+  const code = new URLSearchParams(location.search).get('code');
+  if (!code) return;
+  try {
+    const res = await fetch('https://api.trakt.tv/oauth/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        code, client_id: TRAKT_CLIENT,
+        client_secret: '', grant_type: 'authorization_code',
+        redirect_uri: TRAKT_REDIRECT
+      })
+    });
+    const data = await res.json();
+    if (data.access_token) {
+      localStorage.setItem('trakt_token', data.access_token);
+      window.history.replaceState({}, '', location.pathname);
+      showToast('✅ تم الربط بـ Trakt بنجاح!');
+      traktLoadLibrary();
+    }
+  } catch { showToast('⚠️ فشل الاتصال بـ Trakt'); }
+}
+async function traktLoadLibrary() {
+  const token = localStorage.getItem('trakt_token');
+  if (!token) return;
+  try {
+    const [wl, col] = await Promise.all([
+      fetch('https://api.trakt.tv/sync/watchlist', { headers: { 'trakt-api-key': TRAKT_CLIENT, Authorization: `Bearer ${token}`, 'trakt-api-version':'2', 'Content-Type':'application/json' }}).then(r=>r.json()),
+      fetch('https://api.trakt.tv/sync/collection/movies', { headers: { 'trakt-api-key': TRAKT_CLIENT, Authorization: `Bearer ${token}`, 'trakt-api-version':'2', 'Content-Type':'application/json' }}).then(r=>r.json()),
+    ]);
+    const toItem = i => ({ id: i.movie?.ids?.tmdb || i.show?.ids?.tmdb, type: i.movie ? 'movie' : 'tv' });
+    const wlItems  = (wl  || []).map(toItem).filter(i=>i.id);
+    const colItems = (col || []).map(toItem).filter(i=>i.id);
+    wlItems .forEach(i => addToLib('rox_watchlater', i));
+    colItems.forEach(i => addToLib('rox_watchlist',  i));
+    showToast(`📥 تم استيراد ${wlItems.length + colItems.length} عنصر من Trakt`);
+    if (document.getElementById('libraryPage')?.classList.contains('active')) loadLibraryPage();
+  } catch { showToast('⚠️ خطأ في جلب بيانات Trakt'); }
+}
+function addToLib(key, item) {
+  const list = getLib(key);
+  if (!list.find(i => i.id == item.id && i.type === item.type)) {
+    list.push(item);
+    saveLib(key, list);
+  }
+}
 async function openAllEpsTMDB(id, season) {
   const page = document.getElementById('detailPage');
   if (!page) return;
