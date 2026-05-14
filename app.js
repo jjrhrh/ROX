@@ -267,16 +267,16 @@ async function openAnimeJikan(malId, encodedTitle) {
           </div>
           <div class="swiper eps-swiper" id="epsSwiper_${malId}">
             <div class="swiper-wrapper">
-              ${episodes.map(e=>`
-                <div class="swiper-slide ep-card" onclick="openWatchPageAnime(${tmdbId||0},${malId},1,${e.episode_id||1})">
+              ${episodes.map((e,i)=>`
+                <div class="swiper-slide ep-card" onclick="openWatchPageAnime(${tmdbId||0},${malId},1,${e.episode_id||i+1})">
                   <div class="ep-thumb-wrap">
                     <img data-src="${e.images?.jpg?.image_url||poster}"
                          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
                          class="lazy-img ep-thumb" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-                    <div class="ep-num-badge">ح ${e.episode_id||''}</div>
+                    <div class="ep-num-badge">ح ${e.episode_id||i+1}</div>
                   </div>
                   <div class="ep-info">
-                    <div class="ep-title">${(e.title||'حلقة '+(e.episode_id||'')).slice(0,28)}</div>
+                    <div class="ep-title">${(e.title||'حلقة '+(e.episode_id||i+1)).slice(0,28)}</div>
                   </div>
                 </div>`).join('')}
             </div>
