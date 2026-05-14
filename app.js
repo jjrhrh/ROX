@@ -220,6 +220,22 @@ async function openAnimeJikan(malId, encodedTitle) {
             </div>
           </div>
         </div>
+        ${episodes.length ? `
+        <div class="seasons-glass">
+          <div class="seasons-header">
+            <h3 class="detail-section-title" style="margin:0">🎬 الحلقات</h3>
+            <span style="color:rgba(255,255,255,0.4);font-size:0.75rem">${a.episodes||'?'} حلقة</span>
+          </div>
+          <div class="swiper eps-swiper" id="epsSwiper_${malId}">
+            <div class="swiper-wrapper">
+              ${episodes.map(e=>`
+                <div class="swiper-slide ep-card" onclick="openWatchPageAnime(${tmdbId||0},${malId},1,${e.mal_id?e.episode_id||e.mal_id:e.episode_id||1})">
+                  <div class="ep-num">ح ${e.mal_id||e.episode_id||''}</div>
+                  <div class="ep-title">${(e.title||'').slice(0,24)||'حلقة '+e.mal_id}</div>
+                </div>`).join('')}
+            </div>
+          </div>
+        </div>` : ''}
         <div class="detail-section">
           <h3 class="detail-section-title">📖 القصة</h3>
           <p class="detail-overview">${synopsis}</p>
