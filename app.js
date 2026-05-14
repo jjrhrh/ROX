@@ -159,7 +159,6 @@ function buildAnimeCardJikan(anime, rank = 0) {
       </div>
     </div>`;
 }
-async function openAllEpsJikan(malId, tmdbId, encodedTitle, animePoster = '') {
   const page = document.getElementById('detailPage');
   if (!page) return;
   page.innerHTML = '<div class="loading">⏳ جاري تحميل الحلقات...</div>';
