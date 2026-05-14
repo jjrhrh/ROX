@@ -1483,21 +1483,3 @@ html, body {
 .all-ep-info { padding:10px 10px 10px 0; display:flex; flex-direction:column; gap:5px; }
 .all-ep-title { color:#fff; font-size:0.78rem; font-weight:700; }
 .all-ep-overview { color:rgba(255,255,255,0.5); font-size:0.65rem; line-height:1.5; }
-.lib-del-btn {
-  position: absolute;
-  top: 5px; left: 5px;
-  width: 24px; height: 24px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(229,9,20,0.85);
-  color: #fff;
-  font-size: 0.7rem;
-  font-weight: 900;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-}
-.lib-card { position: relative; } 
