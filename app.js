@@ -171,6 +171,16 @@ async function openAllEpsJikan(malId, tmdbId, encodedTitle) {
       hasNext = d.pagination?.has_next_page || false;
       page1++;
     }
+    // جلب صور TMDB إذا متوفر tmdbId
+    let tmdbStills = {};
+    if (tmdbId && tmdbId > 0) {
+      try {
+        const s1 = await fetch(buildTMDBUrl(`/tv/${tmdbId}/season/1`)).then(r=>r.json());
+        (s1.episodes||[]).forEach(e => {
+          if (e.still_path) tmdbStills[e.episode_number] = CONFIG.IMAGES.STILL_MD + e.still_path;
+        });
+      } catch {}
+    }
     const title = decodeURIComponent(encodedTitle);
     page.innerHTML = `
       <div class="all-eps-page">
@@ -179,19 +189,22 @@ async function openAllEpsJikan(malId, tmdbId, encodedTitle) {
           <h2 class="all-eps-title">🎌 ${title} — ${allEps.length} حلقة</h2>
         </div>
         <div class="all-eps-grid">
-          ${allEps.map((e,i)=>`
-            <div class="all-ep-card" onclick="openWatchPageAnime(-1,${malId},1,${e.episode_id||i+1})">
+          ${allEps.map((e,i)=>{
+            const epNum = e.episode_id||i+1;
+            const img = e.images?.jpg?.image_url || tmdbStills[epNum] || CONFIG.IMAGES.PLACEHOLDER;
+            return `
+            <div class="all-ep-card" onclick="openWatchPageAnime(-1,${malId},1,${epNum})">
               <div class="all-ep-thumb-wrap">
-                <img src="${e.images?.jpg?.image_url||CONFIG.IMAGES.PLACEHOLDER}"
-                     onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'" class="all-ep-thumb">
-                <div class="ep-num-badge">ح ${e.episode_id||i+1}</div>
+                <img src="${img}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'" class="all-ep-thumb">
+                <div class="ep-num-badge">ح ${epNum}</div>
                 <div class="all-ep-play">▶</div>
               </div>
               <div class="all-ep-info">
-                <div class="all-ep-title">${(e.title||'حلقة '+(e.episode_id||i+1)).slice(0,32)}</div>
+                <div class="all-ep-title">${(e.title||'حلقة '+epNum).slice(0,32)}</div>
                 <div class="all-ep-overview">${(e.title_japanese||'').slice(0,60)}</div>
               </div>
-            </div>`).join('')}
+            </div>`;
+          }).join('')}
         </div>
       </div>`;
   } catch { page.innerHTML = '<div class="loading">⚠️ خطأ في تحميل الحلقات</div>'; }
