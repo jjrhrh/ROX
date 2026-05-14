@@ -885,12 +885,16 @@ async function loadSeasonEps(tvId, seasonNum) {
     }
     wrap.innerHTML = (data.episodes||[]).map(e=>`
       <div class="swiper-slide ep-card" onclick="openWatchPage(${tvId},'tv',${seasonNum},${e.episode_number})">
-        <img data-src="${e.still_path?CONFIG.IMAGES.STILL_MD+e.still_path:CONFIG.IMAGES.PLACEHOLDER}"
-             src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-             class="lazy-img ep-thumb" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-        <div class="ep-num">ح ${e.episode_number}</div>
-        <div class="ep-title">${(e.name||'').slice(0,24)}</div>
-        <div class="ep-overview">${(e.overview||'').slice(0,60)}</div>
+        <div class="ep-thumb-wrap">
+          <img data-src="${e.still_path?CONFIG.IMAGES.STILL_MD+e.still_path:CONFIG.IMAGES.PLACEHOLDER}"
+               src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+               class="lazy-img ep-thumb" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+          <div class="ep-num-badge">ح ${e.episode_number}</div>
+        </div>
+        <div class="ep-info">
+          <div class="ep-title">${(e.name||'').slice(0,28)}</div>
+          <div class="ep-overview">${(e.overview||'').slice(0,80)}</div>
+        </div>
       </div>`).join('');
     setTimeout(() => {
       wrap.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
