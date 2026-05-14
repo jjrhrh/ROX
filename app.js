@@ -188,9 +188,7 @@ async function openAnimeJikan(malId, encodedTitle) {
     const eps     = a.episodes||'?';
     const status  = a.status||'';
     const synopsis= a.synopsis||'لا يوجد وصف.';
-    const watchBtn = tmdbId
-      ? `<button class="detail-btn detail-btn-now" onclick="openWatchPage(${tmdbId},'tv')">▶ شاهد الآن</button>`
-      : '';
+    const watchBtn = `<button class="detail-btn detail-btn-now" onclick="openWatchPageAnime(${tmdbId||0},${malId})">▶ شاهد الآن</button>`;
     const trailerBtn = trailer
       ? `<button class="detail-btn detail-btn-trailer" onclick="playTrailer('${a.trailer?.youtube_id}')">▶ المقطع الدعائي</button>`
       : '';
