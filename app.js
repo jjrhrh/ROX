@@ -1298,63 +1298,90 @@ async function loadLibraryPage() {
     return;
   }
   page.innerHTML = '<div class="loading">⏳ جاري تحميل المكتبة...</div>';
+
   const watchlist  = getLib('rox_watchlist');
   const watchlater = getLib('rox_watchlater');
   const cwItems    = cwGetAll();
+  const traktCol   = getLib('trakt_collection');
+  const traktWl    = getLib('trakt_watchlist');
   const EMPTY = `<p class="lib-radar-empty">الرادار فارغ حالياً.. أضف تحفتك القادمة من الواجهة الرئيسية</p>`;
 
-  const fetchCards = async (items) => {
+  const buildCard = (item, listKey) => {
+    const delBtn = listKey ? `<button class="lib-del-btn" onclick="libRemove('${listKey}',${item.id},'${item.type}')">✕</button>` : '';
+    return `<div class="lib-card" onclick="openDetail(${item.id},'${item.type === 'anime' ? 'tv' : item.type}')">
+      <img class="lib-card-img" src="${item.poster||CONFIG.IMAGES.PLACEHOLDER}" loading="lazy" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+      <div class="lib-card-overlay"><span>▶</span></div>
+      ${item.rating ? `<span class="lib-card-rating">${item.rating}</span>` : ''}
+      ${delBtn}
+    </div>`;
+  };
+
+  const fetchCards = async (items, listKey = '') => {
     if (!items.length) return EMPTY;
-    const cards = await Promise.all(items.slice(0,12).map(async item => {
+    const cards = await Promise.all(items.map(async item => {
       try {
-        if (item.type === 'anime') {
-          const d = await fetch(buildTMDBUrl(`/tv/${item.id}`)).then(r=>r.json());
-          const poster = d.poster_path ? `${CONFIG.IMAGES.POSTER_SM}${d.poster_path}` : CONFIG.IMAGES.PLACEHOLDER;
-          const rating = d.vote_average ? d.vote_average.toFixed(1) : '';
-          return `<div class="lib-card" onclick="openDetail(${item.id},'tv')">
-            <img class="lib-card-img" src="${poster}" loading="lazy" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-            <div class="lib-card-overlay"><span>▶</span></div>
-            ${rating?`<span class="lib-card-rating">${rating}</span>`:''}
-          </div>`;
-        }
-        const ep = item.type==='tv' ? `/tv/${item.id}` : `/movie/${item.id}`;
-        const d  = await fetch(buildTMDBUrl(ep)).then(r=>r.json());
-        const title  = item.type==='movie' ? (d.title||d.original_title) : (d.name||d.original_name);
-        const poster = d.poster_path ? `${CONFIG.IMAGES.POSTER_SM}${d.poster_path}` : CONFIG.IMAGES.PLACEHOLDER;
-        const rating = d.vote_average ? d.vote_average.toFixed(1) : '';
-        return `<div class="lib-card" onclick="openDetail(${item.id},'${item.type}')">
-          <img class="lib-card-img" src="${poster}" loading="lazy" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-          <div class="lib-card-overlay"><span>▶</span></div>
-          ${rating?`<span class="lib-card-rating">${rating}</span>`:''}
-        </div>`;
+        const ep = (item.type === 'tv' || item.type === 'anime') ? `/tv/${item.id}` : `/movie/${item.id}`;
+        const d  = await fetch(buildTMDBUrl(ep)).then(r => r.json());
+        item.poster = d.poster_path ? `${CONFIG.IMAGES.POSTER_SM}${d.poster_path}` : CONFIG.IMAGES.PLACEHOLDER;
+        item.rating = d.vote_average ? d.vote_average.toFixed(1) : '';
+        return buildCard(item, listKey);
       } catch { return ''; }
     }));
     return `<div class="lib-grid">${cards.join('')}</div>`;
   };
 
-  const cwHTML = cwItems.length ? `<div class="lib-grid">${cwItems.slice(0,12).map(i=>`
-    <div class="lib-card" onclick="cwResume(${i.id},'${i.type}',${i.seconds},'${i.server}','${i.serverUrl||''}')">
+  const buildSection = (laserClass, iconClass, iconSVG, title, html, listKey, allItems) => {
+    const showAllBtn = allItems.length > 12
+      ? `<button class="browse-all-btn" onclick="libShowAll('${listKey}')">عرض الكل (${allItems.length}) ›</button>`
+      : '';
+    return `
+    <div class="lib-section">
+      <div class="lib-sec-head">
+        <span class="lib-laser ${laserClass}"></span>
+        <span class="lib-icon3d ${iconClass}">${iconSVG}</span>
+        <h3 class="lib-sec-title">${title}</h3>
+        ${showAllBtn}
+      </div>
+      ${html}
+    </div>`;
+  };
+
+  const cwHTML = cwItems.length ? `<div class="lib-grid">${cwItems.map(i =>
+    `<div class="lib-card" onclick="cwResume(${i.id},'${i.type}',${i.seconds},'${i.server}','${i.serverUrl||''}')">
       <img class="lib-card-img" src="${i.poster}" loading="lazy" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
       <div class="lib-card-overlay"><span>▶</span></div>
       <div class="lib-card-bar"><div class="lib-card-progress" style="width:${Math.min(i.seconds/7200*100,100).toFixed(1)}%"></div></div>
+      <button class="lib-del-btn" onclick="cwRemove(${i.id},'${i.type}')">✕</button>
     </div>`).join('')}</div>` : EMPTY;
 
-  const [wlHTML, wlrHTML] = await Promise.all([fetchCards(watchlist), fetchCards(watchlater)]);
+  // جلب البيانات
+  const wlSlice  = watchlist.slice(0, 12);
+  const wlrSlice = watchlater.slice(0, 12);
+  const tColSlice = traktCol.slice(0, 12);
+  const tWlSlice  = traktWl.slice(0, 12);
+
+  const [wlHTML, wlrHTML, tColHTML, tWlHTML] = await Promise.all([
+    fetchCards(wlSlice,  'rox_watchlist'),
+    fetchCards(wlrSlice, 'rox_watchlater'),
+    fetchCards(tColSlice, 'trakt_collection'),
+    fetchCards(tWlSlice,  'trakt_watchlist'),
+  ]);
+
+  const svgArchive = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`;
+  const svgClock   = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+  const svgPlay    = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`;
+  const svgTrakt   = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`;
+
+  const hasTrakt = localStorage.getItem('trakt_token');
 
   page.innerHTML = `
     <div class="lib-header"><h2 class="lib-title">مكتبتي</h2></div>
-    <div class="lib-section">
-      <div class="lib-sec-head"><span class="lib-laser lib-laser-magenta"></span><span class="lib-icon3d lib-icon3d-magenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><h3 class="lib-sec-title">أرشيفي الخاص</h3></div>
-      ${wlHTML}
-    </div>
-    <div class="lib-section">
-      <div class="lib-sec-head"><span class="lib-laser lib-laser-cyan"></span><span class="lib-icon3d lib-icon3d-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><h3 class="lib-sec-title">قائمة الانتظار</h3></div>
-      ${wlrHTML}
-    </div>
-    <div class="lib-section">
-      <div class="lib-sec-head"><span class="lib-laser lib-laser-orange"></span><span class="lib-icon3d lib-icon3d-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></span><h3 class="lib-sec-title">أكمل المشاهدة</h3></div>
-      ${cwHTML}
-    </div>`;
+    ${buildSection('lib-laser-magenta','lib-icon3d-magenta', svgArchive, 'أرشيفي الخاص',   wlHTML,  'rox_watchlist',  watchlist)}
+    ${buildSection('lib-laser-cyan',   'lib-icon3d-cyan',    svgClock,   'قائمة الانتظار', wlrHTML, 'rox_watchlater', watchlater)}
+    ${buildSection('lib-laser-orange', 'lib-icon3d-orange',  svgPlay,    'أكمل المشاهدة',  cwHTML,  '',               cwItems)}
+    ${hasTrakt && traktCol.length ? buildSection('lib-laser-magenta','lib-icon3d-magenta', svgTrakt, '📦 Trakt — مجموعتي', tColHTML, 'trakt_collection', traktCol) : ''}
+    ${hasTrakt && traktWl.length  ? buildSection('lib-laser-cyan',   'lib-icon3d-cyan',    svgTrakt, '🕐 Trakt — قائمة المشاهدة', tWlHTML, 'trakt_watchlist', traktWl) : ''}
+  `;
 }
 const TRAKT_CLIENT = CONFIG.KEYS.TRAKT;
 const TRAKT_REDIRECT = location.origin + location.pathname;
