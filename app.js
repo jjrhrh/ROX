@@ -1347,7 +1347,33 @@ async function loadLibraryPage() {
       ${cwHTML}
     </div>`;
 }
-
+async function openAllEpsTMDB(id, season) {
+  const page = document.getElementById('detailPage');
+  if (!page) return;
+  page.innerHTML = '<div class="loading">⏳ جاري تحميل الحلقات...</div>';
+  try {
+    const d = await fetch(buildTMDBUrl(`/tv/${id}/season/${season}`)).then(r=>r.json());
+    const eps = d.episodes || [];
+    page.innerHTML = `
+      <div style="padding:16px">
+        <button class="detail-btn" onclick="goBack()" style="margin-bottom:16px">← رجوع</button>
+        <h2 style="color:#fff;margin-bottom:16px">الموسم ${season} — ${eps.length} حلقة</h2>
+        <div class="otaku-all-grid">
+          ${eps.map(e => {
+            const img = e.still_path ? `${CONFIG.IMAGES.BACKDROP}${e.still_path}` : CONFIG.IMAGES.PLACEHOLDER;
+            return `<div class="anime-card" onclick="openWatchPage(${id},'tv',${season},${e.episode_number})">
+              <div class="anime-poster-wrap">
+                <img class="anime-poster" src="${img}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+                <div class="anime-overlay"><span>▶</span></div>
+                <span class="rank-number">${e.episode_number}</span>
+              </div>
+              <div class="anime-title-bar">${(e.name||'حلقة '+e.episode_number).slice(0,22)}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  } catch { page.innerHTML = '<div class="loading">⚠️ خطأ في تحميل الحلقات</div>'; }
+}
 // ===== SEARCH =====
 let searchDebounce = null;
 function handleSearch(val) {
