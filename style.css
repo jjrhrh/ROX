@@ -1532,3 +1532,213 @@ html, body {
 .movie-badge-rating { color:#f5c518; font-size:0.65rem; }
 .movie-title-bar { color:#fff; font-size:0.78rem; font-weight:600; padding:6px 4px 2px; }
 .movie-meta-bar { display:flex; align-items:center; padding:0 4px 6px; gap:4px; } 
+/* ===== CYBERPUNK NOTIFICATION SIDEBAR ===== */
+
+/* --- Top-left icons bar --- */
+.hero-topbar-left {
+  position: absolute;
+  top: 14px; left: 14px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  position: relative;
+  backdrop-filter: blur(12px);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.topbar-btn:active {
+  background: rgba(229,9,20,0.18);
+  box-shadow: 0 0 16px rgba(229,9,20,0.4);
+}
+
+/* Hamburger three lines */
+.hamburger-btn {
+  width: 40px; height: 40px;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 9px;
+}
+.hamburger-btn span {
+  display: block;
+  width: 100%; height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; }
+.hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Bell button */
+.bell-btn { width: 40px; height: 40px; }
+
+/* --- Neon badge counter --- */
+.notif-badge {
+  position: absolute;
+  top: -5px; right: -5px;
+  min-width: 18px; height: 18px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px; font-weight: 900;
+  font-family: 'Cairo', sans-serif;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid #0a0000;
+  box-shadow:
+    0 0 6px rgba(229,9,20,0.9),
+    0 0 14px rgba(229,9,20,0.6),
+    0 0 28px rgba(229,9,20,0.35);
+  animation: badgePulse 2.4s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%, 100% {
+    box-shadow:
+      0 0 6px rgba(229,9,20,0.9),
+      0 0 14px rgba(229,9,20,0.6),
+      0 0 28px rgba(229,9,20,0.35);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(229,9,20,1),
+      0 0 24px rgba(229,9,20,0.85),
+      0 0 48px rgba(229,9,20,0.5);
+    transform: scale(1.12);
+  }
+}
+
+/* --- Sidebar overlay --- */
+.notif-overlay {
+  position: fixed; inset: 0;
+  z-index: 10000;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  transition: background 0.4s ease;
+}
+.notif-overlay.open {
+  background: rgba(0,0,0,0.65);
+  pointer-events: all;
+}
+
+/* --- Sidebar panel (slides from LEFT) --- */
+.notification-sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: min(340px, 88vw);
+  height: 100dvh;
+  z-index: 10001;
+  background: rgba(8, 0, 0, 0.78);
+  backdrop-filter: blur(28px) saturate(1.6);
+  -webkit-backdrop-filter: blur(28px) saturate(1.6);
+  border-right: 1px solid rgba(229,9,20,0.18);
+  box-shadow:
+    4px 0 40px rgba(0,0,0,0.8),
+    inset 1px 0 0 rgba(255,255,255,0.04);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-105%);
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+.notification-sidebar.open {
+  transform: translateX(0);
+}
+
+/* --- Sidebar header --- */
+.notif-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 52px 20px 18px;
+  border-bottom: 1px solid rgba(229,9,20,0.12);
+  background: linear-gradient(
+    to bottom,
+    rgba(229,9,20,0.06) 0%,
+    transparent 100%
+  );
+}
+.notif-header-text {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.notif-header-title {
+  font-size: 1.25rem; font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(229,9,20,0.4);
+}
+.notif-header-sub {
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--accent);
+}
+
+/* --- 3D Glass Bell icon --- */
+.notif-bell-3d {
+  position: relative;
+  width: 56px; height: 56px;
+  display: flex; align-items: center; justify-content: center;
+  filter: drop-shadow(0 4px 16px rgba(229,9,20,0.5));
+  animation: bellFloat 3.5s ease-in-out infinite;
+}
+.bell-body {
+  width: 52px; height: 52px;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.18) 0%,
+    rgba(229,9,20,0.25) 50%,
+    rgba(180,0,0,0.30) 100%
+  );
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.3),
+    inset 0 -2px 4px rgba(0,0,0,0.3),
+    0 4px 20px rgba(229,9,20,0.4);
+  color: #fff;
+}
+.bell-shine {
+  position: absolute;
+  top: 5px; left: 7px;
+  width: 14px; height: 6px;
+  background: rgba(255,255,255,0.35);
+  border-radius: 50%;
+  filter: blur(2px);
+}
+.bell-shadow {
+  position: absolute;
+  bottom: -6px; left: 50%;
+  transform: translateX(-50%);
+  width: 34px; height: 8px;
+  background: radial-gradient(ellipse, rgba(229,9,20,0.45) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(3px);
+}
+@keyframes bellFloat {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%       { transform: translateY(-4px) rotate(3deg); }
+}
+
+/* --- Notifications list --- */
+.notif-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
+}
+.notif-list::-webkit-scrollbar { width: 3px; }
+.notif-list::-webkit-scrollbar-track { background: transparent; }
+.notif-list::-webkit-scrollbar-thumb {
+  background: rgba(229,9,20,0.4);
+  border-radius: 3px;
+}
