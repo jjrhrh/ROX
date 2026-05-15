@@ -269,19 +269,19 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-  aspect-ratio: unset;
-  flex: 0 0 calc(50vw - 16px);
+  flex: 0 0 72vw;
+  max-width: 320px;
   cursor: pointer;
-  border-radius: 18px;
+  border-radius: 16px;
   overflow: visible;
   min-width: 0;
   background: transparent;
   border: none;
   transition: transform 0.25s, box-shadow 0.25s;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.9);
   transform: translateZ(0);
-  backface-visibility: hidden;
   will-change: transform;
+  position: relative;
+  padding-right: 28px;
 }
 .movie-card:hover {
   transform: translateY(-4px) scale(1.03);
@@ -382,8 +382,10 @@ html, body {
 }
 .movie-poster-wrap {
   position: relative;
-  aspect-ratio: 2/3; overflow: hidden;
-  border-radius: 16px;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.8);
 }
 .movie-poster {
   width: 100%; height: 100%;
@@ -934,35 +936,36 @@ html, body {
 }
 /* ===== SKELETON LOADER ===== */
 .skeleton-card {
-  flex: 0 0 130px;
-  aspect-ratio: 2/3;
-  border-radius: 26px;
+  flex: 0 0 72vw;
+  max-width: 320px;
+  aspect-ratio: 16/9;
+  border-radius: 14px;
   background: linear-gradient(90deg, #111 25%, #1e1e1e 50%, #111 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
   border: 1px solid rgba(229,9,20,0.1);
-  min-height: 180px;
 }
 @keyframes shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
 .movie-title-bar {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 800;
   color: #fff;
-  padding: 4px 6px 2px;
+  padding: 7px 6px 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .movie-meta-bar {
-  font-size: 0.62rem;
-  color: rgba(255,255,255,0.4);
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.45);
   padding: 0 6px 5px;
   display: flex;
-  justify-content: space-between;
-} 
+  align-items: center;
+  gap: 6px;
+}
 .movie-badge-type {
   background: rgba(229,9,20,0.15);
   border: 1px solid rgba(229,9,20,0.4);
