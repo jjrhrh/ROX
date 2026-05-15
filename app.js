@@ -921,7 +921,7 @@ function wsSelectServer(card) {
     if (sw) {
       sw.style.display = 'flex';
       setTimeout(() => {
-        document.getElementById('wsFrame').src = card.dataset.url;
+        if (card.dataset.rox) { loadRox(card.dataset.url); } else { document.getElementById('wsFrame').src = card.dataset.url; }
         setTimeout(() => { sw.style.display = 'none'; }, 1800);
       }, 400);
     } else {
@@ -934,6 +934,24 @@ function wsStartStream() {
   if (!active) return;
   document.getElementById('wsFrame').src = active.dataset.url;
   document.getElementById('wsOverlay').style.display = 'none';
+}
+  async function loadRox(url) {
+  const proxy = CONFIG.VIDEO.PROXY;
+  const res = await fetch(proxy + encodeURIComponent(url)).catch(()=>null);
+  if (!res) { document.getElementById('wsFrame').src = url; return; }
+  const html = await res.text();
+  const m = html.match(/["'](https?:\/\/[^"']+\.m3u8[^"']*)['"]/);
+  const v = document.getElementById('roxPlayer');
+  if (m) {
+    v.style.display = 'block';
+    document.getElementById('wsFrame').style.display = 'none';
+    if (window._plyr) window._plyr.destroy();
+    v.src = m[1];
+    window._plyr = new Plyr(v, { autoplay:true });
+  } else {
+    document.getElementById('wsFrame').src = url;
+  }
+  }
 }
 function wsGoBack() {
   const dp = document.getElementById('detailPage');
