@@ -277,7 +277,8 @@ async function openWatchPageAnime(tmdbId, malId, season=1, episode=1) {
           <span class="ws-play-lbl">اضغط للمشاهدة</span>
         </div>
         <iframe id="wsFrame" class="ws-frame" src="" allowfullscreen
-          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"></iframe>
+  allow="autoplay; fullscreen; encrypted-media; picture-in-picture"></iframe>
+<video id="roxPlayer" class="ws-player" controls playsinline style="display:none"></video>
       </div>
       <button class="ws-back" onclick="wsGoBack()">→ رجوع</button>
     </div>
