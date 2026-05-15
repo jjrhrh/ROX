@@ -993,6 +993,7 @@ const animeParams = '&lang=ja&audio=ja&dubbed=false&dub=false';
 const animeCC = `https://vidsrc.to/embed/tv/${id}/${season}/${episode}`;
 const srvs = isAnime ? [
   { icon:'🎌', name:'PRIME',   desc:'#01 رئيسي', url:`${S.ANIME}${id}/${season}/${episode}${animeParams}`,  active:true },
+  { icon:'🎯', name:'ROX',     desc:'مشغلي 🔥', url:`${S.ANIME}${id}/${season}/${episode}${animeParams}`, rox:true },
   { icon:'⚡', name:'NEXUS',   desc:'#02',        url:`${S.ANIME2}${id}/${season}/${episode}`              },
   { icon:'💎', name:'TITAN',   desc:'#03',        url:`${S.ANIME3}${id}/${season}/${episode}`              },
   { icon:'🌌', name:'COSMOS',  desc:'#04',        url:`${S.ANIME4}${id}/${season}/${episode}`              },
@@ -1021,6 +1022,7 @@ const srvs = isAnime ? [
   { icon:'⚔️', name:'KATANA',  desc:'#27', url:`${S.ANIME27}${id}/${season}/${episode}` },
 ] : type === 'tv' ? [
   { icon:'📺', name:'PRIME',   desc:'#01 رئيسي', url:`${S.TV}${id}/${season}/${episode}`,                 active:true },
+  { icon:'🎯', name:'ROX',     desc:'مشغلي 🔥', url:`${S.TV}${id}/${season}/${episode}`, rox:true },
   { icon:'⚡', name:'NEXUS',   desc:'#02',        url:`${S.TV2}${id}/${season}/${episode}`                 },
   { icon:'💎', name:'TITAN',   desc:'#03',        url:`${S.TV3}${id}/${season}/${episode}`                 },
   { icon:'🌅', name:'AURORA',  desc:'#04',        url:`${S.TV4}${id}/${season}/${episode}`                 },
@@ -1047,6 +1049,7 @@ const srvs = isAnime ? [
   { icon:'💠', name:'EMBED',   desc:'#25',    url:`${S.TV25}${id}/${season}/${episode}`   },
 ] : [
   { icon:'🎬', name:'PRIME',   desc:'#01 رئيسي',   url:`${S.MOV}${id}`,              active:true },
+  { icon:'🎯', name:'ROX',     desc:'مشغلي 🔥', url:`${S.MOV}${id}`, rox:true },
   { icon:'⚡', name:'NEXUS',   desc:'#02',        url:`${S.MOV2}${id}`              },
   { icon:'💎', name:'TITAN',   desc:'#03',        url:`${S.MOV3}${id}`              },
   { icon:'🌅', name:'AURORA',  desc:'#04',        url:`${S.MOV4}${id}`              },
