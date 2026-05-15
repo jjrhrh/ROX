@@ -269,8 +269,8 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-  flex: 0 0 72vw;
-  max-width: 320px;
+  flex: 0 0 44vw;
+  max-width: 220px;
   cursor: pointer;
   border-radius: 12px;
   overflow: hidden;
