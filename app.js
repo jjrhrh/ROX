@@ -397,7 +397,7 @@ document.body.style.backgroundImage = '';
     ? (movie.title || movie.original_title)
     : (movie.name  || movie.original_name);
   const poster = movie.poster_path
-  ? `${CONFIG.IMAGES.POSTER_LG}${movie.poster_path}`
+  ? `${CONFIG.IMAGES.POSTER_SM}${movie.poster_path}`
   : CONFIG.IMAGES.PLACEHOLDER;
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
   const year   = (movie.release_date || movie.first_air_date || '').slice(0,4);
@@ -443,7 +443,7 @@ function buildSection(title, movies, type = 'movie') {
         <span class="section-bar"></span>
         <h2 class="section-title">${title}</h2>
       </div>
-      <div class="anime-grid">
+      <div class="movies-row">
         ${movies.map(m => buildMovieCard(m, type)).join('')}
       </div>
     </div>`;
@@ -629,7 +629,7 @@ async function loadHomePage() {
         <span class="section-bar"></span>
         <h2 class="section-title">${s.title}</h2>
       </div>
-      <div class="anime-grid" id="${s.id}_row">
+      <div class="movies-row" id="${s.id}_row">
         ${Array(6).fill('<div class="movie-card skeleton-card"></div>').join('')}
       </div>
     </div>`).join('');
