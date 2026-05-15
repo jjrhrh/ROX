@@ -1197,20 +1197,19 @@ function toggleAlertSubscription(id, title, type) {
 
 async function checkAlertUpdates(id, title) {
   try {
-    const data = await fetch(buildTMDBUrl(`/tv/${id}`, { append_to_response: 'last_episode_to_air' })).then(r => r.json());
+    const key = `rox_alert_seen_${id}`;
+    const data = await fetch(buildTMDBUrl(`/tv/${id}`)).then(r => r.json());
     const ep = data.last_episode_to_air;
     if (!ep) return;
-    const key = `rox_alert_seen_${id}`;
-    const seen = localStorage.getItem(key);
     const epKey = `${ep.season_number}_${ep.episode_number}`;
-    if (seen !== epKey) {
-      localStorage.setItem(key, epKey);
-      addNotif(
-        title,
-        `الموسم ${ep.season_number} · الحلقة ${ep.episode_number}`,
-        `📺`
-      );
-    }
+    const seen = localStorage.getItem(key);
+    // إذا كان مسجلاً مسبقاً = لا شيء جديد
+    if (seen === epKey) return;
+    // أول مرة نرى هذا المسلسل = سجّل بدون إشعار
+    if (!seen) { localStorage.setItem(key, epKey); return; }
+    // حلقة جديدة فعلاً
+    localStorage.setItem(key, epKey);
+    addNotif(title, `الموسم ${ep.season_number} · الحلقة ${ep.episode_number}`, '📺');
   } catch {}
 }
 
