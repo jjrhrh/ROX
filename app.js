@@ -1583,6 +1583,7 @@ function toggleNotifSidebar() {
 document.addEventListener('DOMContentLoaded', async () => {
   bnavGo('home');
   cwRender();
+  renderNotifList();
 });
 async function loadNewsSection(containerId, feedUrl, color) {
   const sec = document.getElementById('newsSection');
