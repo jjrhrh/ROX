@@ -1538,8 +1538,36 @@ function openSurprise()   {}
 function openAI()         {}
 // ===== NOTIFICATION SIDEBAR =====
 let notifOpen = false;
-
 const NOTIF_DATA = [];
+
+function updateBadge() {
+  const badge = document.getElementById('notifBadge');
+  if (!badge) return;
+  const unread = NOTIF_DATA.filter(n => !n.read).length;
+  if (unread > 0) {
+    badge.textContent = unread;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function markAsRead(id) {
+  const notif = NOTIF_DATA.find(n => n.id === id);
+  if (notif) notif.read = true;
+  updateBadge();
+  renderNotifList();
+}
+
+function addNotif(title, ep, thumb) {
+  NOTIF_DATA.unshift({
+    id: Date.now(),
+    title, ep, thumb,
+    time: 'الآن',
+    read: false
+  });
+  updateBadge();
+}
 
 function renderNotifList() {
   const list = document.getElementById('notifList');
@@ -1549,14 +1577,14 @@ function renderNotifList() {
     return;
   }
   list.innerHTML = NOTIF_DATA.map(n => `
-    <div class="notif-item ${n.isNew ? 'notif-item--new' : ''}">
+    <div class="notif-item ${!n.read ? 'notif-item--new' : ''}" onclick="markAsRead(${n.id})">
       <div class="notif-item-thumb">${n.thumb}</div>
       <div class="notif-item-body">
         <div class="notif-item-title">${n.title}</div>
         <div class="notif-item-ep">${n.ep}</div>
         <div class="notif-item-time">${n.time}</div>
       </div>
-      ${n.isNew ? '<span class="notif-item-dot"></span>' : ''}
+      ${!n.read ? '<span class="notif-item-dot"></span>' : ''}
     </div>
   `).join('');
 }
@@ -1566,18 +1594,10 @@ function toggleNotifSidebar() {
   const sidebar   = document.getElementById('notifSidebar');
   const overlay   = document.getElementById('notifOverlay');
   const hamburger = document.getElementById('hamburgerBtn');
-  const badge     = document.getElementById('notifBadge');
-
   sidebar?.classList.toggle('open', notifOpen);
   overlay?.classList.toggle('open', notifOpen);
   hamburger?.classList.toggle('open', notifOpen);
-
-  if (notifOpen) {
-    renderNotifList();
-    if (badge) badge.style.opacity = '0';
-  } else {
-    if (badge) badge.style.opacity = '1';
-  }
+  if (notifOpen) renderNotifList();
 }
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
