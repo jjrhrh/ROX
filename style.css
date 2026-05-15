@@ -270,7 +270,7 @@ html, body {
 /* ===== MOVIE CARD ===== */
 .movie-card {
   flex: 0 0 calc(50% - 17px);
-  max-width: 220px;
+  max-width: none;
   cursor: pointer;
   border-radius: 12px;
   overflow: hidden;
