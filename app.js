@@ -1080,7 +1080,7 @@ const srvs = isAnime ? [
   { icon:'🏯', name:'SHOGUN',  desc:'#28',        url:`${S.ANIME28}${id}/${season}/${episode}` },
 ];
     const srvHTML = srvs.map(s => `
-      <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" data-name="${s.name}" onclick="wsSelectServer(this)">
+      <div class="ws-card ${s.active?'active':''}" data-url="${s.url}" data-name="${s.name}" ${s.rox?'data-rox="true"':''} onclick="wsSelectServer(this)">
         ${s.active?'<span class="ws-check">✔</span>':''}
         <div class="ws-icon">${s.icon}</div>
         <div class="ws-name">${s.name}</div>
