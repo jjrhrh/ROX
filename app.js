@@ -405,8 +405,8 @@ document.body.style.backgroundImage = '';
   const typeLabel = type === 'tv' ? 'SERIES' : 'MOVIE';
   return `
   <div class="movie-card ${extraClass}" onclick="openDetail(${movie.id},'${type}')">
-    ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
     <div class="movie-poster-wrap">
+      ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
       <img class="movie-poster" src="${poster}" alt="${title}" loading="lazy"
            onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
       <div class="movie-overlay"><span class="play-icon">▶</span></div>
