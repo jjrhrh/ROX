@@ -276,7 +276,8 @@ async function openWatchPageAnime(tmdbId, malId, season=1, episode=1) {
           <div class="ws-play-btn">▶</div>
           <span class="ws-play-lbl">اضغط للمشاهدة</span>
         </div>
-        <video id="wsPlayer" class="ws-player" controls playsinline></video>
+        <iframe id="wsFrame" class="ws-frame" src="" allowfullscreen
+          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"></iframe>
       </div>
       <button class="ws-back" onclick="wsGoBack()">→ رجوع</button>
     </div>
@@ -920,30 +921,18 @@ function wsSelectServer(card) {
     if (sw) {
       sw.style.display = 'flex';
       setTimeout(() => {
-        loadPlyr(card.dataset.url);
+        document.getElementById('wsFrame').src = card.dataset.url;
         setTimeout(() => { sw.style.display = 'none'; }, 1800);
       }, 400);
     } else {
-      loadPlyr(card.dataset.url);
+      document.getElementById('wsFrame').src = card.dataset.url;
     }
   }
 }
 function wsStartStream() {
   const active = document.querySelector('.ws-card.active');
   if (!active) return;
-  loadPlyr(active.dataset.url);
-  document.getElementById('wsOverlay').style.display = 'none';
-}
-function loadPlyr(url) {
-  const v = document.getElementById('wsPlayer');
-  if (!v) return;
-  if (window._plyrInstance) { window._plyrInstance.destroy(); }
-  v.src = url;
-  window._plyrInstance = new Plyr(v, {
-    controls: ['play','progress','current-time','mute','volume','fullscreen'],
-    autoplay: true
-  });
-  window._plyrInstance.play().catch(()=>{});
+  document.getElementById('wsFrame').src = active.dataset.url;
   document.getElementById('wsOverlay').style.display = 'none';
 }
 function wsGoBack() {
@@ -1087,7 +1076,12 @@ const srvs = isAnime ? [
             <div class="ws-play-btn">▶</div>
             <span class="ws-play-lbl">اضغط للمشاهدة</span>
           </div>
-          <video id="wsPlayer" class="ws-player" controls playsinline></video>
+          <iframe id="wsFrame" class="ws-frame" src="" 
+          allowfullscreen
+          allow="autoplay; fullscreen; encrypted-media; picture-in-picture; web-share; clipboard-write; gyroscope; accelerometer"
+          referrerpolicy="no-referrer-when-downgrade"
+          onload="if(this.src)cwTrackTime(${id},'${type}','${cwPoster}','${cwTitle}')">
+          </iframe>
           <script>
             if('${resumeSrv}') {
               document.querySelector('.ws-card.active')?.classList.remove('active');
