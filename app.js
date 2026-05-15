@@ -629,7 +629,7 @@ async function loadHomePage() {
       <div class="section-header">
         <span class="section-bar"></span>
         <h2 class="section-title">${s.title}</h2>
-        <button class="browse-all-btn" onclick="bnavGo('browse','${s.type}','${s.endpoint}','${s.title}')">عرض الكل ›</button>
+        <button class="browse-all-btn" onclick="openBrowseAll('${s.type}','${s.endpoint}','${s.title}')">عرض الكل ›</button>
       </div>
       <div class="otaku-slider-wrap">
         <button class="otaku-arrow otaku-arrow-left" onclick="otakuSlide('${s.id}_row',-1)">‹</button>
@@ -658,6 +658,26 @@ async function loadHomePage() {
       if (container) container.remove();
     }
   });
+}
+async function openBrowseAll(type, endpoint, title) {
+  const page = document.getElementById('detailPage');
+  if (!page) return;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('newsSection').style.display = 'none';
+  document.getElementById('studioBar').style.display = 'none';
+  page.classList.add('active');
+  page.innerHTML = '<div class="loading">⏳ جاري التحميل...</div>';
+  window.scrollTo(0, 0);
+  const movies = await fetchMovies(endpoint, { type, limit: 30, requireBackdrop: true });
+  page.innerHTML = `
+    <div style="padding:16px">
+      <button class="detail-btn" onclick="goBack()" style="margin-bottom:16px">← رجوع</button>
+      <h2 style="color:#fff;margin-bottom:16px;font-size:1rem">${title}</h2>
+      <div class="otaku-all-grid">
+        ${movies.map((m, i) => buildMovieCard(m, type, '', i + 1)).join('')}
+      </div>
+    </div>`;
 }
 // ===== DETAIL PAGE =====
 async function openDetail(id, type = 'movie') {
