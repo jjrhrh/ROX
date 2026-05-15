@@ -186,6 +186,7 @@ async function openAnimeJikan(malId, encodedTitle) {
             <div class="detail-actions">
               ${watchBtn}${trailerBtn}
               <button class="detail-btn detail-btn-watch" onclick="addToWatchlist(${malId},'anime')">❤️ قائمتي</button>
+              <button class="detail-btn detail-btn-alert ${getLib('rox_alerts').find(i=>i.id===malId)?'active':''}" id="alertBtn_${malId}" onclick="toggleAlertSubscription(${malId},'${a.title}','anime')"><span class="btn-bell-ico"></span> ${getLib('rox_alerts').find(i=>i.id===malId)?'مشترك التنبيهات':'تنبيه بالحلقات'}</button>
             </div>
           </div>
         </div>
