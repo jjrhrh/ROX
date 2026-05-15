@@ -402,17 +402,16 @@ document.body.style.backgroundImage = '';
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
   const year   = (movie.release_date || movie.first_air_date || '').slice(0,4);
   return `
-    <div class="movie-card ${extraClass}" onclick="openDetail(${movie.id},'${type}')">
+  <div class="anime-card" onclick="openDetail(${movie.id},'${type}')">
+    <div class="anime-poster-wrap">
+      <img class="anime-poster" src="${poster}" alt="${title}" loading="lazy"
+           onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+      <div class="anime-overlay"><span class="play-icon">▶</span></div>
       ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
-      <div class="movie-poster-wrap">
-        <img class="movie-poster" src="${poster}" alt="${title}" loading="lazy"
-             onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-        ${year   ? `<span class="movie-year-badge">${year}</span>` : ''}
-        <div class="movie-overlay"><span class="play-icon">▶</span></div>
-      </div>
-      <div class="movie-title-bar">${title.length > 18 ? title.slice(0,18)+'...' : title}</div>
-<div class="movie-meta-bar"><span>${type === 'tv' ? 'SERIES' : 'MOVIE'} · ${year}</span><span>⭐ ${rating}</span></div>
-    </div>`;
+    </div>
+    <div class="anime-title-bar">${title.length > 22 ? title.slice(0,22)+'...' : title}</div>
+    <div class="anime-meta-bar"><span class="anime-badge-type">${type === 'tv' ? 'مسلسل' : 'فيلم'}</span><span class="anime-badge-year">${toArabicNums(year)}</span>${rating ? `<span class="anime-badge-rating">⭐ ${rating}</span>` : ''}</div>
+  </div>`;
 }
 function buildAnimeCard(movie, rank = 0, type = 'tv') {
   const title = movie.name || movie.original_name || movie.title || '';
