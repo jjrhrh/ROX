@@ -1644,7 +1644,7 @@ function toggleNotifSidebar() {
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
   bnavGo('home');
-  checkAllAlerts();
+  setTimeout(checkAllAlerts, 4000);
   cwRender();
   renderNotifList();
 });
