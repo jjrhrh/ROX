@@ -20,7 +20,19 @@
   <div class="hero-backdrop" id="heroBackdrop"></div>
   <div class="hero-gradient"></div>
   <div class="hero-logo">Cinema <span>ROX</span></div>
-
+<!-- TOP-LEFT: HAMBURGER + NOTIFICATION BELL -->
+<div class="hero-topbar-left">
+  <button class="topbar-btn hamburger-btn" id="hamburgerBtn" onclick="toggleNotifSidebar()" aria-label="القائمة">
+    <span></span><span></span><span></span>
+  </button>
+  <button class="topbar-btn bell-btn" id="bellBtn" onclick="toggleNotifSidebar()" aria-label="الإشعارات">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+    </svg>
+    <span class="notif-badge" id="notifBadge">3</span>
+  </button>
+</div>
   <div class="swiper hero-swiper" id="heroSwiper" dir="ltr">
     <div class="swiper-wrapper" id="heroSwiperWrapper">
       <!-- slides injected by JS -->
@@ -114,7 +126,29 @@
   </div>
 </div>
 </div>
-
+<!-- NOTIFICATION SIDEBAR -->
+<div class="notif-overlay" id="notifOverlay" onclick="toggleNotifSidebar()"></div>
+<aside class="notification-sidebar" id="notifSidebar">
+  <div class="notif-sidebar-header">
+    <div class="notif-header-text">
+      <span class="notif-header-title">الإشعارات</span>
+      <span class="notif-header-sub">حلقات جديدة 🔥</span>
+    </div>
+    <div class="notif-bell-3d" aria-hidden="true">
+      <div class="bell-body">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <div class="bell-shine"></div>
+      </div>
+      <div class="bell-shadow"></div>
+    </div>
+  </div>
+  <div class="notif-list" id="notifList">
+    <!-- items injected by JS -->
+  </div>
+</aside>
 <!-- TRAILER OVERLAY -->
 <div class="trailer-overlay hidden" id="trailerOverlay">
   <div class="trailer-box">
