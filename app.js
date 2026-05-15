@@ -1176,6 +1176,46 @@ function addToWatchlist(id, type) {
   saveLib('rox_watchlist', list);
   showToast('❤️ تمت الإضافة إلى قائمتك');
 }
+function toggleAlertSubscription(id, title, type) {
+  const list = getLib('rox_alerts');
+  const exists = list.find(i => i.id === id);
+  const btn = document.getElementById(`alertBtn_${id}`);
+  if (exists) {
+    saveLib('rox_alerts', list.filter(i => i.id !== id));
+    if (btn) { btn.classList.remove('active'); btn.innerHTML = `<span class="btn-bell-ico"></span> تنبيه بالحلقات`; }
+    showToast('تم إلغاء الاشتراك');
+  } else {
+    list.unshift({ id, title, type, addedAt: Date.now() });
+    saveLib('rox_alerts', list);
+    if (btn) { btn.classList.add('active'); btn.innerHTML = `<span class="btn-bell-ico"></span> مشترك التنبيهات`; }
+    showToast('تم الاشتراك بالتنبيهات');
+    checkAlertUpdates(id, title);
+  }
+}
+
+async function checkAlertUpdates(id, title) {
+  try {
+    const data = await fetch(buildTMDBUrl(`/tv/${id}`, { append_to_response: 'last_episode_to_air' })).then(r => r.json());
+    const ep = data.last_episode_to_air;
+    if (!ep) return;
+    const key = `rox_alert_seen_${id}`;
+    const seen = localStorage.getItem(key);
+    const epKey = `${ep.season_number}_${ep.episode_number}`;
+    if (seen !== epKey) {
+      localStorage.setItem(key, epKey);
+      addNotif(
+        title,
+        `الموسم ${ep.season_number} · الحلقة ${ep.episode_number}`,
+        `📺`
+      );
+    }
+  } catch {}
+}
+
+function checkAllAlerts() {
+  const list = getLib('rox_alerts');
+  list.forEach(item => checkAlertUpdates(item.id, item.title));
+}
 function addToWatchLater(id, type) {
   if (!window.ROX_USER) { showToast('🔐 سجّل دخولك أولاً'); bnavGo('profile'); return; }
   const list = getLib('rox_watchlater');
