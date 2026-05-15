@@ -12,7 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.css">
 </head>
 <body>
 
@@ -120,7 +119,9 @@
 <div class="trailer-overlay hidden" id="trailerOverlay">
   <div class="trailer-box">
     <button class="trailer-close" id="closeTrailer">✕</button>
-    <video id="trailerFrame" class="trailer-frame" controls playsinline></video>
+    <iframe id="trailerFrame" class="trailer-frame"
+      allowfullscreen allow="autoplay; encrypted-media">
+    </iframe>
   </div>
 </div>
 
@@ -142,5 +143,5 @@
   window.ROX_PROVIDER = new firebase.auth.GoogleAuthProvider();
 </script>
 <script src="app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/plyr@3/dist/plyr.polyfilled.js"></script>
 </body>
+</html>
