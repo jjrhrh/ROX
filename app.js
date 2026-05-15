@@ -1573,7 +1573,7 @@ function renderNotifList() {
   const list = document.getElementById('notifList');
   if (!list) return;
   if (NOTIF_DATA.length === 0) {
-    list.innerHTML = '<div class="notif-empty">🔔 لا توجد إشعارات جديدة</div>';
+    list.innerHTML = '<div class="notif-empty">الرادار نظيف تماماً.. لا توجد حلقات جديدة حالياً</div>';
     return;
   }
   list.innerHTML = NOTIF_DATA.map(n => `
