@@ -269,8 +269,8 @@ html, body {
 
 /* ===== MOVIE CARD ===== */
 .movie-card {
-  flex: 0 0 220px;
-  scroll-snap-align: start;
+  aspect-ratio: unset;
+  flex: 0 0 calc(50vw - 16px);
   cursor: pointer;
   border-radius: 18px;
   overflow: visible;
