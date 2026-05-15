@@ -1536,7 +1536,49 @@ function openMovieOfDay() {}
 function openStats()      {}
 function openSurprise()   {}
 function openAI()         {}
+// ===== NOTIFICATION SIDEBAR =====
+let notifOpen = false;
 
+const NOTIF_DATA = [];
+
+function renderNotifList() {
+  const list = document.getElementById('notifList');
+  if (!list) return;
+  if (NOTIF_DATA.length === 0) {
+    list.innerHTML = '<div class="notif-empty">🔔 لا توجد إشعارات جديدة</div>';
+    return;
+  }
+  list.innerHTML = NOTIF_DATA.map(n => `
+    <div class="notif-item ${n.isNew ? 'notif-item--new' : ''}">
+      <div class="notif-item-thumb">${n.thumb}</div>
+      <div class="notif-item-body">
+        <div class="notif-item-title">${n.title}</div>
+        <div class="notif-item-ep">${n.ep}</div>
+        <div class="notif-item-time">${n.time}</div>
+      </div>
+      ${n.isNew ? '<span class="notif-item-dot"></span>' : ''}
+    </div>
+  `).join('');
+}
+
+function toggleNotifSidebar() {
+  notifOpen = !notifOpen;
+  const sidebar   = document.getElementById('notifSidebar');
+  const overlay   = document.getElementById('notifOverlay');
+  const hamburger = document.getElementById('hamburgerBtn');
+  const badge     = document.getElementById('notifBadge');
+
+  sidebar?.classList.toggle('open', notifOpen);
+  overlay?.classList.toggle('open', notifOpen);
+  hamburger?.classList.toggle('open', notifOpen);
+
+  if (notifOpen) {
+    renderNotifList();
+    if (badge) badge.style.opacity = '0';
+  } else {
+    if (badge) badge.style.opacity = '1';
+  }
+}
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
   bnavGo('home');
