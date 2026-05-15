@@ -1483,3 +1483,9 @@ html, body {
 .all-ep-info { padding:10px 10px 10px 0; display:flex; flex-direction:column; gap:5px; }
 .all-ep-title { color:#fff; font-size:0.78rem; font-weight:700; }
 .all-ep-overview { color:rgba(255,255,255,0.5); font-size:0.65rem; line-height:1.5; }
+.movie-poster { width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:12px; display:block; }
+.movie-badge-type { background:rgba(255,255,255,0.15); border-radius:6px; padding:2px 6px; font-size:0.6rem; color:#fff; margin-left:4px; }
+.movie-badge-year { color:rgba(255,255,255,0.6); font-size:0.65rem; margin-left:4px; }
+.movie-badge-rating { color:#f5c518; font-size:0.65rem; }
+.movie-title-bar { color:#fff; font-size:0.78rem; font-weight:600; padding:6px 4px 2px; }
+.movie-meta-bar { display:flex; align-items:center; padding:0 4px 6px; gap:4px; } 
