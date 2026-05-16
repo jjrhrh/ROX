@@ -709,13 +709,14 @@ async function openDetail(id, type = 'movie') {
 
   try {
     const ep = type === 'tv' ? `/tv/${id}` : `/movie/${id}`;
-    const [dRes, vRes, cRes, rRes, simRes, recRes] = await Promise.all([
+    const [dRes, vRes, cRes, rRes, simRes, recRes, imgRes] = await Promise.all([
       fetch(buildTMDBUrl(ep)),
       fetch(buildTMDBUrl(`${ep}/videos`)),
       fetch(buildTMDBUrl(`${ep}/credits`)),
       fetch(buildTMDBUrl(`${ep}/reviews`)),
       fetch(buildTMDBUrl(`${ep}/similar`)),
       fetch(buildTMDBUrl(`${ep}/recommendations`)),
+      fetch(buildTMDBUrl(`${ep}/images`)),
     ]);
     const detail  = await dRes.json();
     const videos  = await vRes.json();
@@ -723,6 +724,8 @@ async function openDetail(id, type = 'movie') {
     const revData = await rRes.json();
     const simData = await simRes.json();
     const recData = await recRes.json();
+    const imgData = await imgRes.json();
+    const backdrops = (imgData.backdrops || []).slice(0, 6).map(b => `${CONFIG.IMAGES.ORIGINAL}${b.file_path}`);
 
     const trailer = (videos.results || []).find(v => v.type === CONFIG.VIDEO.TRAILER_TYPE && v.site === 'YouTube')
                  || (videos.results || [])[0];
@@ -857,12 +860,19 @@ const reviewsHTML = `
 
     <button class="dp-back-btn" onclick="goBack()">← رجوع</button>
 
-    ${trailer ? `
-    <div class="dp-trailer-zone">
-      <iframe src="https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&controls=0&loop=1&playlist=${trailer.key}&playsinline=1&rel=0"
-              allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <div class="dp-media-zone" id="dpMediaZone_${id}">
+      ${backdrops.length ? `
+      <div class="dp-backdrops-slider" id="dpSlider_${id}">
+        ${backdrops.map((b,i) => `<img class="dp-backdrop-slide ${i===0?'active':''}" src="${b}" alt="">`).join('')}
+      </div>` : ''}
+      <div class="dp-trailer-container" id="dpTrailerBox_${id}" style="display:none">
+        ${trailer ? `<iframe id="dpTrailerFrame_${id}"
+          src=""
+          data-src="https://www.youtube-nocookie.com/embed/${trailer.key}?autoplay=1&mute=1&controls=1&loop=1&playlist=${trailer.key}&playsinline=1&rel=0&modestbranding=1"
+          allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>` : ''}
+      </div>
       <div class="dp-trailer-fade"></div>
-    </div>` : ''}
+    </div>
     <div class="dp-poster-zone">
       <img class="dp-poster-img" src="${poster}"
            onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
@@ -932,7 +942,29 @@ const reviewsHTML = `
       entries.forEach(e => { if(e.isIntersecting){ e.target.src=e.target.dataset.src; lazyObs.unobserve(e.target); }});
     });
     page.querySelectorAll('.lazy-img').forEach(img => lazyObs.observe(img));
-
+// سلايدر الصور
+    if (backdrops.length > 1) {
+      let si = 0;
+      const slides = document.querySelectorAll(`#dpSlider_${id} .dp-backdrop-slide`);
+      setInterval(() => {
+        slides[si].classList.remove('active');
+        si = (si + 1) % slides.length;
+        slides[si].classList.add('active');
+      }, 3500);
+    }
+    // تريلر بعد 3 ثواني
+    if (${!!trailer}) {
+      setTimeout(() => {
+        const box = document.getElementById(`dpTrailerBox_${id}`);
+        const frame = document.getElementById(`dpTrailerFrame_${id}`);
+        const slider = document.getElementById(`dpSlider_${id}`);
+        if (box && frame) {
+          frame.src = frame.dataset.src;
+          box.style.display = 'block';
+          if (slider) { slider.style.opacity = '0'; setTimeout(() => slider.style.display='none', 400); }
+        }
+      }, 3000);
+          }
     if (type === 'tv' && tvSeasons.length) loadSeasonEps(id, tvSeasons[0].season_number);
 
   } catch (err) {
