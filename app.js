@@ -827,7 +827,7 @@ const reviewsHTML = `
             </div>
             <div class="detail-genres">${genres}</div>
             <div class="detail-actions">
-              <button class="detail-btn detail-btn-now" onclick="openWatchPage(${id},'${type}')">▶ شاهد الآن</button>
+              <button class="detail-btn detail-btn-now" id="mainWatchBtn_${id}" onclick="openWatchPage(${id},'${type}',${(() => { const p=getProgress(id); return p?`${p.season},${p.episode+1}`:`1,1`; })()})">▶ ${(() => { const p=getProgress(id); return p ? `أكمل المشاهدة: الحلقة ${p.episode+1}` : 'شاهد الآن'; })()}</button>
               ${trailerBtn}
               <button class="detail-btn detail-btn-watch" onclick="addToWatchlist(${id},'${type}')">❤️ قائمتي</button>
               ${type === 'tv' ? `<button class="detail-btn detail-btn-alert ${getLib('rox_alerts').find(i=>i.id===id)?'active':''}" id="alertBtn_${id}" onclick="toggleAlertSubscription(${id},'${title}','${type}')"><span class="btn-bell-ico"></span> ${getLib('rox_alerts').find(i=>i.id===id)?'مشترك التنبيهات':'تنبيه بالحلقات'}</button>` : ''}
@@ -920,7 +920,7 @@ async function loadSeasonEps(tvId, seasonNum) {
       if (dp) { dp.style.backgroundImage = `linear-gradient(to bottom, rgba(0,0,0,0.7), #080000), url('${poster}')`; dp.style.backgroundSize = 'cover'; }
     }
     wrap.innerHTML = (data.episodes||[]).map(e=>`
-      <div class="swiper-slide ep-card" onclick="openWatchPage(${tvId},'tv',${seasonNum},${e.episode_number})">
+      <div class="swiper-slide ep-card ${(() => { const p=getProgress(tvId); return p && p.season===seasonNum && p.episode+1===e.episode_number ? 'ep-next-glow' : ''; })()}" onclick="saveProgress(${tvId},${seasonNum},${e.episode_number});openWatchPage(${tvId},'tv',${seasonNum},${e.episode_number})">
         <div class="ep-thumb-wrap">
           <img data-src="${e.still_path?CONFIG.IMAGES.STILL_MD+e.still_path:CONFIG.IMAGES.PLACEHOLDER}"
                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
@@ -1232,6 +1232,12 @@ async function checkAlertUpdates(id, title) {
     addNotif(title, `الموسم ${ep.season_number} · الحلقة ${ep.episode_number}`, '📺');
   } catch {}
 }
+function saveProgress(id, season, episode) {
+  localStorage.setItem(`rox_progress_${id}`, JSON.stringify({ season, episode }));
+}
+function getProgress(id) {
+  try { return JSON.parse(localStorage.getItem(`rox_progress_${id}`)); } catch { return null; }
+    }
 function switchTab(btn, tabId) {
   const parent = btn.closest('.detail-body') || document.getElementById('detailPage');
   parent.querySelectorAll('.dtab').forEach(b => b.classList.remove('active'));
