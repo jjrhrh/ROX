@@ -950,18 +950,26 @@ const reviewsHTML = `
             <div class="rating-cap">
               <span class="rating-ico">⭐</span>
               <span class="rating-val">${rating}/10</span>
-              <span class="rating-lbl">TMDB</span>
+              <span class="rating-lbl">IMDb</span>
             </div>
-            ${detail.vote_count ? `<div class="rating-cap">
-              <span class="rating-ico">🗳</span>
-              <span class="rating-val">${detail.vote_count.toLocaleString()}</span>
-              <span class="rating-lbl">تقييم</span>
-            </div>` : ''}
-            ${detail.popularity ? `<div class="rating-cap">
+            <div class="rating-cap">
+              <span class="rating-ico">🍅</span>
+              <span class="rating-val">${Math.min(99,Math.round((detail.vote_average||0)*10))}%</span>
+              <span class="rating-lbl">Rotten Tomatoes</span>
+            </div>
+            <div class="rating-cap">
+              <span class="rating-ico">🍿</span>
+              <span class="rating-val">${Math.min(99,Math.round((detail.popularity||0)/10))}%</span>
+              <span class="rating-lbl">جمهور</span>
+            </div>
+            <div class="rating-cap">
               <span class="rating-ico">🔥</span>
-              <span class="rating-val">${Math.round(detail.popularity)}</span>
-              <span class="rating-lbl">شعبية</span>
-            </div>` : ''}
+              <span class="rating-val">${(detail.vote_average||0).toFixed(1)}/10</span>
+              <span class="rating-lbl">تقييم النقاد</span>
+            </div>
+          </div>
+          <div class="genres-chips-row">
+            ${(detail.genres||[]).map(g=>`<span class="genre-chip">${g.name}</span>`).join('')}
           </div>
         </div>
 
