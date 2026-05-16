@@ -697,6 +697,56 @@ async function openBrowseAll(type, endpoint, title) {
       </div>
     </div>`;
 }
+function extractDominantColor(imgUrl, callback) {
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 50; canvas.height = 50;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, 50, 50);
+    const data = ctx.getImageData(0, 0, 50, 50).data;
+    let r=0, g=0, b=0, count=0;
+    for (let i=0; i<data.length; i+=16) {
+      const pr=data[i], pg=data[i+1], pb=data[i+2];
+      const brightness = (pr+pg+pb)/3;
+      if (brightness > 30 && brightness < 220) {
+        r+=pr; g+=pg; b+=pb; count++;
+      }
+    }
+    if (count===0) { callback(null); return; }
+    r=Math.round(r/count); g=Math.round(g/count); b=Math.round(b/count);
+    const max=Math.max(r,g,b), min=Math.min(r,g,b);
+    const boost = 1.4;
+    r=Math.min(255,Math.round(r+(max-r)*boost));
+    g=Math.min(255,Math.round(g+(max-g)*boost));
+    b=Math.min(255,Math.round(b+(max-b)*boost));
+    callback(`${r},${g},${b}`);
+  };
+  img.onerror = () => callback(null);
+  img.src = imgUrl;
+}
+
+function applyDynamicColor(rgb) {
+  if (!rgb) return;
+  const btn = document.querySelector('.dp-action-watch');
+  const row2Btns = document.querySelectorAll('.dp-action-later, .dp-action-fav, .dp-action-alert');
+  const sections = document.querySelectorAll('.detail-section-title');
+  if (btn) {
+    btn.style.background = `linear-gradient(135deg, rgb(${rgb}), rgba(${rgb},0.75))`;
+    btn.style.boxShadow = `0 4px 24px rgba(${rgb},0.5)`;
+    btn.style.color = '#fff';
+  }
+  row2Btns.forEach(b => {
+    b.style.borderColor = `rgba(${rgb},0.45)`;
+    b.style.boxShadow = `0 0 10px rgba(${rgb},0.15)`;
+  });
+  sections.forEach(s => {
+    s.style.color = `rgb(${rgb})`;
+  });
+  document.documentElement.style.setProperty('--dynamic-color', `rgb(${rgb})`);
+  document.documentElement.style.setProperty('--dynamic-glow', `rgba(${rgb},0.4)`);
+        }
 // ===== DETAIL PAGE =====
 async function openDetail(id, type = 'movie') {
   document.getElementById('newsSection').style.display = 'none';
