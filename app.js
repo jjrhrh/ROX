@@ -217,7 +217,7 @@ async function openAnimeJikan(malId, encodedTitle) {
             </div>
           </div>
         </div>` : ''}
-        <<div class="detail-tabs-bar">
+        <div class="detail-tabs-bar">
           ${episodes.length?`<button class="dtab active" onclick="switchTab(this,'tab-eps-a')">الحلقات</button>`:''}
           <button class="dtab ${!episodes.length?'active':''}" onclick="switchTab(this,'tab-about-a')">عن العمل</button>
           <button class="dtab" onclick="switchTab(this,'tab-trailers-a')">العروض الترويجية</button>
