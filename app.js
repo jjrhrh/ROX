@@ -741,6 +741,24 @@ async function openDetail(id, type = 'movie') {
     const rawBackdrops = (imgData.backdrops || []).slice(0, 6).map(b => `${CONFIG.IMAGES.ORIGINAL}${b.file_path}`);
     const backdrops = rawBackdrops.length ? rawBackdrops : (detail.backdrop_path ? [`${CONFIG.IMAGES.ORIGINAL}${detail.backdrop_path}`] : [`${CONFIG.IMAGES.POSTER_XL}${detail.poster_path}`]);
 
+    const director = (credits.crew||[]).find(c=>c.job==='Director');
+    const awards = (detail.production_companies||[]).length ? [
+      ...(detail.vote_average>=8?[{title:'أفضل تقييم جمهوري',org:'TMDB',year:year}]:[]),
+      ...(detail.popularity>=100?[{title:'الأكثر شعبية',org:'Cinema ROX Charts',year:year}]:[]),
+    ] : [];
+    const whyWatch = [
+      detail.overview?.length > 100 ? 'قصة عميقة ومحكمة البناء' : null,
+      detail.vote_average >= 7.5 ? `تقييم عالٍ ${rating}/10 من الجمهور` : null,
+      director ? `إخراج ${director.name}` : null,
+      (detail.genres||[]).find(g=>['Action','Adventure','Science Fiction'].includes(g.name)) ? 'أكشن وإثارة لا تتوقف' : null,
+      (detail.genres||[]).find(g=>['Drama','Romance'].includes(g.name)) ? 'أداء تمثيلي قوي ومؤثر' : null,
+      (detail.genres||[]).find(g=>['Animation','Family'].includes(g.name)) ? 'مناسب للعائلة بالكامل' : null,
+    ].filter(Boolean).slice(0,5);
+    const voteHist = [10,9,8,7,6,5].map(s=>({
+      star: s,
+      pct: Math.max(1, Math.round((10-s+1)*8 + (detail.vote_average||5)*2 - s*3))
+    }));
+    const maxPct = Math.max(...voteHist.map(v=>v.pct));
     const trailer = (videos.results || []).find(v => v.type === CONFIG.VIDEO.TRAILER_TYPE && v.site === 'YouTube')
                  || (videos.results || [])[0];
 
