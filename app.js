@@ -857,6 +857,12 @@ const reviewsHTML = `
 
     <button class="dp-back-btn" onclick="goBack()">← رجوع</button>
 
+    ${trailer ? `
+    <div class="dp-trailer-zone">
+      <iframe src="https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&controls=0&loop=1&playlist=${trailer.key}&playsinline=1&rel=0"
+              allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <div class="dp-trailer-fade"></div>
+    </div>` : ''}
     <div class="dp-poster-zone">
       <img class="dp-poster-img" src="${poster}"
            onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
