@@ -806,15 +806,14 @@ const reviewsHTML = `
           <div class="detail-info">
             <h1 class="detail-title">${title}</h1>
             <div class="detail-stats-bar">
-              <div class="stat-cap stat-views">👁 <span>${detail.popularity?Math.round(detail.popularity*1000).toLocaleString():'—'}</span></div>
-              <div class="stat-cap stat-gold">⭐ <span>${rating}</span></div>
-              <div class="stat-cap stat-votes">🗳 <span>${detail.vote_count?detail.vote_count.toLocaleString():'—'}</span></div>
-            </div>
-            <div class="detail-meta">
-              ${year    ?`<span class="detail-badge">📅 ${year}</span>`:''}
-              ${runtime ?`<span class="detail-badge">⏱ ${runtime}</span>`:''}
-              <span class="detail-badge">${type==='tv'?'📺 مسلسل':'🎬 فيلم'}</span>
-            </div>
+  <div class="stat-cap stat-gold"><svg class="stat-ico" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>${score}</span></div>
+  <div class="stat-cap stat-views"><svg class="stat-ico" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span>${(a.members||0).toLocaleString()}</span></div>
+</div>
+<div class="detail-meta">
+  ${eps?`<span class="detail-badge"><svg class="stat-ico" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>${eps} حلقة</span>`:''}
+  ${status?`<span class="detail-badge detail-rating"><svg class="stat-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${status}</span>`:''}
+  ${studios?`<span class="detail-badge"><svg class="stat-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>${studios}</span>`:''}
+</div>
             <div class="detail-genres">${genres}</div>
             <div class="detail-actions">
               <button class="detail-btn detail-btn-now" onclick="openWatchPage(${id},'${type}')">▶ شاهد الآن</button>
