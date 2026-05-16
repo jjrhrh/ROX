@@ -1166,6 +1166,7 @@ const reviewsHTML = `
       entries.forEach(e => { if(e.isIntersecting){ e.target.src=e.target.dataset.src; lazyObs.unobserve(e.target); }});
     });
     page.querySelectorAll('.lazy-img').forEach(img => lazyObs.observe(img));
+    extractDominantColor(poster, applyDynamicColor);
 // سلايدر الصور
     if (backdrops.length > 1) {
       let si = 0;
