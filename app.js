@@ -725,7 +725,8 @@ async function openDetail(id, type = 'movie') {
     const simData = await simRes.json();
     const recData = await recRes.json();
     const imgData = await imgRes.json();
-    const backdrops = (imgData.backdrops || []).slice(0, 6).map(b => `${CONFIG.IMAGES.ORIGINAL}${b.file_path}`);
+    const rawBackdrops = (imgData.backdrops || []).slice(0, 6).map(b => `${CONFIG.IMAGES.ORIGINAL}${b.file_path}`);
+    const backdrops = rawBackdrops.length ? rawBackdrops : (detail.backdrop_path ? [`${CONFIG.IMAGES.ORIGINAL}${detail.backdrop_path}`] : [`${CONFIG.IMAGES.POSTER_XL}${detail.poster_path}`]);
 
     const trailer = (videos.results || []).find(v => v.type === CONFIG.VIDEO.TRAILER_TYPE && v.site === 'YouTube')
                  || (videos.results || [])[0];
@@ -861,16 +862,15 @@ const reviewsHTML = `
     <button class="dp-back-btn" onclick="goBack()">← رجوع</button>
 
     <div class="dp-media-zone" id="dpMediaZone_${id}">
-      ${backdrops.length ? `
       <div class="dp-backdrops-slider" id="dpSlider_${id}">
-        ${backdrops.map((b,i) => `<img class="dp-backdrop-slide ${i===0?'active':''}" src="${b}" alt="">`).join('')}
-      </div>` : ''}
-      <div class="dp-trailer-container" id="dpTrailerBox_${id}" style="display:none">
-        ${trailer ? `<iframe id="dpTrailerFrame_${id}"
+        ${backdrops.map((b,i) => `<img class="dp-backdrop-slide ${i===0?'active':''}" src="${b}" alt="" style="object-position:center top">`).join('')}
+      </div>
+      ${trailer ? `<div class="dp-trailer-container" id="dpTrailerBox_${id}" style="display:none">
+        <iframe id="dpTrailerFrame_${id}"
           src=""
           data-src="https://www.youtube-nocookie.com/embed/${trailer.key}?autoplay=1&mute=1&controls=1&loop=1&playlist=${trailer.key}&playsinline=1&rel=0&modestbranding=1"
-          allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>` : ''}
-      </div>
+          allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+      </div>` : ''}
       <div class="dp-trailer-fade"></div>
     </div>
     <div class="dp-poster-zone">
