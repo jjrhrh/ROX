@@ -851,52 +851,75 @@ const reviewsHTML = `
       : '';
 
     page.innerHTML = `
-      <div class="cine-header" style="background-image:url('${backdrop}')">
-        <div class="cine-header-grad"></div>
-        <button class="detail-back-btn" onclick="goBack()">← رجوع</button>
+  <div class="dp-wrap">
+    <div class="dp-bg-blur" style="background-image:url('${poster}')"></div>
+    <div class="dp-bg-dim"></div>
+
+    <button class="dp-back-btn" onclick="goBack()">← رجوع</button>
+
+    <div class="dp-poster-zone">
+      <img class="dp-poster-img" src="${poster}"
+           onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+    </div>
+
+    <div class="dp-actions-wrap">
+      ${trailer ? `<button class="dp-action-trailer" onclick="playTrailer('${trailer.key}')">🎬 شاهد الإعلان</button>` : ''}
+      <button class="dp-action-watch" id="mainWatchBtn_${id}"
+        onclick="openWatchPage(${id},'${type}',${(() => {
+          const p = getProgress(id);
+          return p ? `${p.season},${p.episode + 1}` : `1,1`;
+        })()})">
+        ▶ ${(() => {
+          const p = getProgress(id);
+          return p ? `أكمل المشاهدة — ح${p.episode + 1}` : 'شاهد الآن';
+        })()}
+      </button>
+      <div class="dp-action-row2">
+        <button class="dp-action-later" onclick="addToWatchLater(${id},'${type}')">⏰ سأشاهده</button>
+        <button class="dp-action-fav"   onclick="addToWatchlist(${id},'${type}')">❤️ قائمتي</button>
+        ${type === 'tv' ? `<button class="dp-action-alert ${getLib('rox_alerts').find(i=>i.id===id)?'active':''}"
+          id="alertBtn_${id}" onclick="toggleAlertSubscription(${id},'${title}','${type}')">
+          <span class="btn-bell-ico"></span> تنبيه</button>` : ''}
       </div>
-      <div class="cine-poster-wrap">
-        <img class="cine-poster" src="${poster}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+    </div>
+
+    <div class="dp-info-block">
+      <h1 class="dp-title">${title}</h1>
+      ${tagline ? `<p class="dp-tagline">"${tagline}"</p>` : ''}
+      <div class="dp-meta-row">
+        ${year    ? `<span class="dp-meta-chip">📅 ${year}</span>`    : ''}
+        ${runtime ? `<span class="dp-meta-chip">🕐 ${runtime}</span>` : ''}
+        <span class="dp-meta-chip">⭐ ${rating}${voteCount ? ` · ${voteCount}` : ''}</span>
       </div>
-      <div class="cine-actions">
-        ${trailerBtn ? `<button class="cine-btn cine-btn-trailer" onclick="playTrailer('${trailer?.key}')">🎬 شاهد الإعلان</button>` : ''}
-        <button class="cine-btn cine-btn-watch" id="mainWatchBtn_${id}" onclick="openWatchPage(${id},'${type}',${(() => { const p=getProgress(id); return p?`${p.season},${p.episode+1}`:`1,1`; })()})">▶ ${(() => { const p=getProgress(id); return p ? `أكمل: ح${p.episode+1}` : 'شاهد الآن'; })()}</button>
-        <div class="cine-btn-row">
-          <button class="cine-btn cine-btn-later" onclick="addToWatchLater(${id},'${type}')">⏰ سأشاهده</button>
-          <button class="cine-btn cine-btn-fav" onclick="addToWatchlist(${id},'${type}')">❤️ قائمتي</button>
-          ${type === 'tv' ? `<button class="cine-btn cine-btn-alert ${getLib('rox_alerts').find(i=>i.id===id)?'active':''}" id="alertBtn_${id}" onclick="toggleAlertSubscription(${id},'${title}','${type}')"><span class="btn-bell-ico"></span> تنبيه</button>` : ''}
-        </div>
+      <div class="dp-genres-row">${genres}</div>
+    </div>
+
+    <div class="detail-body">
+      <div class="detail-tabs-bar">
+        ${type === 'tv' || seasonsHTML
+          ? `<button class="dtab active" onclick="switchTab(this,'tab-eps')">المواسم والحلقات</button>`
+          : ''}
+        <button class="dtab ${!(type === 'tv' || seasonsHTML) ? 'active' : ''}"
+          onclick="switchTab(this,'tab-about')">عن العمل</button>
+        <button class="dtab" onclick="switchTab(this,'tab-trailers')">العروض الترويجية</button>
       </div>
-      <div class="cine-info">
-        <h1 class="cine-title">${title}</h1>
-        <div class="cine-meta-row">
-          ${year?`<span class="cine-meta-item">📅 ${year}</span>`:''}
-          ${runtime?`<span class="cine-meta-item">🕐 ${runtime}</span>`:''}
-          <span class="cine-meta-item">⭐ ${rating}</span>
-        </div>
-        <div class="detail-genres">${genres}</div>
+
+      <div id="tab-eps" class="dtab-content ${type === 'tv' || seasonsHTML ? 'active' : ''}">
+        ${seasonsHTML}
       </div>
-      <div class="detail-body" style="margin-top:0">
-        <div class="detail-tabs-bar">
-          ${type==='tv'||seasonsHTML?`<button class="dtab active" onclick="switchTab(this,'tab-eps')">المواسم والحلقات</button>`:''}
-          <button class="dtab ${!(type==='tv'||seasonsHTML)?'active':''}" onclick="switchTab(this,'tab-about')">عن العمل</button>
-          <button class="dtab" onclick="switchTab(this,'tab-trailers')">العروض الترويجية</button>
+      <div id="tab-about" class="dtab-content ${!(type === 'tv' || seasonsHTML) ? 'active' : ''}">
+        <div class="detail-section">
+          <p class="detail-overview">${overview}</p>
         </div>
-        <div id="tab-eps" class="dtab-content ${type==='tv'||seasonsHTML?'active':''}">
-          ${seasonsHTML}
-        </div>
-        <div id="tab-about" class="dtab-content ${!(type==='tv'||seasonsHTML)?'active':''}">
-          <div class="detail-section">
-            <p class="detail-overview">${overview}</p>
-          </div>
-          ${castHTML}
-          ${similarHTML}
-          ${recommendedHTML}
-        </div>
-        <div id="tab-trailers" class="dtab-content">
-          ${reviewsHTML}
-        </div>
-      </div>`;
+        ${castHTML}
+        ${similarHTML}
+        ${recommendedHTML}
+      </div>
+      <div id="tab-trailers" class="dtab-content">
+        ${reviewsHTML}
+      </div>
+    </div>
+  </div>`;
 
     // IntersectionObserver للصور الكسولة
     const lazyObs = new IntersectionObserver(entries => {
