@@ -2482,22 +2482,20 @@ html, body {
 
 /* ── Hero (backdrop + poster) ── */
 .dp-hero {
+.dp-hero {
   position: relative;
   width: 100%;
-  min-height: 540px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 54px 0 28px;
+  height: 230px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .dp-hero-bg {
   position: absolute;
-  inset: -30px;
+  inset: 0;
   background-size: cover;
   background-position: center top;
-  filter: blur(36px) brightness(0.28) saturate(2);
+  filter: brightness(0.6);
   z-index: 0;
 }
 
@@ -2506,9 +2504,9 @@ html, body {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(5,5,5,0.15)  0%,
-    rgba(5,5,5,0.35) 55%,
-    #050505           96%
+    rgba(5,5,5,0.05) 0%,
+    rgba(5,5,5,0.6)  70%,
+    #050505          100%
   );
   z-index: 1;
 }
