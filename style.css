@@ -558,18 +558,25 @@ html, body {
   0%,100% { box-shadow: 0 0 22px rgba(229,9,20,0.6); }
   50%     { box-shadow: 0 0 45px rgba(229,9,20,0.95), 0 0 70px rgba(229,9,20,0.35); }
 } 
-.detail-section { margin-top: 24px; }
+.detail-section {
+  margin-top: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 18px;
+  padding: 16px;
+  backdrop-filter: blur(12px);
+}
 .detail-section-title {
-  font-size: 0.95rem; font-weight: 900; color: var(--accent);
-  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  font-size: 0.92rem; font-weight: 900; color: var(--accent);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
 }
 .detail-section-title::after {
   content: ''; flex: 1; height: 1px;
-  background: var(--border-accent); opacity: 0.4;
+  background: var(--border-accent); opacity: 0.3;
 }
 .detail-overview {
-  color: var(--text2); font-size: 0.9rem;
-  line-height: 1.8; text-align: justify;
+  color: var(--text2); font-size: 0.88rem;
+  line-height: 1.85; text-align: justify;
 }
 .detail-prod-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
@@ -582,29 +589,44 @@ html, body {
 .prod-label { font-size: 0.7rem; color: var(--text3); font-weight: 700; }
 .prod-val   { font-size: 0.92rem; color: var(--text); font-weight: 900; }
 .cast-row {
-  display: flex; gap: 10px; overflow-x: auto;
-  padding-bottom: 10px; scrollbar-width: none;
+  display: flex; gap: 14px; overflow-x: auto;
+  padding-bottom: 12px; scrollbar-width: none;
   scroll-snap-type: x mandatory;
 }
 .cast-row::-webkit-scrollbar { display: none; }
 .cast-card {
-  flex: 0 0 70px; scroll-snap-align: start;
+  flex: 0 0 72px; scroll-snap-align: start;
   display: flex; flex-direction: column;
-  align-items: center; gap: 5px;
+  align-items: center; gap: 6px;
+  cursor: pointer;
 }
 .cast-card img {
-  width: 60px; height: 60px; border-radius: 50%;
-  object-fit: cover; border: 2px solid var(--border-accent);
+  width: 62px; height: 62px; border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-accent);
+  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1),
+              box-shadow 0.4s cubic-bezier(0.23,1,0.32,1),
+              border-color 0.4s ease;
+}
+.cast-card:hover img {
+  transform: scale(1.1);
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 2px var(--accent),
+    0 0 14px var(--accent-glow),
+    0 0 28px var(--accent-glow);
 }
 .cast-name {
   font-size: 0.62rem; font-weight: 700; color: var(--text);
   text-align: center; white-space: nowrap;
-  overflow: hidden; text-overflow: ellipsis; max-width: 70px;
+  overflow: hidden; text-overflow: ellipsis; max-width: 72px;
+  transition: color 0.3s ease;
 }
+.cast-card:hover .cast-name { color: #fff; }
 .cast-char {
   font-size: 0.58rem; color: var(--text3); text-align: center;
   white-space: nowrap; overflow: hidden;
-  text-overflow: ellipsis; max-width: 70px;
+  text-overflow: ellipsis; max-width: 72px;
 }
 /* ===== PLAYER WRAP ===== */
 .detail-player-wrap {
@@ -1192,12 +1214,19 @@ html, body {
 }
 .seasons-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
 .season-select {
-  background: rgba(229,9,20,0.15);
-  border: 1px solid rgba(229,9,20,0.4);
+  background: rgba(229,9,20,0.1);
+  border: 1px solid rgba(229,9,20,0.5);
   color: #fff; font-family:'Cairo',sans-serif;
   font-size: 0.8rem; font-weight: 700;
-  padding: 6px 12px; border-radius: 999px;
+  padding: 7px 16px; border-radius: 999px;
   outline: none; cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 12px rgba(229,9,20,0.2);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.season-select:focus {
+  border-color: rgba(229,9,20,0.9);
+  box-shadow: 0 0 20px rgba(229,9,20,0.4);
 }
 
 /* ===== EPISODE CARD ===== */
