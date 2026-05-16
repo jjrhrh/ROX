@@ -2625,16 +2625,16 @@ html, body {
 .dp-action-watch {
   width: 100%;
   padding: 16px;
-  background: #ffffff;
+  background: var(--dynamic-color, #e50914);
   border: none;
   border-radius: 13px;
-  color: #000;
+  color: #fff;
   font-family: Cairo, sans-serif;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(255,255,255,0.15);
-  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 24px var(--dynamic-glow, rgba(229,9,20,0.5));
+  transition: transform 0.15s, box-shadow 0.15s, background 0.6s ease;
 }
 .dp-action-watch:active {
   transform: scale(0.97);
