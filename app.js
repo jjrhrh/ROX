@@ -852,11 +852,10 @@ const reviewsHTML = `
 
     page.innerHTML = `
   <div class="dp-wrap">
-    <div class="dp-hero">
-      <div class="dp-hero-bg" style="background-image:url('${backdrop || poster}')"></div>
-      <div class="dp-hero-fade"></div>
-      <button class="dp-back-btn" onclick="goBack()">← رجوع</button>
-    </div>
+    <div class="dp-bg-blur" style="background-image:url('${poster}')"></div>
+    <div class="dp-bg-dim"></div>
+
+    <button class="dp-back-btn" onclick="goBack()">← رجوع</button>
 
     <div class="dp-poster-zone">
       <img class="dp-poster-img" src="${poster}"
