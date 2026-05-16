@@ -2528,24 +2528,42 @@ html, body {
 .dp-poster-zone {
   position: relative;
   z-index: 2;
-  display: flex;
-  justify-content: center;
-  padding-top: 62px;
-  padding-bottom: 22px;
+  width: 100%;
+  padding: 0;
 }
-
 .dp-poster-img {
-  width: 68%;
-  max-width: 300px;
+  width: 100%;
+  max-width: 100%;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  border-radius: 18px;
-  box-shadow:
-    0 24px 64px rgba(0,0,0,0.85),
-    0 0 0 1px rgba(255,255,255,0.07);
+  border-radius: 0;
+  display: block;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.85);
   transition: transform 0.3s ease;
 }
-.dp-poster-img:active { transform: scale(0.97); }
+.dp-poster-img:active { transform: scale(0.99); }
+
+/* تريلر فوق البوستر */
+.dp-trailer-zone {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+  z-index: 2;
+}
+.dp-trailer-zone iframe {
+  width: 100%; height: 100%;
+  border: none; display: block;
+}
+.dp-trailer-fade {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, #050505);
+  z-index: 3;
+  pointer-events: none;
+}
 
 /* ── Buttons ── */
 .dp-actions-wrap {
