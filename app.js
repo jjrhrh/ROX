@@ -174,13 +174,14 @@ async function openAnimeJikan(malId, encodedTitle) {
           <div class="detail-info">
             <h1 class="detail-title">${a.title}</h1>
             <div class="detail-stats-bar">
-              <div class="stat-cap stat-gold">⭐ <span>${score}</span></div>
-              <div class="stat-cap stat-views">👁 <span>${(a.members||0).toLocaleString()}</span></div>
+              <div class="stat-cap stat-gold"><svg class="stat-ico" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span>${score}</span></div>
+              <div class="stat-cap stat-views"><svg class="stat-ico" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span>${(a.members||0).toLocaleString()}</span></div>
             </div>
             <div class="detail-meta">
-              ${eps?`<span class="detail-badge">🎬 ${eps} حلقة</span>`:''}
-              ${status?`<span class="detail-badge">${status}</span>`:''}
-              ${studios?`<span class="detail-badge">🎌 ${studios}</span>`:''}
+              ${eps?`<span class="detail-badge"><svg class="stat-ico" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>${eps} حلقة</span>`:''}
+              ${status?`<span class="detail-badge detail-rating"><svg class="stat-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${status}</span>`:''}
+              ${studios?`<span class="detail-badge"><svg class="stat-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>${studios}</span>`:''}
+            </div>
             </div>
             <div class="detail-genres">${genres}</div>
             <div class="detail-actions">
