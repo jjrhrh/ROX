@@ -159,7 +159,8 @@ async function openAnimeJikan(malId, encodedTitle) {
     const status  = a.status||'';
     const synopsis= a.synopsis||'لا يوجد وصف.';
     const episodes = epsRes.data || [];
-    const watchBtn = `<button class="detail-btn detail-btn-now" onclick="openWatchPageAnime(${tmdbId||0},${malId},1,1)">▶ شاهد الآن — الحلقة 1</button>`;
+    const _ap = getProgress(malId);
+    const watchBtn = `<button class="detail-btn detail-btn-now" onclick="openWatchPageAnime(${tmdbId||0},${malId},1,${_ap?_ap.episode+1:1})">▶ ${_ap?`أكمل المشاهدة: الحلقة ${_ap.episode+1}`:'شاهد الآن — الحلقة 1'}</button>`;
     const trailerBtn = trailer
       ? `<button class="detail-btn detail-btn-trailer" onclick="playTrailer('${a.trailer?.youtube_id}')">▶ المقطع الدعائي</button>`
       : '';
@@ -203,7 +204,7 @@ async function openAnimeJikan(malId, encodedTitle) {
           <div class="swiper eps-swiper" id="epsSwiper_${malId}">
             <div class="swiper-wrapper">
               ${episodes.map((e,i)=>`
-                <div class="swiper-slide ep-card" onclick="openWatchPageAnime(-1,${malId},1,${e.episode_id||i+1})">
+                <div class="swiper-slide ep-card ${(() => { const p=getProgress(malId); return p && p.episode+1===(e.episode_id||i+1) ? 'ep-next-glow' : ''; })()}" onclick="saveProgress(${malId},1,${e.episode_id||i+1});openWatchPageAnime(-1,${malId},1,${e.episode_id||i+1})">
                   <div class="ep-thumb-wrap">
                     <img data-src="${e.images?.jpg?.image_url||poster}"
                          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
