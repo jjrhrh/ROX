@@ -766,57 +766,39 @@ async function openDetail(id, type = 'movie') {
         </div>
       </div>` : '';
 
-    const simItems = (simData.results||[]).filter(i=>i.backdrop_path||i.poster_path).slice(0,10);
-    const recItems = (recData.results||[]).filter(i=>i.backdrop_path||i.poster_path).slice(0,10);
+    const simItems = (simData.results||[]).filter(i=>i.poster_path).slice(0,12);
+    const recItems = (recData.results||[]).filter(i=>i.poster_path).slice(0,12);
     const _mediaType = type;
+
+    const buildPosterCard = (m, mediaT) => {
+      const img = m.poster_path ? `${CONFIG.IMAGES.POSTER_LG}${m.poster_path}` : CONFIG.IMAGES.PLACEHOLDER;
+      const y = (m.release_date||m.first_air_date||'').slice(0,4);
+      const r = m.vote_average?m.vote_average.toFixed(1):'';
+      return `<div class="pc-card" onclick="openDetail(${m.id},'${mediaT}')">
+        <div class="pc-wrap">
+          <img class="pc-img lazy-img" data-src="${img}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+          <div class="pc-badges-top">
+            ${y?`<span class="pc-badge-year">📅 ${y}</span>`:''}
+            ${r?`<span class="pc-badge-rating">⭐ ${r}</span>`:''}
+          </div>
+          <div class="pc-hover-play">▶</div>
+        </div>
+      </div>`;
+    };
 
     const similarHTML = simItems.length ? `
       <div class="detail-section">
         <h3 class="detail-section-title">🎬 أعمال مشابهة</h3>
-        <div class="landscape-slider">
-          ${simItems.map((m,i) => {
-            const img = m.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}` : `${CONFIG.IMAGES.POSTER_LG}${m.poster_path}`;
-            const t = m.title||m.name||'';
-            const y = (m.release_date||m.first_air_date||'').slice(0,4);
-            const r = m.vote_average?m.vote_average.toFixed(1):'';
-            return `<div class="ls-card" onclick="openDetail(${m.id},'${_mediaType}')">
-              <div class="ls-img-wrap">
-                <span class="ls-rank">${i+1}</span>
-                <img class="ls-img lazy-img" data-src="${img}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-                <div class="ls-overlay">▶</div>
-              </div>
-              <div class="ls-pill">
-                <span class="ls-pill-title">${t.slice(0,22)}</span>
-                ${y?`<span class="ls-pill-year">${y}</span>`:''}
-                ${r?`<span class="ls-pill-rating">⭐${r}</span>`:''}
-              </div>
-            </div>`;
-          }).join('')}
+        <div class="poster-slider">
+          ${simItems.map(m => buildPosterCard(m, _mediaType)).join('')}
         </div>
       </div>` : '';
 
     const recommendedHTML = recItems.length ? `
       <div class="detail-section">
-        <h3 class="detail-section-title">💡 موصى به لك</h3>
-        <div class="landscape-slider">
-          ${recItems.map((m,i) => {
-            const img = m.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${m.backdrop_path}` : `${CONFIG.IMAGES.POSTER_LG}${m.poster_path}`;
-            const t = m.title||m.name||'';
-            const y = (m.release_date||m.first_air_date||'').slice(0,4);
-            const r = m.vote_average?m.vote_average.toFixed(1):'';
-            return `<div class="ls-card" onclick="openDetail(${m.id},'${_mediaType}')">
-              <div class="ls-img-wrap">
-                <span class="ls-rank">${i+1}</span>
-                <img class="ls-img lazy-img" data-src="${img}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-                <div class="ls-overlay">▶</div>
-              </div>
-              <div class="ls-pill">
-                <span class="ls-pill-title">${t.slice(0,22)}</span>
-                ${y?`<span class="ls-pill-year">${y}</span>`:''}
-                ${r?`<span class="ls-pill-rating">⭐${r}</span>`:''}
-              </div>
-            </div>`;
-          }).join('')}
+        <h3 class="detail-section-title">✨ موصى به لك</h3>
+        <div class="poster-slider">
+          ${recItems.map(m => buildPosterCard(m, _mediaType)).join('')}
         </div>
       </div>` : '';
     const allRevs   = revData.results || [];
