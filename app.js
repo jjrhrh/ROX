@@ -1235,10 +1235,18 @@ async function checkAlertUpdates(id, title) {
 function switchTab(btn, tabId) {
   const parent = btn.closest('.detail-body') || document.getElementById('detailPage');
   parent.querySelectorAll('.dtab').forEach(b => b.classList.remove('active'));
-  parent.querySelectorAll('.dtab-content').forEach(c => { c.classList.remove('active'); c.style.opacity='0'; });
+  parent.querySelectorAll('.dtab-content').forEach(c => {
+    c.classList.remove('active');
+    c.style.display = 'none';
+    c.style.opacity = '0';
+  });
   btn.classList.add('active');
   const tab = document.getElementById(tabId);
-  if (tab) { tab.classList.add('active'); setTimeout(()=>tab.style.opacity='1', 10); }
+  if (tab) {
+    tab.style.display = 'block';
+    tab.classList.add('active');
+    setTimeout(() => tab.style.opacity = '1', 10);
+  }
 }
 
 function checkAllAlerts() {
