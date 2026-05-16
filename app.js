@@ -408,9 +408,11 @@ document.body.style.backgroundImage = '';
   const title  = type === 'movie'
     ? (movie.title || movie.original_title)
     : (movie.name  || movie.original_name);
-  const poster = movie.backdrop_path
-    ? `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}`
-    : movie.poster_path ? `${CONFIG.IMAGES.POSTER_LG}${movie.poster_path}` : CONFIG.IMAGES.PLACEHOLDER;
+  const _imgs = [
+    movie.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}` : null,
+    movie.poster_path   ? `${CONFIG.IMAGES.POSTER_XL}${movie.poster_path}`  : null,
+  ].filter(Boolean);
+  const poster = _imgs.length ? _imgs[Math.floor(Math.random() * _imgs.length)] : CONFIG.IMAGES.PLACEHOLDER;
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
   const year   = (movie.release_date || movie.first_air_date || '').slice(0,4);
   const typeLabel = type === 'tv' ? 'SERIES' : 'MOVIE';
@@ -418,8 +420,9 @@ document.body.style.backgroundImage = '';
   <div class="movie-card ${extraClass}" onclick="openDetail(${movie.id},'${type}')">
     <div class="movie-poster-wrap">
       ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
-      <img class="movie-poster" src="${poster}" alt="${title}" loading="lazy"
-           onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+      <img class="movie-poster fade-img" src="${poster}" alt="${title}" loading="lazy"
+           onload="this.classList.add('loaded')"
+           onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}';this.classList.add('loaded')">
       <div class="movie-overlay"><span class="play-icon">▶</span></div>
     </div>
     <div class="movie-title-bar">${title.length > 28 ? title.slice(0,28)+'...' : title}</div>
@@ -428,16 +431,19 @@ document.body.style.backgroundImage = '';
 }
 function buildAnimeCard(movie, rank = 0, type = 'tv') {
   const title = movie.name || movie.original_name || movie.title || '';
-  const poster = movie.backdrop_path
-    ? `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}`
-    : movie.poster_path ? `${CONFIG.IMAGES.POSTER_LG}${movie.poster_path}` : CONFIG.IMAGES.PLACEHOLDER;
+  const _imgs2 = [
+    movie.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}` : null,
+    movie.poster_path   ? `${CONFIG.IMAGES.POSTER_XL}${movie.poster_path}`  : null,
+  ].filter(Boolean);
+  const poster = _imgs2.length ? _imgs2[Math.floor(Math.random() * _imgs2.length)] : CONFIG.IMAGES.PLACEHOLDER;
   const year = (movie.first_air_date || movie.release_date || '').slice(0,4);
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
   return `
     <div class="anime-card" onclick="openDetail(${movie.id},'${type}')">
       <div class="anime-poster-wrap">
-        <img class="anime-poster" src="${poster}" loading="lazy"
-             onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+        <img class="anime-poster fade-img" src="${poster}" loading="lazy"
+             onload="this.classList.add('loaded')"
+             onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}';this.classList.add('loaded')">
         <div class="anime-overlay"><span class="play-icon">▶</span></div>
         ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
       </div>
