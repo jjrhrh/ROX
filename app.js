@@ -826,19 +826,29 @@ const reviewsHTML = `
             </div>
           </div>
         </div>
-        ${seasonsHTML}
-        <div class="detail-section">
-          <h3 class="detail-section-title">📖 القصة</h3>
-          <p class="detail-overview">${overview}</p>
+        <div class="detail-tabs-bar">
+          ${type==='tv'||seasonsHTML?`<button class="dtab active" onclick="switchTab(this,'tab-eps')">المواسم والحلقات</button>`:''}
+          <button class="dtab ${!(type==='tv'||seasonsHTML)?'active':''}" onclick="switchTab(this,'tab-about')">عن العمل</button>
+          <button class="dtab" onclick="switchTab(this,'tab-trailers')">العروض الترويجية</button>
         </div>
-        <div class="detail-section detail-prod-grid">
-          ${detail.budget  ?`<div class="detail-prod-item"><span class="prod-label">💰 الميزانية</span><span class="prod-val">$${(detail.budget/1e6).toFixed(1)}M</span></div>`:''}
-          ${detail.revenue ?`<div class="detail-prod-item"><span class="prod-label">✅ الإيرادات</span><span class="prod-val">$${(detail.revenue/1e6).toFixed(1)}M</span></div>`:''}
-          ${detail.vote_count?`<div class="detail-prod-item"><span class="prod-label">🗳 التقييمات</span><span class="prod-val">${detail.vote_count.toLocaleString()}</span></div>`:''}
-          ${detail.status    ?`<div class="detail-prod-item"><span class="prod-label">📌 الحالة</span><span class="prod-val">${detail.status}</span></div>`:''}
+        <div id="tab-eps" class="dtab-content ${type==='tv'||seasonsHTML?'active':''}">
+          ${seasonsHTML}
         </div>
-        ${castHTML}
-        ${reviewsHTML}
+        <div id="tab-about" class="dtab-content ${!(type==='tv'||seasonsHTML)?'active':''}">
+          <div class="detail-section">
+            <p class="detail-overview">${overview}</p>
+          </div>
+          <div class="detail-section detail-prod-grid">
+            ${detail.budget  ?`<div class="detail-prod-item"><span class="prod-label">الميزانية</span><span class="prod-val">$${(detail.budget/1e6).toFixed(1)}M</span></div>`:''}
+            ${detail.revenue ?`<div class="detail-prod-item"><span class="prod-label">الإيرادات</span><span class="prod-val">$${(detail.revenue/1e6).toFixed(1)}M</span></div>`:''}
+            ${detail.vote_count?`<div class="detail-prod-item"><span class="prod-label">التقييمات</span><span class="prod-val">${detail.vote_count.toLocaleString()}</span></div>`:''}
+            ${detail.status    ?`<div class="detail-prod-item"><span class="prod-label">الحالة</span><span class="prod-val">${detail.status}</span></div>`:''}
+          </div>
+          ${castHTML}
+        </div>
+        <div id="tab-trailers" class="dtab-content">
+          ${reviewsHTML}
+        </div>
       </div>`;
 
     // IntersectionObserver للصور الكسولة
