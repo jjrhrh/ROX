@@ -732,6 +732,7 @@ async function openDetail(id, type = 'movie') {
     const revData = await rRes.json();
     const simData = await simRes.json();
     const recData = await recRes.json();
+    const imgData = await imgRes.json();
     const kwData  = await kwRes.json();
     const wpData  = await wpRes.json();
     const keywords = (kwData.keywords || kwData.results || []).slice(0, 8);
