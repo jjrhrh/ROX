@@ -2817,3 +2817,77 @@ html, body {
   transition: transform 0.3s ease;
 }
 .gallery-img:hover { transform: scale(1.03); }
+/* ── Audience Rating ── */
+.audience-rating-wrap {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.audience-score-big {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+  min-width: 80px;
+}
+.audience-num {
+  font-size: 2.4rem; font-weight: 900; color: var(--gold);
+  line-height: 1;
+}
+.audience-outof { font-size: 0.75rem; color: var(--text3); }
+.audience-stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; }
+.audience-count { font-size: 0.62rem; color: var(--text3); text-align: center; }
+
+.vote-bars { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.vote-bar-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.vote-star-lbl { font-size: 0.7rem; color: var(--gold); min-width: 28px; text-align: left; }
+.vote-bar-track {
+  flex: 1; height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px; overflow: hidden;
+}
+.vote-bar-fill {
+  height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold), #f59e0b);
+  transition: width 0.8s ease;
+}
+.vote-pct-lbl { font-size: 0.65rem; color: var(--text3); min-width: 28px; }
+
+/* ── Why Watch ── */
+.why-list { display: flex; flex-direction: column; gap: 10px; }
+.why-item {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 10px 14px;
+}
+.why-ico { color: var(--accent); font-size: 0.9rem; flex-shrink: 0; }
+
+/* ── Critics ── */
+.critics-list { display: flex; flex-direction: column; gap: 10px; }
+.critic-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 14px;
+}
+.critic-source {
+  font-size: 0.78rem; font-weight: 900;
+  color: var(--text); margin-bottom: 6px;
+  font-style: italic;
+}
+.critic-quote {
+  font-size: 0.8rem; color: var(--text2);
+  line-height: 1.6; margin-bottom: 8px;
+}
+.critic-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; }
+
+/* ── Awards ── */
+.awards-list { display: flex; flex-direction: column; gap: 10px; }
+.award-item {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(245,197,24,0.05);
+  border: 1px solid rgba(245,197,24,0.2);
+  border-radius: 14px; padding: 12px 14px;
+}
+.award-laurel { font-size: 1.4rem; }
+.award-info { display: flex; flex-direction: column; gap: 2px; }
+.award-title { font-size: 0.82rem; font-weight: 700; color: var(--text); }
+.award-org { font-size: 0.65rem; color: var(--gold); }
