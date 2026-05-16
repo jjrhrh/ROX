@@ -873,6 +873,7 @@ const reviewsHTML = `
         <div class="detail-top">
           <div class="detail-info">
             <div class="detail-genres">${genres}</div>
+          </div>
         </div>
         <div class="detail-tabs-bar">
           ${type==='tv'||seasonsHTML?`<button class="dtab active" onclick="switchTab(this,'tab-eps')">المواسم والحلقات</button>`:''}
