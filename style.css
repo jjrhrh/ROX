@@ -430,18 +430,21 @@ html, body {
 /* ===== DETAIL PAGE ===== */
 .detail-backdrop {
   position: relative; width: 100%;
-  height: 62vw; max-height: 360px; min-height: 220px;
+  height: 72vw; max-height: 480px; min-height: 280px;
   background-size: cover; background-position: center top;
+  overflow: hidden;
 }
 .detail-backdrop-gradient {
   position: absolute; inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(5,5,5,0.1) 0%,
-    rgba(5,5,5,0.3) 45%,
-    rgba(5,5,5,0.82) 75%,
-    var(--bg) 100%
+    rgba(5,0,0,0.0) 0%,
+    rgba(5,0,0,0.05) 30%,
+    rgba(8,0,0,0.55) 60%,
+    rgba(8,0,0,0.88) 80%,
+    #080000 100%
   );
+  z-index: 1;
 }
 .detail-back-btn {
   position: absolute; top: 14px; right: 14px;
@@ -459,9 +462,10 @@ html, body {
 }
 .detail-body {
   padding: 0 16px 100px;
-  margin-top: -70px; position: relative; z-index: 2;
+  margin-top: 0;
+  position: relative; z-index: 2;
 }
-.detail-top { display: flex; gap: 14px; align-items: flex-end; }
+.detail-top { display: flex; flex-direction: column; }
 .detail-poster {
   width: 110px; flex-shrink: 0;
   border-radius: 14px;
@@ -2308,4 +2312,68 @@ html, body {
   gap: 6px;
   margin-bottom: 14px;
   margin-top: 8px;
+}
+/* ===== HERO FLOAT ===== */
+.detail-hero-float {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 4;
+  padding: 0 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.detail-hero-float .detail-title {
+  font-size: clamp(1.5rem, 6vw, 2.2rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.98), 0 0 60px rgba(0,0,0,0.8);
+  margin-bottom: 0;
+}
+.detail-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.detail-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.88);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: 'Cairo', sans-serif;
+}
+.detail-hero-badge-gold {
+  color: #f5c518;
+  border-color: rgba(245,197,24,0.35);
+  background: rgba(0,0,0,0.6);
+  text-shadow: 0 0 8px rgba(245,197,24,0.6);
+}
+.detail-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.detail-hero-actions .detail-btn-now {
+  width: auto !important;
+  padding: 10px 20px !important;
+  font-size: 0.88rem !important;
+}
+/* إخفاء البوستر القديم */
+.detail-poster { display: none !important; }
+.detail-info { width: 100%; }
+.detail-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 14px;
 }
