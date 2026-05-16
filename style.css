@@ -2473,48 +2473,57 @@ html, body {
 /* ===========================
    DETAIL PAGE v2 — dp-*
    =========================== */
+
 .dp-wrap {
-  position: relative;
   min-height: 100vh;
   background: #050505;
   padding-bottom: 90px;
-  overflow-x: hidden;
 }
 
-.dp-bg-blur {
-  position: fixed;
-  inset: 0;
+/* ── Hero (backdrop + poster) ── */
+.dp-hero {
+  position: relative;
+  width: 100%;
+  min-height: 540px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 54px 0 28px;
+  overflow: hidden;
+}
+
+.dp-hero-bg {
+  position: absolute;
+  inset: -30px;
   background-size: cover;
   background-position: center top;
-  filter: blur(45px) brightness(0.25) saturate(1.8);
-  transform: scale(1.12);
+  filter: blur(36px) brightness(0.28) saturate(2);
   z-index: 0;
-  pointer-events: none;
 }
 
-.dp-bg-dim {
-  position: fixed;
+.dp-hero-fade {
+  position: absolute;
   inset: 0;
   background: linear-gradient(
-    to bottom,
-    rgba(5,5,5,0.2)  0%,
-    rgba(5,5,5,0.55) 45%,
-    #050505          88%
+    180deg,
+    rgba(5,5,5,0.15)  0%,
+    rgba(5,5,5,0.35) 55%,
+    #050505           96%
   );
   z-index: 1;
-  pointer-events: none;
 }
 
 .dp-back-btn {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 14px;
+  right: 14px;
   z-index: 10;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.6);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.14);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
   color: #fff;
-  padding: 8px 18px;
+  padding: 7px 16px;
   border-radius: 22px;
   font-family: Cairo, sans-serif;
   font-size: 0.85rem;
@@ -2522,30 +2531,22 @@ html, body {
   cursor: pointer;
   transition: background 0.2s;
 }
-.dp-back-btn:active { background: rgba(255,255,255,0.1); }
+.dp-back-btn:active { background: rgba(255,255,255,0.12); }
 
 /* ── Poster ── */
-.dp-poster-zone {
+.dp-poster-img {
   position: relative;
   z-index: 2;
-  display: flex;
-  justify-content: center;
-  padding-top: 62px;
-  padding-bottom: 22px;
-}
-
-.dp-poster-img {
-  width: 68%;
-  max-width: 300px;
+  width: 78%;
+  max-width: 320px;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 18px;
+  display: block;
   box-shadow:
-    0 24px 64px rgba(0,0,0,0.85),
+    0 32px 80px rgba(0,0,0,0.95),
     0 0 0 1px rgba(255,255,255,0.07);
-  transition: transform 0.3s ease;
 }
-.dp-poster-img:active { transform: scale(0.97); }
 
 /* ── Buttons ── */
 .dp-actions-wrap {
@@ -2569,10 +2570,9 @@ html, body {
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  letter-spacing: 0.01em;
   transition: background 0.2s;
 }
-.dp-action-trailer:active { background: rgba(255,255,255,0.13); }
+.dp-action-trailer:active { background: rgba(255,255,255,0.14); }
 
 .dp-action-watch {
   width: 100%;
@@ -2585,13 +2585,10 @@ html, body {
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(255,255,255,0.15);
-  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 24px rgba(255,255,255,0.18);
+  transition: transform 0.15s, opacity 0.15s;
 }
-.dp-action-watch:active {
-  transform: scale(0.97);
-  box-shadow: 0 2px 10px rgba(255,255,255,0.1);
-}
+.dp-action-watch:active { transform: scale(0.97); opacity: 0.9; }
 
 .dp-action-row2 {
   display: flex;
@@ -2633,7 +2630,7 @@ html, body {
 }
 
 .dp-title {
-  color: #ffffff;
+  color: #fff;
   font-size: 1.55rem;
   font-weight: 900;
   margin: 0 0 6px;
@@ -2670,4 +2667,4 @@ html, body {
   flex-wrap: wrap;
   gap: 7px;
   justify-content: flex-end;
-}
+  }
