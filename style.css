@@ -610,6 +610,19 @@ html, body {
   font-size: 0.92rem; font-weight: 900; color: var(--accent);
   margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
 }
+.ep-next-glow {
+  border: 2px solid rgba(229,9,20,0.9) !important;
+  box-shadow: 0 0 14px rgba(229,9,20,0.45), inset 0 0 8px rgba(229,9,20,0.08);
+  animation: epPulse 2s ease-in-out infinite;
+}
+.otaku-mode .ep-next-glow {
+  border-color: rgba(147,51,234,0.9) !important;
+  box-shadow: 0 0 14px rgba(147,51,234,0.45), inset 0 0 8px rgba(147,51,234,0.08);
+}
+@keyframes epPulse {
+  0%,100% { box-shadow: 0 0 14px rgba(229,9,20,0.45); }
+  50%      { box-shadow: 0 0 24px rgba(229,9,20,0.75); }
+} 
 .detail-section-title::after {
   content: ''; flex: 1; height: 1px;
   background: var(--border-accent); opacity: 0.3;
