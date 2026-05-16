@@ -2645,26 +2645,31 @@ html, body {
   display: flex;
   gap: 10px;
 }
-
-.dp-action-later,
-.dp-action-fav,
-.dp-action-alert {
+.dp-action-fav {
   flex: 1;
-  padding: 13px 8px;
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,0.11);
-  border-radius: 13px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 5px;
+  padding: 14px 8px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
   color: #fff;
   font-family: Cairo, sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
 }
-.dp-action-later:active,
-.dp-action-fav:active,
-.dp-action-alert:active { background: rgba(255,255,255,0.13); }
+.dp-action-fav:active {
+  transform: scale(0.95);
+  background: rgba(255,255,255,0.12);
+}
+.dp-act-ico {
+  width: 22px; height: 22px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
 
 .dp-action-alert.active {
   border-color: rgba(229,9,20,0.5);
