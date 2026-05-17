@@ -1374,6 +1374,7 @@ async function loadSeasonEps(tvId, seasonNum) {
       const dp = document.getElementById('detailPage');
       if (dp) { dp.style.backgroundImage = `linear-gradient(to bottom, rgba(0,0,0,0.7), #080000), url('${poster}')`; dp.style.backgroundSize = 'cover'; }
     }
+    window._epsCache = data.episodes||[];
     wrap.innerHTML = (data.episodes||[]).map(e=>`
       <div class="swiper-slide ep-card ${(() => { const p=getProgress(tvId); return p && p.season===seasonNum && p.episode+1===e.episode_number ? 'ep-next-glow' : ''; })()}" onclick="saveProgress(${tvId},${seasonNum},${e.episode_number});openWatchPage(${tvId},'tv',${seasonNum},${e.episode_number})">
         <div class="ep-thumb-wrap">
