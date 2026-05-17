@@ -2529,22 +2529,23 @@ html, body {
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 16px 0 8px;
+  padding: 0;
+  margin-top: -60px;
   display: flex;
   justify-content: center;
 }
 .dp-poster-img {
-  width: 92%;
-  max-width: 92%;
+  width: 85%;
+  max-width: 340px;
   margin: 0 auto;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  border-radius: 24px;
+  border-radius: 20px;
   display: block;
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.06),
-    0 8px 32px rgba(0,0,0,0.6),
-    0 32px 80px rgba(0,0,0,0.85);
+    0 0 0 1px rgba(255,255,255,0.08),
+    0 12px 40px rgba(0,0,0,0.7),
+    0 40px 100px rgba(0,0,0,0.9);
   transition: transform 0.3s ease;
 }
 .dp-poster-img:active { transform: scale(0.99); }
