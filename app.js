@@ -49,6 +49,8 @@ if (tab === 'otaku') { if(hero){hero.style.display='';hero.style.visibility='';}
   window.scrollTo(0,0);
 }
 function goBack() {
+  if (window._trailerTimer) { clearTimeout(window._trailerTimer); window._trailerTimer = null; }
+  if (window._activeTrailerFrame) { window._activeTrailerFrame.src = ''; window._activeTrailerFrame = null; }
   const hero = document.getElementById('heroSection');
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
@@ -948,7 +950,7 @@ const reviewsHTML = `
       ${trailer ? `<div class="dp-trailer-container" id="dpTrailerBox_${id}" style="display:none">
         <iframe id="dpTrailerFrame_${id}"
           src=""
-          data-src="https://www.youtube-nocookie.com/embed/${trailer.key}?autoplay=1&mute=1&controls=1&loop=1&playlist=${trailer.key}&playsinline=1&rel=0&modestbranding=1"
+          data-src="https://www.youtube-nocookie.com/embed/${trailer.key}?autoplay=1&mute=0&controls=0&loop=1&playlist=${trailer.key}&playsinline=1&rel=0&modestbranding=1&enablejsapi=1"
           allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
       </div>` : ''}
       <div class="dp-trailer-fade"></div>
