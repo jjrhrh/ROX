@@ -2625,7 +2625,7 @@ html, body {
 .dp-action-watch {
   width: 100%;
   padding: 16px;
-  background: var(--dynamic-color, #e50914);
+  background: #e50914;
   border: none;
   border-radius: 13px;
   color: #fff;
