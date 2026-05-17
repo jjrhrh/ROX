@@ -48,6 +48,36 @@ function bnavGo(tab) {
 if (tab === 'otaku') { if(hero){hero.style.display='';hero.style.visibility='';} _otakuOn=true; document.getElementById('htmlRoot').classList.add('otaku-mode'); document.getElementById('bnavOtaku').classList.add('active'); loadOtakuPage(); loadNewsSection('newsFeed',CONFIG.NEWS.ANIME,'purple'); document.getElementById('newsSectionTitle').textContent='📰 أخبار الأنمي'; document.getElementById('newsSection').style.display='block'; document.getElementById('studioBar').style.display='block'; }
   window.scrollTo(0,0);
 }
+function testNotifAlert() {
+  const btn = document.querySelector('.notif-test-btn');
+  const alerts = getLib('rox_alerts');
+  if (!alerts.length) { showToast('لا يوجد مسلسلات مشترك فيها بعد'); return; }
+  const item = alerts[0];
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '⏳ 5...';
+    let count = 5;
+    const timer = setInterval(() => {
+      count--;
+      if (btn) btn.textContent = `⏳ ${count}...`;
+      if (count <= 0) {
+        clearInterval(timer);
+        addNotif(
+          item.title,
+          'اختبار — الموسم 1 · الحلقة 1',
+          ''
+        );
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '✅ وصل!';
+          setTimeout(() => {
+            if (btn) btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><circle cx="12" cy="8" r="1" fill="currentColor"/></svg>تجربة`;
+          }, 2000);
+        }
+      }
+    }, 1000);
+  }
+}
 function unmuteTrailer(id) {
   const frame = document.getElementById(`dpTrailerFrame_${id}`);
   const overlay = document.getElementById(`unmuteOverlay_${id}`);
