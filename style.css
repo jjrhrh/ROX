@@ -2540,7 +2540,7 @@ html, body {
   margin: 0 auto;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  border-radius: 22px;
+  border-radius: 12px;
   display: block;
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.08),
