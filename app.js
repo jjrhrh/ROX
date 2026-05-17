@@ -1199,7 +1199,16 @@ const reviewsHTML = `
     page.querySelectorAll('.lazy-img').forEach(img => lazyObs.observe(img));
     extractDominantColor(poster, applyDynamicColor);
     setTimeout(() => {
+      // استعادة ألوان الأزرار
       if (localStorage.getItem(`rox_fav_${id}`)) {
+        const fb = document.querySelector(`.dp-btn-fav[data-id="${id}"]`);
+        if (fb) { fb.style.color='#e50914'; fb.style.borderColor='rgba(229,9,20,0.7)'; fb.style.boxShadow='0 0 14px rgba(229,9,20,0.4)'; const s=fb.querySelector('svg'); if(s){s.style.fill='#e50914';s.style.stroke='none';} }
+      }
+      if (localStorage.getItem(`rox_later_${id}`)) {
+        const lb = document.querySelector(`.dp-btn-later[data-id="${id}"]`);
+        if (lb) { lb.style.color='#f5c518'; lb.style.borderColor='rgba(245,197,24,0.7)'; lb.style.boxShadow='0 0 14px rgba(245,197,24,0.4)'; const s=lb.querySelector('svg'); if(s){s.style.fill='#f5c518';s.style.stroke='none';} }
+      }
+    }, 300);
         const fb = document.querySelector(`.dp-btn-fav[data-id="${id}"]`);
         if (fb) { fb.style.color='#e50914'; fb.style.borderColor='rgba(229,9,20,0.7)'; fb.style.boxShadow='0 0 14px rgba(229,9,20,0.4)'; const s=fb.querySelector('svg'); if(s){s.style.fill='#e50914';s.style.stroke='none';} }
       }
@@ -1226,9 +1235,8 @@ const reviewsHTML = `
         const box = document.getElementById(`dpTrailerBox_${id}`);
         const frame = document.getElementById(`dpTrailerFrame_${id}`);
         const slider = document.getElementById(`dpSlider_${id}`);
-        if (box && frame) {
-          const src = frame.dataset.src.replace('mute=1','mute=0').replace('controls=1','controls=0');
-          frame.src = src;
+        if (box && frame && frame.dataset.src) {
+          frame.src = frame.dataset.src;
           window._activeTrailerFrame = frame;
           box.style.display = 'block';
           if (slider) { slider.style.opacity='0'; setTimeout(()=>slider.style.display='none',400); }
@@ -1562,18 +1570,22 @@ function saveLib(key, arr) {
 function addToWatchlist(id, type) {
   if (!window.ROX_USER) { showToast('🔐 سجّل دخولك أولاً'); bnavGo('profile'); return; }
   const list = getLib('rox_watchlist');
-  if (list.find(i => i.id === id)) { showToast('✅ موجود في قائمتك مسبقاً'); return; }
-  list.unshift({ id, type, addedAt: Date.now() });
-  saveLib('rox_watchlist', list);
-  showToast('❤️ تمت الإضافة إلى قائمتك');
-  localStorage.setItem(`rox_fav_${id}`, '1');
+  const exists = list.find(i => i.id === id);
   const favBtn = document.querySelector(`.dp-btn-fav[data-id="${id}"]`);
-  if (favBtn) {
-    favBtn.style.color = '#e50914';
-    favBtn.style.borderColor = 'rgba(229,9,20,0.7)';
-    favBtn.style.boxShadow = '0 0 14px rgba(229,9,20,0.4)';
-    const svg = favBtn.querySelector('svg');
-    if (svg) { svg.style.fill = '#e50914'; svg.style.stroke = 'none'; }
+  const svg = favBtn?.querySelector('svg');
+  if (exists) {
+    saveLib('rox_watchlist', list.filter(i => i.id !== id));
+    localStorage.removeItem(`rox_fav_${id}`);
+    showToast('💔 تمت الإزالة من المفضلة');
+    if (favBtn) { favBtn.style.color=''; favBtn.style.borderColor=''; favBtn.style.boxShadow=''; }
+    if (svg) { svg.style.fill='none'; svg.style.stroke='currentColor'; }
+  } else {
+    list.unshift({ id, type, addedAt: Date.now() });
+    saveLib('rox_watchlist', list);
+    localStorage.setItem(`rox_fav_${id}`, '1');
+    showToast('❤️ تمت الإضافة إلى المفضلة');
+    if (favBtn) { favBtn.style.color='#e50914'; favBtn.style.borderColor='rgba(229,9,20,0.7)'; favBtn.style.boxShadow='0 0 14px rgba(229,9,20,0.4)'; }
+    if (svg) { svg.style.fill='#e50914'; svg.style.stroke='none'; }
   }
 }
 function toggleAlertSubscription(id, title, type) {
@@ -1743,6 +1755,7 @@ function clearLibraryConfirm() {
   if (confirm('⚠️ هل تريد مسح المكتبة كاملاً؟')) {
     saveLib('rox_watchlist', []);
     saveLib('rox_watchlater', []);
+    Object.keys(localStorage).filter(k=>k.startsWith('rox_fav_')||k.startsWith('rox_later_')).forEach(k=>localStorage.removeItem(k));
     showToast('🗑 تم مسح المكتبة');
   }
 }
