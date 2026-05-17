@@ -2862,10 +2862,21 @@ html, body {
   transform: scale(1.2) translateY(-2px);
 }
 
-.dp-action-alert.active {
-  border-color: rgba(229,9,20,0.5);
-  background: rgba(229,9,20,0.12);
-  color: #e50914;
+.dp-action-alert.active,
+.dp-action-fav.dp-btn-alert.active,
+button.dp-btn-alert.active {
+  border-color: rgba(28,231,131,0.7) !important;
+  background: rgba(28,231,131,0.1) !important;
+  color: #1ce783 !important;
+  box-shadow:
+    0 0 0 1px rgba(28,231,131,0.3),
+    0 0 18px rgba(28,231,131,0.3),
+    0 0 40px rgba(28,231,131,0.12),
+    inset 0 1px 0 rgba(28,231,131,0.1) !important;
+}
+.dp-action-fav.dp-btn-alert.active .dp-act-ico {
+  filter: drop-shadow(0 0 8px #1ce783) drop-shadow(0 0 20px rgba(28,231,131,0.6)) !important;
+  stroke: #1ce783 !important;
 }
 
 /* ── Info ── */
