@@ -1376,8 +1376,7 @@ async function loadSeasonEps(tvId, seasonNum) {
     }
     window._epsCache = data.episodes||[];
     wrap.innerHTML = (data.episodes||[]).map(e=>`
-      <div class="swiper-slide ep-card ${(() => { const p=getProgress(tvId); return p && p.season===seasonNum && p.episode+1===e.episode_number ? 'ep-next-glow' : ''; })()}" onclick="saveProgress(${tvId},${seasonNum},${e.episode_number});openWatchPage(${tvId},'tv',${seasonNum},${e.episode_number})">
-        <div class="ep-thumb-wrap">
+          <div class="swiper-slide ep-card ${(() => { const p=getProgress(tvId); return p && p.season===seasonNum && p.episode+1===e.episode_number ? 'ep-next-glow' : ''; })()}" onclick="openEpisodeDetail(${tvId},${seasonNum},${e.episode_number},window._epsCache||[])">        <div class="ep-thumb-wrap">
           <img data-src="${e.still_path?CONFIG.IMAGES.STILL_MD+e.still_path:CONFIG.IMAGES.PLACEHOLDER}"
                src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
                class="lazy-img ep-thumb" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
@@ -1397,6 +1396,50 @@ async function loadSeasonEps(tvId, seasonNum) {
     wrap.querySelectorAll('.lazy-img').forEach(i=>o2.observe(i));
     if(window.Swiper) new Swiper(`#epsSwiper_${tvId}`,{slidesPerView:2.3,spaceBetween:10,freeMode:true,grabCursor:true});
   } catch{ wrap.innerHTML='<div class="loading">⚠️ خطأ</div>'; }
+}
+async function openEpisodeDetail(tvId, seasonNum, epNum, allEps) {
+  const page = document.getElementById('detailPage');
+  if (!page) return;
+  page.innerHTML = '<div class="loading">⏳ جاري تحميل الحلقة...</div>';
+  try {
+    const data = await fetch(buildTMDBUrl(`/tv/${tvId}/season/${seasonNum}/episode/${epNum}`)).then(r=>r.json());
+    const img = data.still_path ? `${CONFIG.IMAGES.BACKDROP}${data.still_path}` : CONFIG.IMAGES.PLACEHOLDER;
+    const date = data.air_date ? new Date(data.air_date).toLocaleDateString('ar-SA',{day:'numeric',month:'long',year:'numeric'}) : 'غير محدد';
+    const rating = data.vote_average ? data.vote_average.toFixed(1) : '—';
+    const runtime = data.runtime ? `${data.runtime} د` : '—';
+    const guests = (data.guest_stars||[]).slice(0,6);
+    const idx = allEps.findIndex(e=>e.episode_number===epNum);
+    const prev = allEps[idx-1];
+    const next = allEps[idx+1];
+    page.innerHTML = `
+    <div class="epd-wrap">
+      <div class="epd-hero" style="background-image:url('${img}')">
+        <div class="epd-hero-overlay"></div>
+        <button class="epd-back-btn" onclick="loadSeasonEps(${tvId},${seasonNum})">← رجوع</button>
+        <div class="epd-nav">
+          ${prev ? `<button class="epd-nav-btn" onclick="openEpisodeDetail(${tvId},${seasonNum},${prev.episode_number},window._curEps)">‹ ح${prev.episode_number}</button>` : '<span></span>'}
+          <span class="epd-ep-badge">م${seasonNum} · ح${epNum}</span>
+          ${next ? `<button class="epd-nav-btn" onclick="openEpisodeDetail(${tvId},${seasonNum},${next.episode_number},window._curEps)">ح${next.episode_number} ›</button>` : '<span></span>'}
+        </div>
+      </div>
+      <div class="epd-body">
+        <h2 class="epd-title">${data.name||''}</h2>
+        <div class="epd-meta-row">
+          <span class="epd-chip">⭐ ${rating}</span>
+          <span class="epd-chip">⏱ ${runtime}</span>
+          <span class="epd-chip">📅 ${date}</span>
+        </div>
+        <p class="epd-overview">${data.overview||'لا يوجد ملخص لهذه الحلقة.'}</p>
+        <button class="epd-watch-btn" onclick="saveProgress(${tvId},${seasonNum},${epNum});openWatchPage(${tvId},'tv',${seasonNum},${epNum})">▶ شاهد الحلقة</button>
+        ${guests.length ? `<div class="epd-guests-title">ضيوف الحلقة</div>
+        <div class="epd-guests-row">${guests.map(g=>`
+          <div class="epd-guest">
+            <img class="epd-guest-img" src="${g.profile_path?CONFIG.IMAGES.POSTER_SM+g.profile_path:CONFIG.IMAGES.PLACEHOLDER}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
+            <span class="epd-guest-name">${(g.name||'').slice(0,14)}</span>
+          </div>`).join('')}</div>` : ''}
+      </div>
+    </div>`;
+  } catch(e) { page.innerHTML = '<div class="loading">⚠️ خطأ في تحميل الحلقة</div>'; }
 }
 function playTrailer(key) {
   const overlay = document.getElementById('trailerOverlay');
