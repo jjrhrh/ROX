@@ -1510,6 +1510,7 @@ const srvs = [
     page.innerHTML = `
       <div class="ws-player-wrap">
         <div class="ws-player-bg" style="background-image:url('${backdrop}')">
+          <div class="ws-ambient" style="background-image:url('${backdrop}')"></div>
           <div class="ws-overlay" id="wsOverlay" onclick="wsStartStream()">
             <div class="ws-play-btn">▶</div>
             <span class="ws-play-lbl">اضغط للمشاهدة</span>
