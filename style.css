@@ -2532,14 +2532,17 @@ html, body {
   padding: 0;
 }
 .dp-poster-img {
-  width: 88%;
-  max-width: 88%;
+  width: 92%;
+  max-width: 92%;
   margin: 0 auto;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  border-radius: 16px;
+  border-radius: 24px;
   display: block;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.85);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 8px 32px rgba(0,0,0,0.6),
+    0 32px 80px rgba(0,0,0,0.85);
   transition: transform 0.3s ease;
 }
 .dp-poster-img:active { transform: scale(0.99); }
