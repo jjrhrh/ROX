@@ -1417,8 +1417,7 @@ async function openEpisodeDetail(tvId, seasonNum, epNum, allEps) {
     <div class="epd-wrap">
       <div class="epd-hero" style="background-image:url('${img}')">
         <div class="epd-hero-overlay"></div>
-        <button class="epd-back-btn" onclick="loadSeasonEps(${tvId},${seasonNum})">← رجوع</button>
-        <div class="epd-nav">
+        <button class="epd-back-btn" onclick="openDetail(${tvId},'tv')">← رجوع</button>        <div class="epd-nav">
           ${prev ? `<button class="epd-nav-btn" onclick="openEpisodeDetail(${tvId},${seasonNum},${prev.episode_number},window._curEps)">‹ ح${prev.episode_number}</button>` : '<span></span>'}
           <span class="epd-ep-badge">م${seasonNum} · ح${epNum}</span>
           ${next ? `<button class="epd-nav-btn" onclick="openEpisodeDetail(${tvId},${seasonNum},${next.episode_number},window._curEps)">ح${next.episode_number} ›</button>` : '<span></span>'}
