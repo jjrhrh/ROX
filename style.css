@@ -3608,3 +3608,55 @@ body.cinema-mode .ws-player-wrap    { position: fixed; inset: 0; z-index: 9998; 
 body.cinema-mode .ws-player-bg      { position: absolute; inset: 0; padding-bottom: 0 !important; border-radius: 0; overflow: hidden; }
 body.cinema-mode .ws-frame          { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; }
 body.cinema-mode .ws-overlay        { border-radius: 0; }
+/* ===== RADAR SECTION ===== */
+.radar-list { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
+.radar-card {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.radar-card:active { transform: scale(0.98); }
+.radar-poster {
+  width: 48px; height: 68px; border-radius: 8px;
+  object-fit: cover; flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.radar-info { flex: 1; min-width: 0; }
+.radar-title {
+  font-size: 0.88rem; font-weight: 700;
+  color: var(--text); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.radar-last {
+  font-size: 0.75rem; color: var(--text2);
+  margin-top: 3px;
+}
+.radar-next {
+  font-size: 0.75rem; margin-top: 4px;
+  font-weight: 600;
+}
+.radar-next.soon   { color: #1ce783; }
+.radar-next.days   { color: #f59e0b; }
+.radar-next.nodate { color: var(--text3); }
+.radar-watch-btn {
+  flex-shrink: 0; padding: 6px 12px;
+  background: rgba(229,9,20,0.15);
+  border: 1px solid rgba(229,9,20,0.35);
+  border-radius: var(--radius-full);
+  color: var(--accent); font-size: 0.72rem;
+  font-family: 'Cairo', sans-serif;
+  cursor: pointer; transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.radar-watch-btn:active {
+  background: rgba(229,9,20,0.3);
+  transform: scale(0.96);
+}
+.radar-empty {
+  text-align: center; color: var(--text3);
+  font-size: 0.82rem; padding: 20px;
+}
