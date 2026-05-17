@@ -410,7 +410,7 @@ document.body.style.backgroundImage = '';
   }
   if (ratingEl) {
     const rating = m.vote_average ? m.vote_average.toFixed(1) : '';
-    ratingEl.innerHTML = rating ? `<span class="hero-cap hero-cap-rating">⭐ ${rating}</span>` : '';
+    ratingEl.innerHTML = rating ? `<span class="hero-cap hero-cap-rating"><svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)" style="vertical-align:middle;margin-left:3px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${rating}</span>` : '';
   }
 }
     function buildMovieCard(movie, type = 'movie', extraClass = '', rank = 0) {
@@ -435,7 +435,7 @@ document.body.style.backgroundImage = '';
       <div class="movie-overlay"><span class="play-icon">▶</span></div>
     </div>
     <div class="movie-title-bar">${title.length > 28 ? title.slice(0,28)+'...' : title}</div>
-    <div class="movie-meta-bar"><span class="movie-badge-type">${typeLabel}</span><span class="movie-badge-year">${year}</span>${rating ? `<span class="movie-badge-rating">⭐ ${rating}</span>` : ''}</div>
+    <div class="movie-meta-bar"><span class="movie-badge-type">${typeLabel}</span><span class="movie-badge-year">${year}</span>${rating ? `<span class="movie-badge-rating"><svg width="9" height="9" viewBox="0 0 24 24" fill="var(--gold)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> ${rating}</span>` : ''}</div>
   </div>`;
 }
 function buildAnimeCard(movie, rank = 0, type = 'tv') {
@@ -457,7 +457,7 @@ function buildAnimeCard(movie, rank = 0, type = 'tv') {
         ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
       </div>
       <div class="anime-title-bar">${title.length > 22 ? title.slice(0,22)+'...' : title}</div>
-      <div class="anime-meta-bar"><span class="anime-badge-type">أنمي</span><span class="anime-badge-year">${toArabicNums(year)}</span>${rating ? `<span class="anime-badge-rating">⭐ ${rating}</span>` : ''}</div>
+      <div class="anime-meta-bar"><span class="anime-badge-type">أنمي</span><span class="anime-badge-year">${toArabicNums(year)}</span>${rating ? `<span class="anime-badge-rating"><svg width="9" height="9" viewBox="0 0 24 24" fill="var(--gold)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> ${rating}</span>` : ''}</div>
     </div>`;
 }
 function toArabicNums(str) {
@@ -885,7 +885,7 @@ async function openDetail(id, type = 'movie') {
 
     const similarHTML = simItems.length ? `
       <div class="detail-section">
-        <h3 class="detail-section-title">🎬 أعمال مشابهة</h3>
+        <h3 class="detail-section-title">أعمال مشابهة</h3>
         <div class="poster-slider">
           ${simItems.map(m => buildPosterCard(m, _mediaType)).join('')}
         </div>
@@ -893,7 +893,7 @@ async function openDetail(id, type = 'movie') {
 
     const recommendedHTML = recItems.length ? `
       <div class="detail-section">
-        <h3 class="detail-section-title">✨ موصى به لك</h3>
+        <h3 class="detail-section-title">موصى به لك</h3>
         <div class="poster-slider">
           ${recItems.map(m => buildPosterCard(m, _mediaType)).join('')}
         </div>
@@ -904,24 +904,24 @@ async function openDetail(id, type = 'movie') {
     const tvSeasons = type === 'tv' ? (detail.seasons||[]).filter(s=>s.season_number>0 && s.name!=='Specials') : [];
     const totalEps = tvSeasons.reduce((sum,s)=>sum+(s.episode_count||0),0);
     const network = detail.networks?.[0]?.name || '';
-    const status = detail.status === 'Returning Series' ? '🟢 مستمر' : detail.status === 'Ended' ? '🔴 منتهي' : detail.status || '';
+    const status = detail.status === 'Returning Series' ? 'مستمر' : detail.status === 'Ended' ? 'منتهي' : detail.status || '';
 const reviewsHTML = `
       <div class="detail-section">
-        <h3 class="detail-section-title">💬 التعليقات</h3>
+        <h3 class="detail-section-title">التعليقات</h3>
         <div class="reviews-list">
           ${reviews.length ? reviews.map(r=>`
             <div class="review-card">
-              <div class="review-author">✍️ ${r.author}</div>
+              <div class="review-author">${r.author}</div>
               <p class="review-content">${r.content.slice(0,300)}${r.content.length>300?'…':''}</p>
             </div>`).join('') :
-            `<div class="review-empty">🎬 لا توجد تعليقات متاحة لهذا المحتوى حتى الآن</div>`}
+            `<div class="review-empty">لا توجد تعليقات متاحة لهذا المحتوى حتى الآن</div>`}
         </div>
       </div>`;
 
     const seasonsHTML = tvSeasons.length ? `
       <div class="seasons-glass">
         <div class="seasons-header">
-          <h3 class="detail-section-title" style="margin:0">📺 المواسم والحلقات</h3>
+          <h3 class="detail-section-title" style="margin:0">المواسم والحلقات</h3>
           <select class="season-select" onchange="loadSeasonEps(${id},+this.value)">
             ${tvSeasons.map(s=>`<option value="${s.season_number}">الموسم ${s.season_number} · ${s.episode_count} ح</option>`).join('')}
           </select>
@@ -931,14 +931,14 @@ const reviewsHTML = `
         </div>
         <div class="swiper eps-swiper" id="epsSwiper_${id}">
           <div class="swiper-wrapper" id="epsWrap_${id}">
-            <div class="loading" style="padding:16px">⏳</div>
+            <div class="loading" style="padding:16px">...</div>
           </div>
         </div>
         ${(network||totalEps||status) ? `
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
           ${status?`<span class="detail-badge">${status}</span>`:''}
-          ${network?`<span class="detail-badge">📡 ${network}</span>`:''}
-          ${totalEps?`<span class="detail-badge">🎬 ${totalEps} حلقة</span>`:''}
+          ${network?`<span class="detail-badge">${network}</span>`:''}
+          ${totalEps?`<span class="detail-badge">${totalEps} حلقة</span>`:''}
         </div>` : ''}
       </div>` : '';
     const trailerKey = trailer?.key || '';
