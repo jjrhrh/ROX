@@ -2529,7 +2529,9 @@ html, body {
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 0;
+  padding: 16px 0 8px;
+  display: flex;
+  justify-content: center;
 }
 .dp-poster-img {
   width: 92%;
