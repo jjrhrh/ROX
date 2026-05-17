@@ -1735,7 +1735,7 @@ function addToWatchlist(id, type) {
 }
 function toggleAlertSubscription(id, title, type) {
   const list = getLib('rox_alerts');
-  const exists = list.find(i => i.id === id);
+  const exists = list.find(i => String(i.id) === String(id));
   const btn = document.getElementById(`alertBtn_${id}`);
   if (exists) {
     saveLib('rox_alerts', list.filter(i => i.id !== id));
