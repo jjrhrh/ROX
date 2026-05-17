@@ -1531,6 +1531,7 @@ function addToWatchlist(id, type) {
     laterBtn.querySelector('svg').style.fill = '#f5c518';
     laterBtn.querySelector('svg').style.stroke = '#f5c518';
   }
+}
 function toggleAlertSubscription(id, title, type) {
   const list = getLib('rox_alerts');
   const exists = list.find(i => i.id === id);
