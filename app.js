@@ -1051,7 +1051,7 @@ const reviewsHTML = `
           </svg>
           <span>مشاركة</span>
         </button>`}
-        ${type === 'tv' ? `<button class="dp-action-fav dp-btn-alert ${getLib('rox_alerts').find(i=>i.id===id)?'active':''}" id="alertBtn_${id}" data-title="${(title||'').replace(/'/g,'&#39;')}" onclick="toggleAlertSubscription(${id},this.dataset.title,'tv')">
+        ${type === 'tv' ? `<button class="dp-action-fav dp-btn-alert ${getLib('rox_alerts').find(i=>String(i.id)===String(id))?'active':''}" id="alertBtn_${id}" data-title="${(title||'').replace(/'/g,'&#39;')}" onclick="toggleAlertSubscription(${id},this.dataset.title,'tv')">
           <svg class="dp-act-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           <span>${getLib('rox_alerts').find(i=>String(i.id)===String(id))?'مفعّل':'تنبيه'}</span>
         </button>` : ''}
