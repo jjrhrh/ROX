@@ -1158,6 +1158,20 @@ const reviewsHTML = `
         ${recommendedHTML}
       </div>
       <div id="tab-trailers" class="dtab-content">
+        ${videos.results?.length ? `
+        <div class="detail-section">
+          <h3 class="detail-section-title">العروض الترويجية</h3>
+          <div class="trailers-list">
+            ${videos.results.slice(0,6).map(v=>`
+            <div class="trailer-item" onclick="playTrailer('${v.key}')">
+              <div class="trailer-thumb">
+                <img src="https://img.youtube.com/vi/${v.key}/mqdefault.jpg" alt="${v.name}">
+                <div class="trailer-play-ico">▶</div>
+              </div>
+              <span class="trailer-name">${v.name}</span>
+            </div>`).join('')}
+          </div>
+        </div>` : '<div class="detail-section"><p style="color:var(--text3);text-align:center;padding:20px">لا توجد عروض ترويجية</p></div>'}
         ${reviewsHTML}
       </div>
     </div>
@@ -1523,13 +1537,13 @@ function addToWatchlist(id, type) {
   list.unshift({ id, type, addedAt: Date.now() });
   saveLib('rox_watchlist', list);
   showToast('❤️ تمت الإضافة إلى قائمتك');
-  const laterBtn = document.querySelector(`.dp-action-fav[onclick*="addToWatchLater(${id}"]`);
-  if (laterBtn) {
-    laterBtn.style.color = '#f5c518';
-    laterBtn.style.borderColor = 'rgba(245,197,24,0.7)';
-    laterBtn.style.boxShadow = '0 0 14px rgba(245,197,24,0.4)';
-    laterBtn.querySelector('svg').style.fill = '#f5c518';
-    laterBtn.querySelector('svg').style.stroke = '#f5c518';
+  const favBtn = document.querySelector(`.dp-action-fav[onclick*="addToWatchlist(${id}"]`);
+  if (favBtn) {
+    favBtn.style.color = '#e50914';
+    favBtn.style.borderColor = 'rgba(229,9,20,0.7)';
+    favBtn.style.boxShadow = '0 0 14px rgba(229,9,20,0.4)';
+    const svg = favBtn.querySelector('svg');
+    if (svg) { svg.style.fill = '#e50914'; svg.style.stroke = '#e50914'; }
   }
 }
 function toggleAlertSubscription(id, title, type) {
@@ -1600,6 +1614,14 @@ function addToWatchLater(id, type) {
   list.unshift({ id, type, addedAt: Date.now() });
   saveLib('rox_watchlater', list);
   showToast('⏰ تمت الإضافة إلى سأشاهده لاحقاً');
+  const laterBtn = document.querySelector(`.dp-action-fav[onclick*="addToWatchLater(${id}"]`);
+  if (laterBtn) {
+    laterBtn.style.color = '#f5c518';
+    laterBtn.style.borderColor = 'rgba(245,197,24,0.7)';
+    laterBtn.style.boxShadow = '0 0 14px rgba(245,197,24,0.4)';
+    const svg = laterBtn.querySelector('svg');
+    if (svg) { svg.style.fill = '#f5c518'; svg.style.stroke = '#f5c518'; }
+  }
 }
 function showToast(msg) {
   const t = document.createElement('div');
