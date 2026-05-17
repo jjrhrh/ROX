@@ -2368,3 +2368,6 @@ async function loadNewsSection(containerId, feedUrl, color) {
       </a>`).join('');
   } catch { el.innerHTML = '<p class="lib-empty">⚠️ تعذّر تحميل الأخبار</p>'; }
 }
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
