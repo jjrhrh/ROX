@@ -1135,7 +1135,21 @@ const reviewsHTML = `
             ${keywords.map(k=>`<span class="keyword-chip">${k.name}</span>`).join('')}
           </div>
         </div>` : ''}
-
+${type === 'tv' && (() => { const s = calcSeasonEnd(detail); if (!s) return ''; return `
+<div class="detail-section season-forecast-box">
+  <div class="sf-header">
+    <svg class="sf-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>توقع نهاية الموسم</span>
+  </div>
+  <div class="sf-track">
+    <div class="sf-fill" style="width:${s.pct}%"></div>
+  </div>
+  <div class="sf-row">
+    <span class="sf-chip">${s.aired} / ${s.total} حلقة</span>
+    <span class="sf-chip sf-chip-red">باقي ${s.remaining} حلقة</span>
+  </div>
+  ${s.endDate ? `<div class="sf-date">تنتهي تقريباً — ${s.endDate}</div>` : '<div class="sf-date">موعد النهاية غير محدد بعد</div>'}
+</div>`;})()}
         <!-- متوفر على -->
         ${providers.length ? `<div class="detail-section">
           <h3 class="detail-section-title">متوفر على</h3>
