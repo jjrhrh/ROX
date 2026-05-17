@@ -48,6 +48,13 @@ function bnavGo(tab) {
 if (tab === 'otaku') { if(hero){hero.style.display='';hero.style.visibility='';} _otakuOn=true; document.getElementById('htmlRoot').classList.add('otaku-mode'); document.getElementById('bnavOtaku').classList.add('active'); loadOtakuPage(); loadNewsSection('newsFeed',CONFIG.NEWS.ANIME,'purple'); document.getElementById('newsSectionTitle').textContent='📰 أخبار الأنمي'; document.getElementById('newsSection').style.display='block'; document.getElementById('studioBar').style.display='block'; }
   window.scrollTo(0,0);
 }
+function unmuteTrailer(id) {
+  const frame = document.getElementById(`dpTrailerFrame_${id}`);
+  const overlay = document.getElementById(`unmuteOverlay_${id}`);
+  if (frame) { frame.src = frame.src.replace('mute=1', 'mute=0'); }
+  if (overlay) { overlay.style.opacity='0'; setTimeout(()=>overlay.style.display='none',400); }
+}
+
 function goBack() {
   if (window._trailerTimer) { clearTimeout(window._trailerTimer); window._trailerTimer = null; }
   if (window._activeTrailerFrame) { window._activeTrailerFrame.src = ''; window._activeTrailerFrame = null; }
