@@ -1181,6 +1181,16 @@ const reviewsHTML = `
     });
     page.querySelectorAll('.lazy-img').forEach(img => lazyObs.observe(img));
     extractDominantColor(poster, applyDynamicColor);
+    setTimeout(() => {
+      if (localStorage.getItem(`rox_fav_${id}`)) {
+        const fb = document.querySelector(`.dp-btn-fav[data-id="${id}"]`);
+        if (fb) { fb.style.color='#e50914'; fb.style.borderColor='rgba(229,9,20,0.7)'; fb.style.boxShadow='0 0 14px rgba(229,9,20,0.4)'; const s=fb.querySelector('svg'); if(s){s.style.fill='#e50914';s.style.stroke='none';} }
+      }
+      if (localStorage.getItem(`rox_later_${id}`)) {
+        const lb = document.querySelector(`.dp-btn-later[data-id="${id}"]`);
+        if (lb) { lb.style.color='#f5c518'; lb.style.borderColor='rgba(245,197,24,0.7)'; lb.style.boxShadow='0 0 14px rgba(245,197,24,0.4)'; const s=lb.querySelector('svg'); if(s){s.style.fill='#f5c518';s.style.stroke='none';} }
+      }
+    }, 300);
 // سلايدر الصور
     if (backdrops.length > 1) {
       let si = 0;
@@ -1539,6 +1549,7 @@ function addToWatchlist(id, type) {
   list.unshift({ id, type, addedAt: Date.now() });
   saveLib('rox_watchlist', list);
   showToast('❤️ تمت الإضافة إلى قائمتك');
+  localStorage.setItem(`rox_fav_${id}`, '1');
   const favBtn = document.querySelector(`.dp-btn-fav[data-id="${id}"]`);
   if (favBtn) {
     favBtn.style.color = '#e50914';
@@ -1615,6 +1626,7 @@ function addToWatchLater(id, type) {
   if (list.find(i => i.id === id)) { showToast('⏰ موجود في سأشاهده مسبقاً'); return; }
   list.unshift({ id, type, addedAt: Date.now() });
   saveLib('rox_watchlater', list);
+  localStorage.setItem(`rox_later_${id}`, '1');
   showToast('⏰ تمت الإضافة إلى سأشاهده لاحقاً');
   const laterBtn = document.querySelector(`.dp-btn-later[data-id="${id}"]`);
   if (laterBtn) {
