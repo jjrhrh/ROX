@@ -3622,7 +3622,23 @@ body.cinema-mode .ws-player-bg      { position: absolute; inset: 0; padding-bott
 body.cinema-mode .ws-frame          { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; }
 body.cinema-mode .ws-overlay        { border-radius: 0; }
 /* ===== RADAR SECTION ===== */
-.radar-list { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
+.radar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(229,9,20,0.4) transparent;
+}
+.radar-list::-webkit-scrollbar { width: 3px; }
+.radar-list::-webkit-scrollbar-track { background: transparent; }
+.radar-list::-webkit-scrollbar-thumb {
+  background: rgba(229,9,20,0.4);
+  border-radius: 3px;
+}
 .radar-card {
   display: flex; align-items: center; gap: 12px;
   background: rgba(255,255,255,0.03);
