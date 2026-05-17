@@ -3759,3 +3759,62 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   border-top: 1px solid rgba(255,255,255,0.06);
   margin-top: 4px;
 }
+/* ===== EPISODE DETAIL ===== */
+.epd-wrap { min-height:100vh; background:#080000; }
+.epd-hero {
+  position: relative; height: 240px;
+  background-size: cover; background-position: center;
+}
+.epd-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), #080000);
+}
+.epd-back-btn {
+  position: absolute; top: 16px; right: 16px; z-index: 2;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15); color: #fff;
+  padding: 8px 16px; border-radius: 999px; font-size: 0.82rem; cursor: pointer;
+}
+.epd-nav {
+  position: absolute; bottom: 16px; left: 0; right: 0; z-index: 2;
+  display: flex; justify-content: space-between; align-items: center; padding: 0 16px;
+}
+.epd-nav-btn {
+  background: rgba(229,9,20,0.15); border: 1px solid rgba(229,9,20,0.4);
+  color: #fff; padding: 8px 16px; border-radius: 999px;
+  font-size: 0.82rem; cursor: pointer;
+  box-shadow: 0 0 12px rgba(229,9,20,0.2);
+}
+.epd-ep-badge {
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.8); padding: 6px 14px; border-radius: 999px; font-size: 0.8rem;
+}
+.epd-body { padding: 20px 16px; }
+.epd-title { font-size: 1.2rem; font-weight: 900; color: #fff; margin-bottom: 12px; }
+.epd-meta-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.epd-chip {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7); padding: 5px 12px; border-radius: 999px; font-size: 0.78rem;
+}
+.epd-overview {
+  color: rgba(255,255,255,0.6); font-size: 0.88rem; line-height: 1.7;
+  margin-bottom: 20px;
+}
+.epd-watch-btn {
+  width: 100%; padding: 16px; border-radius: 14px; font-size: 1rem; font-weight: 800;
+  background: linear-gradient(135deg, #e50914, #b00710);
+  color: #fff; border: none; cursor: pointer; margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(229,9,20,0.4);
+}
+.epd-guests-title {
+  font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.5);
+  margin-bottom: 12px;
+}
+.epd-guests-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; }
+.epd-guest { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 64px; }
+.epd-guest-img {
+  width: 56px; height: 56px; border-radius: 50%; object-fit: cover;
+  border: 2px solid rgba(229,9,20,0.3);
+}
+.epd-guest-name { font-size: 0.7rem; color: rgba(255,255,255,0.6); text-align: center; }
