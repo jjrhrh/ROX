@@ -2196,6 +2196,7 @@ function toggleCinemaMode() {
 document.addEventListener('DOMContentLoaded', async () => {
   bnavGo('home');
   setTimeout(checkAllAlerts, 4000);
+setInterval(checkAllAlerts, 30 * 60 * 1000);
   cwRender();
   renderNotifList();
 });
