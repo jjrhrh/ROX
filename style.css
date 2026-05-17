@@ -276,7 +276,8 @@ html, body {
   overflow: hidden;
   min-width: 0;
   background: rgba(80,0,0,0.45);
-  border: 1px solid rgba(229,9,20,0.28);
+  border: 1px solid rgba(255,255,255,0.06);
+box-shadow: 0 0 0 1px rgba(229,9,20,0.08), 0 8px 24px rgba(0,0,0,0.4);
   box-shadow: 0 0 0 0 transparent;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -294,7 +295,8 @@ html, body {
     0 0 18px rgba(229,9,20,0.45),
     0 0 40px rgba(229,9,20,0.18),
     0 10px 32px rgba(0,0,0,0.85);
-  border-color: rgba(229,9,20,0.85);
+  border-color: rgba(255,255,255,0.12);
+box-shadow: 0 0 0 1px rgba(229,9,20,0.2), 0 12px 32px rgba(0,0,0,0.5);
 }
 /* ===== ANIME CARD — Purple Neon ===== */
 .anime-card {
