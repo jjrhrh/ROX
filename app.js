@@ -2099,7 +2099,13 @@ function openSurprise()   {}
 function openAI()         {}
 // ===== NOTIFICATION SIDEBAR =====
 let notifOpen = false;
-const NOTIF_DATA = [];
+function loadNotifData() {
+  try { return JSON.parse(localStorage.getItem('rox_notif_data') || '[]'); } catch { return []; }
+}
+function saveNotifData() {
+  localStorage.setItem('rox_notif_data', JSON.stringify(NOTIF_DATA.slice(0, 50)));
+}
+const NOTIF_DATA = loadNotifData();
 
 function updateBadge() {
   const badge = document.getElementById('notifBadge');
