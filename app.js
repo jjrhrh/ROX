@@ -1535,6 +1535,27 @@ const srvs = [
         </div>
         <button class="ws-back" onclick="wsGoBack()">→ رجوع</button>
       </div>
+      <button class="ws-cinema-btn" id="cinemaModeBtn" onclick="toggleCinemaMode()">
+        <svg class="ws-cine-ico" width="18" height="18" viewBox="0 0 24 24">
+          <defs>
+            <linearGradient id="cg1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="#fde68a"/>
+              <stop offset="50%"  stop-color="#f59e0b"/>
+              <stop offset="100%" stop-color="#92400e"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="6" width="20" height="14" rx="2.5" fill="url(#cg1)"/>
+          <rect x="2" y="3.5" width="20" height="4" rx="1.5" fill="#f59e0b" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+          <line x1="6.5"  y1="3.5" x2="5"  y2="7.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="11.5" y1="3.5" x2="10" y2="7.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="16.5" y1="3.5" x2="15" y2="7.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+          <polygon points="9.5,11 16,14.5 9.5,18" fill="rgba(255,255,255,0.75)"/>
+          <ellipse cx="5.5" cy="4.8" rx="2.2" ry="0.9" fill="rgba(255,255,255,0.4)"/>
+        </svg>
+        وضع السينما
+      </button>
+      <div style="display:none">
+      </div>
       <div class="ws-info-card">
         <h2 class="ws-title">${title}</h2>
         <div class="ws-badges">
