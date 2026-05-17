@@ -971,17 +971,13 @@ const reviewsHTML = `
         })()}
       </button>
       <div class="dp-action-row2">
-        <button class="dp-action-fav" onclick="addToWatchlist(${id},'${type}')">
+        <button class="dp-action-fav dp-btn-fav" data-id="${id}" onclick="addToWatchlist(${id},'${type}')">
           <svg class="dp-act-ico" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <span>المفضلة</span>
         </button>
-        <button class="dp-action-fav" onclick="addToWatchLater(${id},'${type}')">
+        <button class="dp-action-fav dp-btn-later" data-id="${id}" onclick="addToWatchLater(${id},'${type}')">
           <svg class="dp-act-ico" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
           <span>قائمتي</span>
-        </button>
-        <button class="dp-action-fav" onclick="navigator.share?navigator.share({title:'${title}',url:window.location.href}):null">
-          <svg class="dp-act-ico" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          <span>مشاركة</span>
         </button>
       </div>
     </div>
@@ -1538,13 +1534,13 @@ function addToWatchlist(id, type) {
   list.unshift({ id, type, addedAt: Date.now() });
   saveLib('rox_watchlist', list);
   showToast('❤️ تمت الإضافة إلى قائمتك');
-  const favBtn = document.querySelector(`.dp-action-fav[onclick*="addToWatchlist(${id}"]`);
+  const favBtn = document.querySelector(`.dp-btn-fav[data-id="${id}"]`);
   if (favBtn) {
     favBtn.style.color = '#e50914';
     favBtn.style.borderColor = 'rgba(229,9,20,0.7)';
     favBtn.style.boxShadow = '0 0 14px rgba(229,9,20,0.4)';
     const svg = favBtn.querySelector('svg');
-    if (svg) { svg.style.fill = '#e50914'; svg.style.stroke = '#e50914'; }
+    if (svg) { svg.style.fill = '#e50914'; svg.style.stroke = 'none'; }
   }
 }
 function toggleAlertSubscription(id, title, type) {
@@ -1615,13 +1611,13 @@ function addToWatchLater(id, type) {
   list.unshift({ id, type, addedAt: Date.now() });
   saveLib('rox_watchlater', list);
   showToast('⏰ تمت الإضافة إلى سأشاهده لاحقاً');
-  const laterBtn = document.querySelector(`.dp-action-fav[onclick*="addToWatchLater(${id}"]`);
+  const laterBtn = document.querySelector(`.dp-btn-later[data-id="${id}"]`);
   if (laterBtn) {
     laterBtn.style.color = '#f5c518';
     laterBtn.style.borderColor = 'rgba(245,197,24,0.7)';
     laterBtn.style.boxShadow = '0 0 14px rgba(245,197,24,0.4)';
     const svg = laterBtn.querySelector('svg');
-    if (svg) { svg.style.fill = '#f5c518'; svg.style.stroke = '#f5c518'; }
+    if (svg) { svg.style.fill = '#f5c518'; svg.style.stroke = 'none'; }
   }
 }
 function showToast(msg) {
