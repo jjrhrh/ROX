@@ -1700,7 +1700,7 @@ function toggleAlertSubscription(id, title, type) {
   } else {
     list.unshift({ id, title, type, addedAt: Date.now() });
     saveLib('rox_alerts', list);
-  if (btn) { btn.classList.add('active'); btn.style.color='#1ce783'; btn.style.borderColor='rgba(28,231,131,0.7)'; btn.style.boxShadow='0 0 14px rgba(28,231,131,0.3)'; btn.style.background='rgba(28,231,131,0.1)'; btn.innerHTML = `<span class="btn-bell-ico"></span> مفعّل`; }    showToast('تم الاشتراك بالتنبيهات');
+  if (btn) { btn.classList.add('active'); btn.style.color='#1ce783'; btn.style.borderColor='rgba(28,231,131,0.7)'; btn.style.boxShadow='0 0 14px rgba(28,231,131,0.3)'; btn.style.background='rgba(28,231,131,0.1)'; const ico=btn.querySelector('.dp-act-ico,svg'); if(ico){ico.style.stroke='#1ce783';ico.style.filter='drop-shadow(0 0 8px #1ce783)';} btn.querySelector('span')&&(btn.querySelector('span').textContent='مفعّل'); }    showToast('تم الاشتراك بالتنبيهات');
     checkAlertUpdates(id, title);
   }
 }
