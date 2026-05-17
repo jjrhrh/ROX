@@ -40,8 +40,8 @@ HERO: Object.freeze({
   //  🖼️  مسارات الصور
   // ─────────────────────────────────────────
   IMAGES: Object.freeze({
-    POSTER_SM   : 'https://image.tmdb.org/t/p/w500',
-    POSTER_MD   : 'https://image.tmdb.org/t/p/w500',
+    POSTER_SM   : 'https://image.tmdb.org/t/p/w185',
+    POSTER_MD   : 'https://image.tmdb.org/t/p/w342',
     POSTER_LG   : 'https://image.tmdb.org/t/p/w780',
     POSTER_XL   : 'https://image.tmdb.org/t/p/original',
     BACKDROP    : 'https://image.tmdb.org/t/p/original',
