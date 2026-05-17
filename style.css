@@ -3562,3 +3562,49 @@ html, body {
   60%  { transform: scale(1.2) rotate(5deg);  opacity:1;   }
   100% { transform: scale(1)   rotate(0deg);  opacity:1;   }
 }
+/* ===== CINEMA MODE ===== */
+.ws-cinema-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin: 10px 16px 0;
+  width: calc(100% - 32px);
+  padding: 11px 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-md);
+  color: var(--text2);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.83rem;
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+.ws-cinema-btn.active {
+  color: #fbbf24;
+  border-color: rgba(251,191,36,0.55);
+  box-shadow: 0 0 18px rgba(251,191,36,0.22), inset 0 0 10px rgba(251,191,36,0.07);
+}
+.ws-cinema-btn.active .ws-cine-ico {
+  filter: drop-shadow(0 0 5px rgba(251,191,36,0.9)) drop-shadow(0 0 14px rgba(251,191,36,0.5));
+  animation: cinePopIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes cinePopIn {
+  0%   { transform: scale(0.6); opacity: 0.2; }
+  70%  { transform: scale(1.2); opacity: 1;   }
+  100% { transform: scale(1);   opacity: 1;   }
+}
+.ws-ambient {
+  position: absolute; inset: -40px;
+  background-size: cover; background-position: center;
+  filter: blur(70px) saturate(4) brightness(0.55);
+  opacity: 0; z-index: 0; pointer-events: none;
+  transition: opacity 1s ease;
+}
+body.cinema-mode .ws-ambient        { opacity: 1; }
+body.cinema-mode .bottom-nav        { opacity: 0 !important; pointer-events: none !important; }
+body.cinema-mode .ws-info-card,
+body.cinema-mode .ws-section        { display: none !important; }
+body.cinema-mode .ws-cinema-btn     { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 10000; width: auto; padding: 8px 20px; opacity: 0.7; margin: 0; }
+body.cinema-mode .ws-back           { opacity: 0.25; }
+body.cinema-mode .ws-player-wrap    { position: fixed; inset: 0; z-index: 9998; background: #000; margin: 0; padding: 0; border-radius: 0; }
+body.cinema-mode .ws-player-bg      { position: absolute; inset: 0; padding-bottom: 0 !important; border-radius: 0; overflow: hidden; }
+body.cinema-mode .ws-frame          { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; }
+body.cinema-mode .ws-overlay        { border-radius: 0; }
