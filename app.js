@@ -430,12 +430,12 @@ document.body.style.backgroundImage = '';
     movie.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}` : null,
     movie.poster_path   ? `${CONFIG.IMAGES.POSTER_XL}${movie.poster_path}`  : null,
   ].filter(Boolean);
-  const poster = _imgs.length ? _imgs[Math.floor(Math.random() * _imgs.length)] : CONFIG.IMAGES.PLACEHOLDER;
+  const poster = movie.poster_path ? `${CONFIG.IMAGES.POSTER_XL}${movie.poster_path}` : (movie.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}` : CONFIG.IMAGES.PLACEHOLDER);
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
   const year   = (movie.release_date || movie.first_air_date || '').slice(0,4);
   const typeLabel = type === 'tv' ? 'SERIES' : 'MOVIE';
   return `
-  <div class="movie-card ${extraClass}" onclick="openDetail(${movie.id},'${type}')">
+  <div class=\"movie-card ${extraClass}\" data-id=\"${movie.id}\" data-type=\"${type}\" onclick=\"openDetail(this.dataset.id,this.dataset.type)\">\n
     <div class="movie-poster-wrap">
       ${rank > 0 ? `<span class="rank-number">${rank}</span>` : ''}
       <img class="movie-poster fade-img" src="${poster}" alt="${title}" loading="lazy"
@@ -453,7 +453,7 @@ function buildAnimeCard(movie, rank = 0, type = 'tv') {
     movie.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}` : null,
     movie.poster_path   ? `${CONFIG.IMAGES.POSTER_XL}${movie.poster_path}`  : null,
   ].filter(Boolean);
-  const poster = _imgs2.length ? _imgs2[Math.floor(Math.random() * _imgs2.length)] : CONFIG.IMAGES.PLACEHOLDER;
+  const poster = movie.poster_path ? `${CONFIG.IMAGES.POSTER_XL}${movie.poster_path}` : (movie.backdrop_path ? `${CONFIG.IMAGES.BACKDROP}${movie.backdrop_path}` : CONFIG.IMAGES.PLACEHOLDER);
   const year = (movie.first_air_date || movie.release_date || '').slice(0,4);
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
   return `
