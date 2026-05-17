@@ -765,6 +765,20 @@ function applyDynamicColor(rgb) {
   document.documentElement.style.setProperty('--dynamic-color', `rgb(${rgb})`);
   document.documentElement.style.setProperty('--dynamic-glow', `rgba(${rgb},0.45)`);
 }
+function calcSeasonEnd(detail) {
+  const total = detail.number_of_episodes || 0;
+  const aired = detail.last_episode_to_air?.episode_number || 0;
+  const next  = detail.next_episode_to_air?.air_date || null;
+  const remaining = total - aired;
+  if (!total || !aired) return null;
+  let endDate = null;
+  if (next) {
+    const d = new Date(next);
+    d.setDate(d.getDate() + (remaining - 1) * 7);
+    endDate = d.toLocaleDateString('ar-SA', { day:'numeric', month:'long', year:'numeric' });
+  }
+  return { total, aired, remaining, endDate, pct: Math.round((aired/total)*100) };
+}
 // ===== DETAIL PAGE =====
 async function openDetail(id, type = 'movie') {
   document.getElementById('newsSection').style.display = 'none';
