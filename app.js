@@ -950,8 +950,18 @@ const reviewsHTML = `
       ${trailer ? `<div class="dp-trailer-container" id="dpTrailerBox_${id}" style="display:none">
         <iframe id="dpTrailerFrame_${id}"
           src=""
-          data-src="https://www.youtube-nocookie.com/embed/${trailer.key}?autoplay=1&mute=0&controls=0&loop=1&playlist=${trailer.key}&playsinline=1&rel=0&modestbranding=1&enablejsapi=1"
+          data-src="https://www.youtube-nocookie.com/embed/${trailer.key}?autoplay=1&mute=1&controls=0&loop=1&playlist=${trailer.key}&playsinline=1&rel=0&modestbranding=1"
           allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+        <div class="trailer-unmute-overlay" id="unmuteOverlay_${id}" onclick="unmuteTrailer(${id})">
+          <div class="trailer-unmute-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <line x1="23" y1="9" x2="17" y2="15"/>
+              <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+            <span>اضغط لتشغيل الصوت</span>
+          </div>
+        </div>
       </div>` : ''}
       <div class="dp-trailer-fade"></div>
     </div>
