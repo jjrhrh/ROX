@@ -1153,6 +1153,7 @@ const reviewsHTML = `
           </div>
         </div>` : ''}
 
+        ${reviewsHTML}
         ${castHTML}
         ${similarHTML}
         ${recommendedHTML}
