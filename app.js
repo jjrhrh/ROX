@@ -207,8 +207,7 @@ async function openAnimeJikan(malId, encodedTitle) {
     <line x1="8.6" y1="13.5" x2="15.4" y2="17.5" stroke="#c084fc" stroke-width="1.6" stroke-linecap="round"/>
   </svg> مشاركة
 </button>
-              <button class="detail-btn detail-btn-alert ${getLib('rox_alerts').find(i=>i.id===malId)?'active':''}" style="${getLib('rox_alerts').find(i=>i.id===malId)?'color:#1ce783;border-color:rgba(28,231,131,0.7);box-shadow:0 0 14px rgba(28,231,131,0.3)':''}" id="alertBtn_${malId}" onclick="toggleAlertSubscription(${malId},'${a.title}','anime')"><span class="btn-bell-ico"></span> ${getLib('rox_alerts').find(i=>i.id===malId)?'مشترك التنبيهات':'تنبيه بالحلقات'}</button>
-            </div>
+          <button class=\"detail-btn detail-btn-alert ${getLib('rox_alerts').find(i=>i.id===(tmdbId||malId))?'active':''}\" style=\"${getLib('rox_alerts').find(i=>i.id===(tmdbId||malId))?'color:#1ce783;border-color:rgba(28,231,131,0.7);box-shadow:0 0 14px rgba(28,231,131,0.3)':''}\" id=\"alertBtn_${tmdbId||malId}\" onclick=\"toggleAlertSubscription(${tmdbId||malId},'${a.title}','tv')\"><span class=\"btn-bell-ico\"></span> ${getLib('rox_alerts').find(i=>i.id===(tmdbId||malId))?'مشترك التنبيهات':'تنبيه بالحلقات'}</button>            </div>
           </div>
         </div>
         ${episodes.length ? `
