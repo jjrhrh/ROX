@@ -2342,6 +2342,11 @@ async function loadRadarSection() {
 document.addEventListener('DOMContentLoaded', async () => {
   bnavGo('home');
   setTimeout(checkAllAlerts, 4000);
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then(() => console.log('SW registered'))
+      .catch(() => {});
+  }
 setInterval(checkAllAlerts, 30 * 60 * 1000);
   cwRender();
   renderNotifList();
