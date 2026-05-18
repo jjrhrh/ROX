@@ -2419,6 +2419,130 @@ async function loadRadarSection() {
 
   return `<div class="rx-hscroll"><div class="rx-hrow">${sorted.map(c=>c.html).join('')}</div></div>`;
 }
+async function loadAnimeRadarSection() {
+  const alerts = getLib('rox_alerts');
+  const todayMs = new Date().setHours(0,0,0,0);
+
+  const cards = await Promise.all(alerts.map(async item => {
+    try {
+      const d = await fetch(buildTMDBUrl(`/tv/${item.id}`)).then(r=>r.json());
+      const genres = (d.genres||[]).map(g=>g.id);
+      if (!genres.includes(16)) return null;
+
+      const title = d.name || d.original_name || item.title || '';
+      const poster = d.poster_path ? `${CONFIG.IMAGES.POSTER_SM}${d.poster_path}` : CONFIG.IMAGES.PLACEHOLDER;
+      const last = d.last_episode_to_air;
+      const next = d.next_episode_to_air;
+      const rating = d.vote_average ? d.vote_average.toFixed(1) : null;
+      const ratingStars = rating ? Math.round(parseFloat(rating)/2) : 0;
+      const starsHtml = rating ? `
+        <div class="rx-hcard-rating">
+          <span class="rx-stars">${'★'.repeat(ratingStars)}${'☆'.repeat(5-ratingStars)}</span>
+          <span class="rx-rating-num">${rating}</span>
+        </div>` : '';
+
+      const lastTxt = last ? `موسم ${last.season_number} · حلقة ${last.episode_number}` : '—';
+
+      let status = '', statusClass = 'rx-nodate', sortKey = 2;
+      let isToday = false, countdownHtml = '';
+
+      if (next?.air_date) {
+        const diff = Math.floor((new Date(next.air_date).setHours(0,0,0,0) - todayMs) / 86400000);
+        const ns = next.season_number, ne = next.episode_number;
+        const fullDate = new Date(next.air_date).toLocaleDateString('ar-SA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+        const timeStr = new Date(next.air_date).toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+        const ampm = new Date(next.air_date).getHours() < 12 ? 'صباحاً' : 'مساءً';
+
+        if (diff < 0) {
+          const ago = Math.abs(diff);
+          const agoTxt = ago===1?'أمس':ago===2?'منذ يومين':`قبل ${ago} أيام`;
+          status = `موسم ${ns} حلقة ${ne} — نزلت ${agoTxt}\n${fullDate}`;
+          statusClass = ago<=2 ? 'rx-soon' : 'rx-days'; sortKey = 1;
+        } else if (diff===0) {
+          isToday = true;
+          status = `موسم ${ns} حلقة ${ne} — صدرت اليوم\n${timeStr} ${ampm}`;
+          statusClass = 'rx-soon'; sortKey = 0;
+        } else if (diff===1) {
+          status = `موسم ${ns} حلقة ${ne} — غداً\n${fullDate} — ${timeStr} ${ampm}`;
+          statusClass = 'rx-soon'; sortKey = 0;
+          const target = new Date(next.air_date).getTime();
+          countdownHtml = `<div class="rx-countdown" data-target="${target}">⏳ جاري الحساب...</div>`;
+        } else if (diff<=7) {
+          status = `موسم ${ns} حلقة ${ne} — بعد ${diff} أيام\n${fullDate}`;
+          statusClass = 'rx-days'; sortKey = 0;
+          const target = new Date(next.air_date).getTime();
+          countdownHtml = `<div class="rx-countdown" data-target="${target}">⏳ جاري الحساب...</div>`;
+        } else {
+          status = `موسم ${ns} حلقة ${ne}\n${fullDate}`;
+          statusClass = 'rx-days'; sortKey = 0;
+        }
+      } else {
+        status = 'لا يوجد موعد بعد';
+        statusClass = 'rx-nodate'; sortKey = 2;
+      }
+
+      const backdrop = d.backdrop_path
+        ? `${CONFIG.IMAGES.BACKDROP_SM || 'https://image.tmdb.org/t/p/w300'}${d.backdrop_path}`
+        : poster;
+
+      const todayBadge = isToday
+        ? `<span class="rx-today-badge"><span class="rx-today-dot"></span> جديد اليوم</span>`
+        : '';
+
+      const statusLines = status.split('\n');
+      const statusHtml = statusLines.map((l,i) =>
+        `<div class="rx-hcard-status ${i===0 ? statusClass : 'rx-hcard-status-sub'}">${l}</div>`
+      ).join('');
+
+      return { sortKey, html: `
+        <div class="rx-hcard rx-hcard--${statusClass} rx-hcard--anime" onclick="openDetail(${item.id},'tv')">
+          <div class="rx-hcard-img" style="background-image:url('${backdrop}')">
+            <div class="rx-hcard-grad"></div>
+            ${todayBadge}
+            <span class="rx-hcard-badge rx-hcard-badge--${statusClass}">
+              <span class="rx-dot rx-dot--${statusClass}"></span>
+            </span>
+          </div>
+          <div class="rx-hcard-body">
+            <div class="rx-hcard-title">${title}</div>
+            ${starsHtml}
+            <div class="rx-hcard-last">${lastTxt}</div>
+            ${statusHtml}
+            ${countdownHtml}
+          </div>
+          <button class="rx-btn rx-btn--anime" onclick="event.stopPropagation();openWatchPage(${item.id},'tv',${last?.season_number||1},${last?.episode_number||1})">
+            <svg class="rx-play-icon" viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="11" fill="rgba(139,92,246,0.25)" stroke="rgba(139,92,246,0.6)" stroke-width="1.5"/><polygon points="10 8 16 12 10 16" fill="#c084fc"/></svg>
+            شاهد
+          </button>
+        </div>`};
+    } catch { return null; }
+  }));
+
+  const valid = cards.filter(Boolean);
+  if (!valid.length) return null;
+  const sorted = [...valid].sort((a,b)=>a.sortKey-b.sortKey);
+
+  setTimeout(() => {
+    document.querySelectorAll('.rx-countdown[data-target]').forEach(el => {
+      if (el._ticking) return;
+      el._ticking = true;
+      const target = parseInt(el.dataset.target);
+      function tick() {
+        const diff = target - Date.now();
+        if (diff <= 0) { el.innerHTML = '<span class="rx-cd-live">● بث مباشر الآن</span>'; return; }
+        const d = Math.floor(diff/86400000);
+        const h = Math.floor((diff%86400000)/3600000);
+        const m = Math.floor((diff%3600000)/60000);
+        const s = Math.floor((diff%60000)/1000);
+        el.innerHTML = `<span class="rx-cd-seg">${d>0?`<b>${d}</b><em>يوم</em>`:''}</span>${d>0?'<span class="rx-cd-sep">◆</span>':''}<span class="rx-cd-seg"><b>${String(h).padStart(2,'0')}</b><em>ساعة</em></span><span class="rx-cd-sep">◆</span><span class="rx-cd-seg"><b>${String(m).padStart(2,'0')}</b><em>دقيقة</em></span><span class="rx-cd-sep">◆</span><span class="rx-cd-seg"><b>${String(s).padStart(2,'0')}</b><em>ثانية</em></span>`;
+        setTimeout(tick, 1000);
+      }
+      tick();
+    });
+  }, 300);
+
+  return `<div class="rx-hscroll"><div class="rx-hrow">${sorted.map(c=>c.html).join('')}</div></div>`;
+                                                                    }
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
   bnavGo('home');
