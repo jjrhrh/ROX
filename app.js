@@ -2356,6 +2356,24 @@ async function loadRadarSection() {
           status = `موسم ${ns} حلقة ${ne}\n${fullDate}`;
           statusClass = 'rx-days'; sortKey = 0;
         }
+      } else if (last?.air_date) {
+        const diffLast = Math.floor((todayMs - new Date(last.air_date).setHours(0,0,0,0)) / 86400000);
+        const ns = last.season_number, ne = last.episode_number;
+        const fullDate = new Date(last.air_date).toLocaleDateString('ar-SA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+        if (diffLast===0) {
+          isToday = true;
+          status = `موسم ${ns} حلقة ${ne} — صدرت اليوم\n${fullDate}`;
+          statusClass = 'rx-soon'; sortKey = 0;
+        } else if (diffLast===1) {
+          status = `موسم ${ns} حلقة ${ne} — نزلت أمس\n${fullDate}`;
+          statusClass = 'rx-soon'; sortKey = 1;
+        } else if (diffLast<=7) {
+          status = `موسم ${ns} حلقة ${ne} — قبل ${diffLast} أيام\n${fullDate}`;
+          statusClass = 'rx-days'; sortKey = 1;
+        } else {
+          status = `موسم ${ns} حلقة ${ne} — آخر حلقة\n${fullDate}`;
+          statusClass = 'rx-nodate'; sortKey = 2;
+        }
       } else {
         status = 'لا يوجد موعد بعد';
         statusClass = 'rx-nodate'; sortKey = 2;
