@@ -3670,7 +3670,7 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   border: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 4px 16px rgba(0,0,0,0.5);
 }
-.radar-info { flex: 1; min-width: 0; }
+.radar-info { flex: 1; min-width: 0; text-align: right; }
 .radar-title {
   font-size: 0.92rem; font-weight: 800;
   color: #fff;
