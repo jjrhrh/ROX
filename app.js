@@ -2160,6 +2160,54 @@ async function openAllEpsTMDB(id, season) {
   } catch { page.innerHTML = '<div class="loading">⚠️ خطأ في تحميل الحلقات</div>'; }
 }
 traktHandleCallback();
+// ===== SEARCH DISCOVERY =====
+async function initSearchDiscovery() {
+  try {
+    const res = await fetch(buildTMDBUrl('/trending/all/day', { page: 1 }));
+    const data = await res.json();
+    const items = (data.results || [])
+      .filter(i => i.poster_path && (i.media_type==='movie'||i.media_type==='tv'))
+      .slice(0, 3);
+    const list = document.getElementById('sqTrendingList');
+    if (!list || !items.length) return;
+    list.innerHTML = items.map((m, i) => {
+      const title = m.title || m.name || '';
+      const rating = m.vote_average ? m.vote_average.toFixed(1) : '';
+      const type = m.media_type === 'movie' ? 'فيلم' : 'مسلسل';
+      const poster = m.poster_path
+        ? `https://image.tmdb.org/t/p/w92${m.poster_path}`
+        : 'https://via.placeholder.com/42x60/1a0000/fff?text=?';
+      return `<div class="sq-trend-card" onclick="openDetail(${m.id},'${m.media_type}')">
+        <div class="sq-trend-rank">${i+1}</div>
+        <img class="sq-trend-poster" src="${poster}" alt="${title}" loading="lazy">
+        <div class="sq-trend-info">
+          <div class="sq-trend-title">${title}</div>
+          <div class="sq-trend-meta">
+            <span class="sq-trend-rating">★ ${rating}</span>
+            <span class="sq-trend-type">${type}</span>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) { console.warn('initSearchDiscovery:', e); }
+}
+
+async function searchByGenre(genreId, label) {
+  const input = document.getElementById('searchInput2');
+  if (input) input.value = label;
+  document.getElementById('searchDiscovery')?.classList.add('hidden');
+  const container = document.getElementById('searchResults');
+  if (!container) return;
+  container.innerHTML = '<div class="loading">🔍 جاري البحث...</div>';
+  try {
+    const res = await fetch(buildTMDBUrl('/discover/movie', { with_genres: genreId, sort_by: 'popularity.desc', page: 1 }));
+    const data = await res.json();
+    const results = (data.results || []).filter(i => i.poster_path).slice(0, CONFIG.SEARCH.MAX_RESULTS);
+    container.innerHTML = results.length
+      ? `<div class="movies-row">${results.map(m => buildMovieCard(m,'movie')).join('')}</div>`
+      : '<p class="lib-empty">لا توجد نتائج 😕</p>';
+  } catch { container.innerHTML = '<p class="lib-empty">حدث خطأ ❌</p>'; }
+}
 // ===== SEARCH =====
 let searchDebounce = null;
 function handleSearch(val) {
