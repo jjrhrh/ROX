@@ -2363,7 +2363,7 @@ async function loadRadarSection() {
 
   const valid  = cards.filter(Boolean);
   const sorted = [...valid].sort((a,b)=>a.sortKey-b.sortKey);
-  return `<div class="rx-list">${sorted.map(c=>c.html).join('')}</div>`;
+  return `<div class="rx-hscroll"><div class="rx-hrow">${sorted.map(c=>c.html).join('')}</div></div>`;
 }
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
