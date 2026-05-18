@@ -3636,16 +3636,34 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 14px;
-  background: rgba(255,255,255,0.04);
+  padding: 13px 14px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
 }
-.rx-card:hover { background: rgba(255,255,255,0.07); }
+.rx-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent 60%);
+  pointer-events: none;
+}
+.rx-card.rx-soon-card {
+  border-color: rgba(28,231,131,0.2);
+  box-shadow: 0 0 20px rgba(28,231,131,0.06), inset 0 1px 0 rgba(28,231,131,0.08);
+}
+.rx-card.rx-days-card {
+  border-color: rgba(245,158,11,0.2);
+  box-shadow: 0 0 20px rgba(245,158,11,0.06), inset 0 1px 0 rgba(245,158,11,0.08);
+}
+.rx-card:hover { background: rgba(255,255,255,0.06); transform: translateY(-1px); }
 .rx-card:active { transform: scale(0.98); }
-
 .rx-poster {
   width: 50px;
   height: 72px;
@@ -3690,9 +3708,9 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 8px 14px;
-  background: rgba(229,9,20,0.12);
-  border: 1px solid rgba(229,9,20,0.4);
+  padding: 9px 15px;
+  background: rgba(229,9,20,0.1);
+  border: 1px solid rgba(229,9,20,0.35);
   border-radius: 999px;
   color: #ff6b6b;
   font-size: 0.75rem;
@@ -3700,14 +3718,22 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   font-family: 'Cairo', sans-serif;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  animation: rxPulse 2.5s ease-in-out infinite;
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
 }
+.rx-btn svg { filter: drop-shadow(0 0 3px #e50914); }
 .rx-btn:hover {
   background: rgba(229,9,20,0.25);
   border-color: rgba(229,9,20,0.7);
-  box-shadow: 0 0 16px rgba(229,9,20,0.3);
+  box-shadow: 0 0 24px rgba(229,9,20,0.35);
+  transform: scale(1.06);
+  animation: none;
 }
 .rx-btn:active { transform: scale(0.94); }
+@keyframes rxPulse {
+  0%,100% { box-shadow: 0 0 8px rgba(229,9,20,0.15); }
+  50%     { box-shadow: 0 0 20px rgba(229,9,20,0.35); }
+}
 
 .rx-empty {
   text-align: center;
