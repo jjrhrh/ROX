@@ -74,48 +74,103 @@
   </div>
   <div id="newsFeed" class="news-feed"></div>
 </div>
-<div id="searchPage"     class="page">
-  <div class="search-header">
-    <input type="text" id="searchInput2" class="search-input-page"
-      placeholder="🔍 ابحث عن فيلم أو مسلسل..."
-      oninput="handleSearch(this.value)">
-  </div>
-  <!-- SEARCH DISCOVERY ZONE -->
-  <div id="searchDiscovery">
-
-    <!-- 1. Quick Tags Row -->
-    <div class="sq-tags-wrap">
-      <div class="sq-tags-row" id="sqTagsRow">
-        <button class="sq-tag" onclick="handleSearch('أفلام السهرة')">🍿 أفلام السهرة</button>
-        <button class="sq-tag" onclick="handleSearch('تريند')">🔥 تريند اليوم</button>
-        <button class="sq-tag" onclick="handleSearch('أوسكار')">🎬 ترشيحات أوسكار</button>
-        <button class="sq-tag" onclick="handleSearch('رعب')">🧟 رعب وإثارة</button>
-        <button class="sq-tag" onclick="handleSearch('رومانسي')">💘 رومانسي</button>
-        <button class="sq-tag" onclick="handleSearch('خيال علمي')">🚀 خيال علمي</button>
+<div id="searchPage" class="page">
+  <!-- SEARCH HEADER مثل Cinemaos -->
+  <div class="search-header-new">
+    <div class="search-logo-row">
+      <div class="search-logo-icon">🔍</div>
+      <div>
+        <div class="search-logo-title">Cinema ROX</div>
+        <div class="search-logo-sub">ابحث عن فيلمك القادم أو مسلسل أو أنمي</div>
       </div>
     </div>
+    <p class="search-logo-desc">اكتشف أفلام، مسلسلات، أنمي. استخدم الفلاتر لتضييق البحث.</p>
 
-    <!-- 2. Premium Genres Grid -->
-    <div class="sq-genres-section">
-      <div class="sq-section-label">✨ استكشف التصنيفات</div>
-      <div class="sq-genres-grid" id="sqGenresGrid">
-        <div class="sq-genre-card sq-g-action"  onclick="searchByGenre(28,'أكشن')">💥<span>أكشن</span></div>
-        <div class="sq-genre-card sq-g-drama"   onclick="searchByGenre(18,'دراما')">🎭<span>دراما</span></div>
-        <div class="sq-genre-card sq-g-anime"   onclick="handleSearch('anime')">⛩️<span>أنمي</span></div>
-        <div class="sq-genre-card sq-g-mystery" onclick="searchByGenre(9648,'غموض')">🕵️<span>غموض</span></div>
-        <div class="sq-genre-card sq-g-doc"     onclick="searchByGenre(99,'وثائقي')">🌍<span>وثائقي</span></div>
-        <div class="sq-genre-card sq-g-comedy"  onclick="searchByGenre(35,'كوميدي')">😂<span>كوميدي</span></div>
+    <!-- شريط البحث + زر الفلتر -->
+    <div class="search-bar-row">
+      <div class="search-input-wrap">
+        <svg class="search-bar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="17" y1="17" x2="21" y2="21"/></svg>
+        <input type="text" id="searchInput2" class="search-input-page"
+          placeholder="ابحث..."
+          oninput="handleSearch(this.value)">
+      </div>
+      <select id="searchTypeSelect" class="search-type-select" onchange="onTypeChange()">
+        <option value="all">الكل</option>
+        <option value="movie">أفلام</option>
+        <option value="tv">مسلسلات</option>
+        <option value="anime">أنمي</option>
+      </select>
+      <button class="search-filter-btn" onclick="toggleAdvFilter()" id="filterToggleBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+      </button>
+    </div>
+
+    <!-- الفلاتر الأساسية -->
+    <div class="search-filters-row" id="searchFiltersRow">
+      <div class="filter-group">
+        <label class="filter-label">التصنيف</label>
+        <select id="filterGenre" class="filter-select" onchange="applyAdvFilter()">
+          <option value="">الكل</option>
+          <option value="28">أكشن</option>
+          <option value="12">مغامرة</option>
+          <option value="16">أنيميشن</option>
+          <option value="35">كوميدي</option>
+          <option value="80">جريمة</option>
+          <option value="99">وثائقي</option>
+          <option value="18">دراما</option>
+          <option value="10751">عائلي</option>
+          <option value="14">فانتازيا</option>
+          <option value="36">تاريخي</option>
+          <option value="27">رعب</option>
+          <option value="10402">موسيقى</option>
+          <option value="9648">غموض</option>
+          <option value="10749">رومانسي</option>
+          <option value="878">خيال علمي</option>
+          <option value="10770">تلفزيوني</option>
+          <option value="53">إثارة</option>
+          <option value="10752">حرب</option>
+          <option value="37">وسترن</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">السنة</label>
+        <select id="filterYear" class="filter-select" onchange="applyAdvFilter()">
+          <option value="">الكل</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">الترتيب</label>
+        <select id="filterSort" class="filter-select" onchange="applyAdvFilter()">
+          <option value="popularity.desc">الأكثر شعبية</option>
+          <option value="vote_average.desc">الأعلى تقييماً</option>
+          <option value="release_date.desc">الأحدث</option>
+          <option value="revenue.desc">الأعلى إيراداً</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">البلد</label>
+        <select id="filterCountry" class="filter-select" onchange="applyAdvFilter()">
+          <option value="">الكل</option>
+          <option value="US">أمريكا</option>
+          <option value="GB">بريطانيا</option>
+          <option value="JP">اليابان</option>
+          <option value="KR">كوريا الجنوبية</option>
+          <option value="FR">فرنسا</option>
+          <option value="DE">ألمانيا</option>
+          <option value="IN">الهند</option>
+          <option value="TR">تركيا</option>
+          <option value="SA">السعودية</option>
+          <option value="EG">مصر</option>
+          <option value="AE">الإمارات</option>
+          <option value="ES">إسبانيا</option>
+          <option value="IT">إيطاليا</option>
+          <option value="MX">المكسيك</option>
+          <option value="CN">الصين</option>
+          <option value="TH">تايلاند</option>
+        </select>
       </div>
     </div>
-
-    <!-- 3. Trending Mini Cards -->
-    <div class="sq-trending-section">
-      <div class="sq-section-label">📈 الأكثر بحثاً اليوم</div>
-      <div id="sqTrendingList" class="sq-trending-list"></div>
-    </div>
-
   </div>
-  <!-- END SEARCH DISCOVERY ZONE -->
 
   <div id="searchResults"></div>
 </div>
