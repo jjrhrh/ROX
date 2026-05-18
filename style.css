@@ -3640,94 +3640,54 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   border-radius: 3px;
 }
 .radar-card {
-  display: flex; align-items: flex-start; gap: 14px;
+  display: flex; align-items: center; gap: 12px;
   background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 13px 14px;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
   cursor: pointer;
   transition: all 0.25s ease;
-  position: relative;
-  overflow: hidden;
-}
-.radar-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.02), transparent);
-  pointer-events: none;
-}
-.radar-card-active {
-  border-color: rgba(28,231,131,0.3);
-  background: rgba(28,231,131,0.04);
-  box-shadow: 0 0 20px rgba(28,231,131,0.08);
 }
 .radar-card:active { transform: scale(0.98); }
-
 .radar-poster {
-  width: 50px; height: 70px; border-radius: 10px;
+  width: 48px; height: 68px; border-radius: 8px;
   object-fit: cover; flex-shrink: 0;
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.08);
 }
-.radar-info { flex: 1; min-width: 0; text-align: right; }
+.radar-info { flex: 1; min-width: 0; }
 .radar-title {
-  font-size: 0.92rem; font-weight: 800;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 4px;
-  max-width: 100%;
+  font-size: 0.88rem; font-weight: 700;
+  color: var(--text); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
 }
 .radar-last {
-  font-size: 0.76rem; color: rgba(255,255,255,0.55);
-  font-weight: 600;
-}
-.radar-last-sub {
-  font-size: 0.68rem; color: rgba(255,255,255,0.35);
-  margin-top: 1px;
+  font-size: 0.75rem; color: var(--text2);
+  margin-top: 3px;
 }
 .radar-next {
-  font-size: 0.76rem; margin-top: 5px;
-  font-weight: 700; letter-spacing: 0.01em;
+  font-size: 0.75rem; margin-top: 4px;
+  font-weight: 600;
 }
-.radar-next-sub {
-  font-size: 0.66rem; margin-top: 1px;
-  opacity: 0.75; font-weight: 500;
-}
-.radar-next.soon, .radar-next-sub.soon { color: #1ce783; }
-.radar-next.days, .radar-next-sub.days { color: #f59e0b; }
-.radar-next.nodate { color: rgba(255,255,255,0.25); }
-
+.radar-next.soon   { color: #1ce783; }
+.radar-next.days   { color: #f59e0b; }
+.radar-next.nodate { color: var(--text3); }
 .radar-watch-btn {
-  flex-shrink: 0;
-  display: flex; align-items: center; gap: 5px;
-  padding: 8px 12px;
-  align-self: center;
-  background: rgba(229,9,20,0.12);
+  flex-shrink: 0; padding: 6px 12px;
+  background: rgba(229,9,20,0.15);
   border: 1px solid rgba(229,9,20,0.35);
-  border-radius: 999px;
-  color: #ff6b6b;
-  font-size: 0.74rem; font-weight: 700;
+  border-radius: var(--radius-full);
+  color: var(--accent); font-size: 0.72rem;
   font-family: 'Cairo', sans-serif;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  cursor: pointer; transition: all 0.2s ease;
   white-space: nowrap;
-  box-shadow: 0 0 12px rgba(229,9,20,0.1);
-}
-.radar-watch-btn:hover {
-  background: rgba(229,9,20,0.22);
-  border-color: rgba(229,9,20,0.6);
-  box-shadow: 0 0 20px rgba(229,9,20,0.2);
 }
 .radar-watch-btn:active {
-  transform: scale(0.94);
+  background: rgba(229,9,20,0.3);
+  transform: scale(0.96);
 }
 .radar-empty {
-  text-align: center; color: rgba(255,255,255,0.2);
-  font-size: 0.82rem; padding: 24px 16px;
-  line-height: 1.8;
+  text-align: center; color: var(--text3);
+  font-size: 0.82rem; padding: 20px;
 }
 .lib-laser-green {
   background: linear-gradient(180deg, #1ce783, rgba(28,231,131,0.2));
@@ -3879,9 +3839,3 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   color: #fff;
 }
 .notif-test-btn:disabled { opacity: 0.6; cursor: default; } 
-.radar-ep-row {
-  display: flex; flex-wrap: wrap; align-items: center;
-  gap: 2px; margin-bottom: 3px;
-}
-.radar-ep-row .radar-last { margin: 0; }
-.radar-ep-row .radar-last-sub { font-size: 0.66rem; color: rgba(255,255,255,0.3); } 
