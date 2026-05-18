@@ -2358,7 +2358,13 @@ async function loadRadarSection() {
         </div>`;
     } catch { return ''; }
   }));
-  return `<div class="radar-list">${cards.join('')}</div>`;
+  const withKeys = cards.map((c,i) => ({ html: c, key: (c.match(/data-sort="(\d)"/) || [,9])[1] }));
+  const sorted = cards
+    .map((c,i) => c)
+    .filter(c => c.includes('data-sort="0"'))
+    .concat(cards.filter(c => c.includes('data-sort="1"')))
+    .concat(cards.filter(c => c.includes('data-sort="2"')));
+  return `<div class="radar-list">${(sorted.length ? sorted : cards).join('')}</div>`;
 }
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
