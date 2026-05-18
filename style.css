@@ -3640,7 +3640,7 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   border-radius: 3px;
 }
 .radar-card {
-  display: flex; align-items: center; gap: 14px;
+  display: flex; align-items: flex-start; gap: 14px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
@@ -3878,3 +3878,9 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   color: #fff;
 }
 .notif-test-btn:disabled { opacity: 0.6; cursor: default; } 
+.radar-ep-row {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 2px; margin-bottom: 3px;
+}
+.radar-ep-row .radar-last { margin: 0; }
+.radar-ep-row .radar-last-sub { font-size: 0.66rem; color: rgba(255,255,255,0.3); } 
