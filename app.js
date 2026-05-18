@@ -2025,22 +2025,12 @@ const svgRadar = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/
   const hasTrakt = localStorage.getItem('trakt_token');
 
   const radarHTML = await loadRadarSection();
-  const animeRadarHTML = await loadAnimeRadarSection();
   page.innerHTML = `
     <div class="lib-header"><h2 class="lib-title">مكتبتي</h2></div>
     ${buildSection('lib-laser-magenta','lib-icon3d-magenta', svgArchive, 'أرشيفي الخاص',   wlHTML,  'rox_watchlist',  watchlist)}
     ${buildSection('lib-laser-cyan',   'lib-icon3d-cyan',    svgClock,   'قائمة الانتظار', wlrHTML, 'rox_watchlater', watchlater)}
     ${buildSection('lib-laser-orange', 'lib-icon3d-orange',  svgPlay,    'أكمل المشاهدة',  cwHTML,  '',               cwItems)}
     ${buildSection('lib-laser-green',  'lib-icon3d-green',   svgRadar,   'رادار حلقاتك', radarHTML, '', [])}
-    ${animeRadarHTML ? `
-    <div class="lib-section">
-      <div class="lib-sec-head">
-        <span class="lib-laser lib-laser-purple"></span>
-        <span class="lib-icon3d lib-icon3d-purple">${svgRadar}</span>
-        <h3 class="lib-sec-title">رادار الأنمي 🎌</h3>
-      </div>
-      ${animeRadarHTML}
-    </div>` : ''}
     ${hasTrakt && traktCol.length ? buildSection('lib-laser-magenta','lib-icon3d-magenta', svgTrakt, '📦 Trakt — مجموعتي', tColHTML, 'trakt_collection', traktCol) : ''}
     ${hasTrakt && traktWl.length  ? buildSection('lib-laser-cyan',   'lib-icon3d-cyan',    svgTrakt, '🕐 Trakt — قائمة المشاهدة', tWlHTML, 'trakt_watchlist', traktWl) : ''}
   `;
@@ -2365,23 +2355,6 @@ async function loadRadarSection() {
           status = `موسم ${ns} حلقة ${ne}\n${fullDate}`;
           statusClass = 'rx-days'; sortKey = 0;
         }
-      } else if (last?.air_date) {
-        const diffLast = Math.floor((todayMs - new Date(last.air_date).setHours(0,0,0,0)) / 86400000);
-        const ns = last.season_number, ne = last.episode_number;
-        const fullDate = new Date(last.air_date).toLocaleDateString('ar-SA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-        if (diffLast===0) {
-          status = `موسم ${ns} حلقة ${ne} — صدرت اليوم\n${fullDate}`;
-          statusClass = 'rx-soon'; sortKey = 1;
-        } else if (diffLast===1) {
-          status = `موسم ${ns} حلقة ${ne} — نزلت أمس\n${fullDate}`;
-          statusClass = 'rx-soon'; sortKey = 1;
-        } else if (diffLast<=7) {
-          status = `موسم ${ns} حلقة ${ne} — قبل ${diffLast} أيام\n${fullDate}`;
-          statusClass = 'rx-days'; sortKey = 1;
-        } else {
-          status = `موسم ${ns} حلقة ${ne} — آخر حلقة\n${fullDate}`;
-          statusClass = 'rx-nodate'; sortKey = 2;
-        }
       } else {
         status = 'لا يوجد موعد بعد';
         statusClass = 'rx-nodate'; sortKey = 2;
@@ -2446,135 +2419,6 @@ async function loadRadarSection() {
 
   return `<div class="rx-hscroll"><div class="rx-hrow">${sorted.map(c=>c.html).join('')}</div></div>`;
 }
-async function loadAnimeRadarSection() {
-  const alerts = getLib('rox_alerts');
-  const todayMs = new Date().setHours(0,0,0,0);
-
-  const cards = await Promise.all(alerts.map(async item => {
-    try {
-      const d = await fetch(buildTMDBUrl(`/tv/${item.id}`)).then(r=>r.json());
-      const genres = (d.genres||[]).map(g=>g.id);
-      const isAnime = genres.includes(16) && (
-        (d.origin_country||[]).includes('JP') || 
-        (d.original_language === 'ja') ||
-        genres.includes(16)
-      );
-      if (!isAnime) return null;
-      const itemType = item.type === 'movie' ? 'movie' : 'tv';
-      const title = d.name || d.original_name || item.title || '';
-      const poster = d.poster_path ? `${CONFIG.IMAGES.POSTER_SM}${d.poster_path}` : CONFIG.IMAGES.PLACEHOLDER;
-      const last = d.last_episode_to_air;
-      const next = d.next_episode_to_air;
-      const rating = d.vote_average ? d.vote_average.toFixed(1) : null;
-      const ratingStars = rating ? Math.round(parseFloat(rating)/2) : 0;
-      const starsHtml = rating ? `
-        <div class="rx-hcard-rating">
-          <span class="rx-stars">${'★'.repeat(ratingStars)}${'☆'.repeat(5-ratingStars)}</span>
-          <span class="rx-rating-num">${rating}</span>
-        </div>` : '';
-
-      const lastTxt = last ? `موسم ${last.season_number} · حلقة ${last.episode_number}` : '—';
-
-      let status = '', statusClass = 'rx-nodate', sortKey = 2;
-      let isToday = false, countdownHtml = '';
-
-      if (next?.air_date) {
-        const diff = Math.floor((new Date(next.air_date).setHours(0,0,0,0) - todayMs) / 86400000);
-        const ns = next.season_number, ne = next.episode_number;
-        const fullDate = new Date(next.air_date).toLocaleDateString('ar-SA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-        const timeStr = new Date(next.air_date).toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
-        const ampm = new Date(next.air_date).getHours() < 12 ? 'صباحاً' : 'مساءً';
-
-        if (diff < 0) {
-          const ago = Math.abs(diff);
-          const agoTxt = ago===1?'أمس':ago===2?'منذ يومين':`قبل ${ago} أيام`;
-          status = `موسم ${ns} حلقة ${ne} — نزلت ${agoTxt}\n${fullDate}`;
-          statusClass = ago<=2 ? 'rx-soon' : 'rx-days'; sortKey = 1;
-        } else if (diff===0) {
-          isToday = true;
-          status = `موسم ${ns} حلقة ${ne} — صدرت اليوم\n${timeStr} ${ampm}`;
-          statusClass = 'rx-soon'; sortKey = 0;
-        } else if (diff===1) {
-          status = `موسم ${ns} حلقة ${ne} — غداً\n${fullDate} — ${timeStr} ${ampm}`;
-          statusClass = 'rx-soon'; sortKey = 0;
-          const target = new Date(next.air_date).getTime();
-          countdownHtml = `<div class="rx-countdown" data-target="${target}">⏳ جاري الحساب...</div>`;
-        } else if (diff<=7) {
-          status = `موسم ${ns} حلقة ${ne} — بعد ${diff} أيام\n${fullDate}`;
-          statusClass = 'rx-days'; sortKey = 0;
-          const target = new Date(next.air_date).getTime();
-          countdownHtml = `<div class="rx-countdown" data-target="${target}">⏳ جاري الحساب...</div>`;
-        } else {
-          status = `موسم ${ns} حلقة ${ne}\n${fullDate}`;
-          statusClass = 'rx-days'; sortKey = 0;
-        }
-      } else {
-        status = 'لا يوجد موعد بعد';
-        statusClass = 'rx-nodate'; sortKey = 2;
-      }
-
-      const backdrop = d.backdrop_path
-        ? `${CONFIG.IMAGES.BACKDROP_SM || 'https://image.tmdb.org/t/p/w300'}${d.backdrop_path}`
-        : poster;
-
-      const todayBadge = isToday
-        ? `<span class="rx-today-badge"><span class="rx-today-dot"></span> جديد اليوم</span>`
-        : '';
-
-      const statusLines = status.split('\n');
-      const statusHtml = statusLines.map((l,i) =>
-        `<div class="rx-hcard-status ${i===0 ? statusClass : 'rx-hcard-status-sub'}">${l}</div>`
-      ).join('');
-
-      return { sortKey, html: `
-        <div class="rx-hcard rx-hcard--${statusClass} rx-hcard--anime" onclick="openDetail(${item.id},'tv')">
-          <div class="rx-hcard-img" style="background-image:url('${backdrop}')">
-            <div class="rx-hcard-grad"></div>
-            ${todayBadge}
-            <span class="rx-hcard-badge rx-hcard-badge--${statusClass}">
-              <span class="rx-dot rx-dot--${statusClass}"></span>
-            </span>
-          </div>
-          <div class="rx-hcard-body">
-            <div class="rx-hcard-title">${title}</div>
-            ${starsHtml}
-            <div class="rx-hcard-last">${lastTxt}</div>
-            ${statusHtml}
-            ${countdownHtml}
-          </div>
-          <div class="rx-hcard rx-hcard--${statusClass} rx-hcard--anime" onclick="openDetail(${item.id},'${itemType}')">
-            <svg class="rx-play-icon" viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="11" fill="rgba(139,92,246,0.25)" stroke="rgba(139,92,246,0.6)" stroke-width="1.5"/><polygon points="10 8 16 12 10 16" fill="#c084fc"/></svg>
-            شاهد
-          </button>
-        </div>`};
-    } catch { return null; }
-  }));
-
-  const valid = cards.filter(Boolean);
-  if (!valid.length) return null;
-  const sorted = [...valid].sort((a,b)=>a.sortKey-b.sortKey);
-
-  setTimeout(() => {
-    document.querySelectorAll('.rx-countdown[data-target]').forEach(el => {
-      if (el._ticking) return;
-      el._ticking = true;
-      const target = parseInt(el.dataset.target);
-      function tick() {
-        const diff = target - Date.now();
-        if (diff <= 0) { el.innerHTML = '<span class="rx-cd-live">● بث مباشر الآن</span>'; return; }
-        const d = Math.floor(diff/86400000);
-        const h = Math.floor((diff%86400000)/3600000);
-        const m = Math.floor((diff%3600000)/60000);
-        const s = Math.floor((diff%60000)/1000);
-        el.innerHTML = `<span class="rx-cd-seg">${d>0?`<b>${d}</b><em>يوم</em>`:''}</span>${d>0?'<span class="rx-cd-sep">◆</span>':''}<span class="rx-cd-seg"><b>${String(h).padStart(2,'0')}</b><em>ساعة</em></span><span class="rx-cd-sep">◆</span><span class="rx-cd-seg"><b>${String(m).padStart(2,'0')}</b><em>دقيقة</em></span><span class="rx-cd-sep">◆</span><span class="rx-cd-seg"><b>${String(s).padStart(2,'0')}</b><em>ثانية</em></span>`;
-        setTimeout(tick, 1000);
-      }
-      tick();
-    });
-  }, 300);
-
-  return `<div class="rx-hscroll"><div class="rx-hrow">${sorted.map(c=>c.html).join('')}</div></div>`;
-                                                                    }
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
   bnavGo('home');
