@@ -2200,6 +2200,7 @@ async function openAllEpsTMDB(id, season) {
 traktHandleCallback();
 // ===== SEARCH DISCOVERY =====
 async function initSearchDiscovery() {
+  fillYearSelect();
   try {
     const res = await fetch(buildTMDBUrl('/trending/all/day', { page: 1 }));
     const data = await res.json();
