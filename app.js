@@ -2213,6 +2213,18 @@ let searchDebounce = null;
 function handleSearch(val) {
   clearTimeout(searchDebounce);
   const q = val.trim();
+  const discovery = document.getElementById('searchDiscovery');
+  if (q.length < CONFIG.SEARCH.MIN_CHARS) {
+    const c = document.getElementById('searchResults');
+    if (c) c.innerHTML = '';
+    if (discovery) discovery.classList.remove('hidden');
+    return;
+  }
+  if (discovery) discovery.classList.add('hidden');
+  searchDebounce = setTimeout(() => runSearch(q), CONFIG.SEARCH.DEBOUNCE_MS);
+}
+  clearTimeout(searchDebounce);
+  const q = val.trim();
   if (q.length < CONFIG.SEARCH.MIN_CHARS) {
     const c = document.getElementById('searchResults');
     if (c) c.innerHTML = '';
