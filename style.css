@@ -3625,9 +3625,9 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
 .radar-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   padding: 4px 0;
-  max-height: 400px;
+  max-height: 520px;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
