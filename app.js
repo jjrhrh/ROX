@@ -2375,8 +2375,10 @@ async function loadRadarSection() {
           <img class="radar-poster" src="${poster}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
           <div class="radar-info">
             <div class="radar-title">${title}</div>
-            <div class="radar-last">${lastTxt}</div>
-            ${lastSubTxt ? `<div class="radar-last-sub">${lastSubTxt}</div>` : ''}
+            <div class="radar-ep-row">
+              <span class="radar-last">${lastTxt}</span>
+              ${lastSubTxt ? `<span class="radar-last-sub"> · ${lastSubTxt}</span>` : ''}
+            </div>
             <div class="radar-next ${nextClass}">${nextTxt}</div>
             ${nextSubTxt ? `<div class="radar-next-sub ${nextClass}">${nextSubTxt}</div>` : ''}
           </div>
