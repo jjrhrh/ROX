@@ -2032,6 +2032,7 @@ const svgRadar = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/
     ${buildSection('lib-laser-cyan',   'lib-icon3d-cyan',    svgClock,   'قائمة الانتظار', wlrHTML, 'rox_watchlater', watchlater)}
     ${buildSection('lib-laser-orange', 'lib-icon3d-orange',  svgPlay,    'أكمل المشاهدة',  cwHTML,  '',               cwItems)}
     ${buildSection('lib-laser-green',  'lib-icon3d-green',   svgRadar,   'رادار حلقاتك', radarHTML, '', [])}
+    ${animeRadarHTML ? buildSection('lib-laser-purple', 'lib-icon3d-purple', svgRadar, 'رادار الأنمي 🎌', animeRadarHTML, '', []) : ''}
     ${hasTrakt && traktCol.length ? buildSection('lib-laser-magenta','lib-icon3d-magenta', svgTrakt, '📦 Trakt — مجموعتي', tColHTML, 'trakt_collection', traktCol) : ''}
     ${hasTrakt && traktWl.length  ? buildSection('lib-laser-cyan',   'lib-icon3d-cyan',    svgTrakt, '🕐 Trakt — قائمة المشاهدة', tWlHTML, 'trakt_watchlist', traktWl) : ''}
   `;
