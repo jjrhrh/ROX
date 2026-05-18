@@ -1783,6 +1783,9 @@ box-shadow: 0 0 0 1px rgba(229,9,20,0.2), 0 12px 32px rgba(0,0,0,0.5);
 .lib-header { padding: 20px 16px 8px; }
 .lib-title { font-size: 1.1rem; font-weight: 900; color: #fff; }
 .lib-section { padding: 16px 16px 8px; }
+.lib-section .rx-hscroll { margin: 0 -16px; padding: 4px 16px 12px; }
+.lib-section .rx-hrow { display: flex; flex-direction: row; gap: 12px; width: max-content; }
+.lib-section .rx-hcard { width: 230px; flex-shrink: 0; } 
 .lib-sec-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-direction: row-reverse; }
 .lib-laser { width: 3px; border-radius: 99px; height: 20px; flex-shrink: 0; }
 .lib-laser-magenta { background: #e040fb; box-shadow: 0 0 10px #e040fb, 0 0 24px rgba(224,64,251,0.5); }
