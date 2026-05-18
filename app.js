@@ -2353,7 +2353,7 @@ async function loadRadarSection() {
         : poster;
 
       const todayBadge = isToday
-        ? `<span class="rx-today-badge">🔴 جديد اليوم</span>`
+        ? `<span class="rx-today-badge"><span class="rx-today-dot"></span> جديد اليوم</span>`
         : '';
 
       const statusLines = status.split('\n');
@@ -2367,7 +2367,7 @@ async function loadRadarSection() {
             <div class="rx-hcard-grad"></div>
             ${todayBadge}
             <span class="rx-hcard-badge rx-hcard-badge--${statusClass}">
-              ${sortKey===0 ? '🟢' : sortKey===1 ? '🟡' : '⚫'}
+              <span class="rx-dot rx-dot--${statusClass}"></span>
             </span>
           </div>
           <div class="rx-hcard-body">
@@ -2378,7 +2378,7 @@ async function loadRadarSection() {
             ${countdownHtml}
           </div>
           <button class="rx-btn" onclick="event.stopPropagation();openWatchPage(${item.id},'tv',${last?.season_number||1},${last?.episode_number||1})">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg class="rx-play-icon" viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="11" fill="rgba(229,9,20,0.25)" stroke="rgba(229,9,20,0.6)" stroke-width="1.5"/><polygon points="10 8 16 12 10 16" fill="#ff4444"/></svg>
             شاهد
           </button>
         </div>`};
@@ -2393,12 +2393,12 @@ async function loadRadarSection() {
       const target = parseInt(el.dataset.target);
       function tick() {
         const diff = target - Date.now();
-        if (diff <= 0) { el.textContent = '🟢 الآن!'; return; }
+        if (diff <= 0) { el.innerHTML = '<span class="rx-cd-live">● بث مباشر الآن</span>'; return; }
         const d = Math.floor(diff/86400000);
         const h = Math.floor((diff%86400000)/3600000);
         const m = Math.floor((diff%3600000)/60000);
         const s = Math.floor((diff%60000)/1000);
-        el.textContent = `⏱ ${d > 0 ? d+'ي ' : ''}${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        el.innerHTML = `<span class="rx-cd-seg">${d > 0 ? `<b>${d}</b><em>يوم</em>` : ''}</span><span class="rx-cd-sep">◆</span><span class="rx-cd-seg"><b>${String(h).padStart(2,'0')}</b><em>ساعة</em></span><span class="rx-cd-sep">◆</span><span class="rx-cd-seg"><b>${String(m).padStart(2,'0')}</b><em>دقيقة</em></span><span class="rx-cd-sep">◆</span><span class="rx-cd-seg"><b>${String(s).padStart(2,'0')}</b><em>ثانية</em></span>`;
         setTimeout(tick, 1000);
       }
       tick();
