@@ -2319,18 +2319,21 @@ async function loadRadarSection() {
         const diff = Math.floor((new Date(next.air_date).setHours(0,0,0,0) - todayMs) / 86400000);
         const fmt  = new Date(next.air_date).toLocaleDateString('ar-SA',{weekday:'short',day:'numeric',month:'long'});
         const ns   = next.season_number, ne = next.episode_number;
+        const fullDate = new Date(next.air_date).toLocaleDateString('ar-SA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+        const timeStr  = new Date(next.air_date).toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+        const ampm     = new Date(next.air_date).getHours() < 12 ? 'صباحاً' : 'مساءً';
         if (diff < 0) {
           const ago = Math.abs(diff);
           const agoTxt = ago===1?'أمس':ago===2?'منذ يومين':`قبل ${ago} أيام`;
-          status = `م${ns} ح${ne} — نزلت ${agoTxt}`; statusClass = ago<=2?'rx-soon':'rx-days'; sortKey=1;
+          status = `م${ns} ح${ne} — نزلت ${agoTxt} | ${fullDate}`; statusClass=ago<=2?'rx-soon':'rx-days'; sortKey=1;
         } else if (diff===0) {
-          status = `م${ns} ح${ne} — صدرت اليوم`; statusClass='rx-soon'; sortKey=0;
+          status = `م${ns} ح${ne} — صدرت اليوم | ${timeStr} ${ampm}`; statusClass='rx-soon'; sortKey=0;
         } else if (diff===1) {
-          status = `م${ns} ح${ne} — غداً | ${fmt}`; statusClass='rx-soon'; sortKey=0;
+          status = `م${ns} ح${ne} — غداً | ${fullDate} — ${timeStr} ${ampm}`; statusClass='rx-soon'; sortKey=0;
         } else if (diff<=7) {
-          status = `م${ns} ح${ne} — بعد ${diff} أيام | ${fmt}`; statusClass='rx-days'; sortKey=0;
+          status = `م${ns} ح${ne} — بعد ${diff} أيام | ${fullDate}`; statusClass='rx-days'; sortKey=0;
         } else {
-          status = `م${ns} ح${ne} | ${fmt}`; statusClass='rx-days'; sortKey=0;
+          status = `م${ns} ح${ne} | ${fullDate}`; statusClass='rx-days'; sortKey=0;
         }
       } else {
         status = 'لا يوجد موعد بعد'; statusClass='rx-nodate'; sortKey=2;
