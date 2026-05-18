@@ -3638,31 +3638,33 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
 }
 
 .rx-hcard {
-  width: 220px;
+  width: 230px;
   flex-shrink: 0;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.04);
+  border-radius: 20px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.4) 100%);
   border: 1px solid rgba(255,255,255,0.08);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
   position: relative;
   display: flex;
   flex-direction: column;
+  backdrop-filter: blur(12px);
 }
+.rx-hcard:hover { transform: translateY(-4px) scale(1.02); }
 .rx-hcard:active { transform: scale(0.96); }
 .rx-hcard--rx-soon {
-  border-color: rgba(28,231,131,0.3);
-  box-shadow: 0 0 18px rgba(28,231,131,0.08);
+  border-color: rgba(28,231,131,0.45);
+  box-shadow: 0 0 30px rgba(28,231,131,0.12), 0 0 60px rgba(28,231,131,0.05), inset 0 1px 0 rgba(28,231,131,0.1);
 }
 .rx-hcard--rx-days {
-  border-color: rgba(245,158,11,0.3);
-  box-shadow: 0 0 18px rgba(245,158,11,0.08);
+  border-color: rgba(245,158,11,0.45);
+  box-shadow: 0 0 30px rgba(245,158,11,0.12), 0 0 60px rgba(245,158,11,0.05), inset 0 1px 0 rgba(245,158,11,0.1);
 }
 .rx-hcard--rx-nodate {
   border-color: rgba(255,255,255,0.07);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
-
 .rx-hcard-img {
   width: 100%;
   height: 120px;
@@ -3677,34 +3679,64 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
 }
 .rx-hcard-badge {
   position: absolute;
-  top: 8px; left: 8px;
-  font-size: 0.65rem;
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(8px);
-  padding: 3px 8px;
+  top: 10px; left: 10px;
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(12px);
+  padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.12);
   z-index: 2;
+}
+.rx-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.rx-dot--rx-soon {
+  background: #1ce783;
+  box-shadow: 0 0 6px #1ce783, 0 0 12px rgba(28,231,131,0.6);
+  animation: rxDotPulse 1.5s ease-in-out infinite;
+}
+.rx-dot--rx-days {
+  background: #f59e0b;
+  box-shadow: 0 0 6px #f59e0b;
+}
+.rx-dot--rx-nodate {
+  background: rgba(255,255,255,0.2);
+}
+@keyframes rxDotPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.4); }
 }
 
 /* badge جديد اليوم */
 .rx-today-badge {
   position: absolute;
-  top: 8px; right: 8px;
-  font-size: 0.62rem;
-  font-weight: 800;
-  background: rgba(229,9,20,0.85);
-  backdrop-filter: blur(8px);
+  top: 10px; right: 10px;
+  font-size: 0.6rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, rgba(229,9,20,0.9), rgba(180,0,0,0.8));
+  backdrop-filter: blur(12px);
   color: #fff;
-  padding: 3px 9px;
+  padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(255,80,80,0.5);
+  border: 1px solid rgba(255,100,100,0.4);
   z-index: 2;
+  display: flex; align-items: center; gap: 5px;
+  letter-spacing: 0.3px;
   animation: rxTodayPulse 1.8s ease-in-out infinite;
 }
+.rx-today-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  animation: rxDotPulse 1s ease-in-out infinite;
+}
 @keyframes rxTodayPulse {
-  0%,100% { box-shadow: 0 0 6px rgba(229,9,20,0.4); }
-  50%     { box-shadow: 0 0 18px rgba(229,9,20,0.8); }
+  0%,100% { box-shadow: 0 0 8px rgba(229,9,20,0.5); }
+  50%     { box-shadow: 0 0 22px rgba(229,9,20,0.9), 0 0 40px rgba(229,9,20,0.3); }
 }
 
 .rx-hcard-body {
@@ -3733,9 +3765,12 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   justify-content: flex-start;
 }
 .rx-stars {
-  font-size: 0.7rem;
-  color: #f5c518;
-  letter-spacing: 1px;
+  font-size: 0.72rem;
+  background: linear-gradient(135deg, #f5c518, #ff9d00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+  filter: drop-shadow(0 0 3px rgba(245,197,24,0.5));
 }
 .rx-rating-num {
   font-size: 0.68rem;
@@ -3764,17 +3799,50 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
 
 /* العداد التنازلي */
 .rx-countdown {
+  background: linear-gradient(135deg, rgba(10,10,20,0.9), rgba(20,10,30,0.8));
+  border: 1px solid rgba(139,92,246,0.3);
+  border-radius: 12px;
+  padding: 8px 10px;
+  text-align: center;
+  margin-top: 4px;
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  box-shadow: 0 0 20px rgba(139,92,246,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.rx-cd-seg {
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+}
+.rx-cd-seg b {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(139,92,246,0.8);
+}
+.rx-cd-seg em {
+  font-size: 0.5rem;
+  font-style: normal;
+  color: rgba(139,92,246,0.8);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.rx-cd-sep {
+  font-size: 0.45rem;
+  color: rgba(139,92,246,0.4);
+  align-self: flex-start;
+  margin-top: 4px;
+}
+.rx-cd-live {
   font-size: 0.7rem;
   font-weight: 800;
-  color: #f5c518;
-  background: rgba(245,197,24,0.08);
-  border: 1px solid rgba(245,197,24,0.2);
-  border-radius: 8px;
-  padding: 4px 8px;
-  text-align: center;
-  margin-top: 2px;
-  font-variant-numeric: tabular-nums;
-  direction: ltr;
+  color: #1ce783;
+  text-shadow: 0 0 10px rgba(28,231,131,0.8);
+  animation: rxDotPulse 1s ease-in-out infinite;
 }
 
 .rx-hcard .rx-btn {
@@ -3783,27 +3851,32 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   justify-content: center;
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 9px;
-  background: rgba(229,9,20,0.1);
-  border: 1px solid rgba(229,9,20,0.35);
+  gap: 7px;
+  padding: 11px;
+  background: linear-gradient(135deg, rgba(229,9,20,0.15), rgba(180,0,50,0.1));
+  border: 1px solid rgba(229,9,20,0.4);
   border-radius: 999px;
-  color: #ff6b6b;
-  font-size: 0.75rem;
-  font-weight: 800;
+  color: #ff8080;
+  font-size: 0.78rem;
+  font-weight: 900;
   font-family: 'Cairo', sans-serif;
   cursor: pointer;
   flex-shrink: 0;
+  letter-spacing: 1px;
   animation: rxPulse 2.5s ease-in-out infinite;
-  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
 }
 .rx-hcard .rx-btn:hover {
-  background: rgba(229,9,20,0.25);
-  border-color: rgba(229,9,20,0.7);
-  box-shadow: 0 0 20px rgba(229,9,20,0.3);
+  background: linear-gradient(135deg, rgba(229,9,20,0.35), rgba(180,0,50,0.25));
+  border-color: rgba(229,9,20,0.8);
+  box-shadow: 0 0 25px rgba(229,9,20,0.4), 0 0 50px rgba(229,9,20,0.15);
+  color: #fff;
   animation: none;
+  transform: scale(1.02);
 }
-.rx-hcard .rx-btn svg { filter: drop-shadow(0 0 3px #e50914); }
+.rx-play-icon { filter: drop-shadow(0 0 5px rgba(229,9,20,0.7)); transition: transform 0.2s ease; }
+.rx-hcard .rx-btn:hover .rx-play-icon { transform: scale(1.15); }
 .rx-hcard .rx-btn:active { transform: scale(0.94); }
 
 .rx-soon   { color: #1ce783; }
@@ -3811,8 +3884,8 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
 .rx-nodate { color: rgba(255,255,255,0.25); }
 
 @keyframes rxPulse {
-  0%,100% { box-shadow: 0 0 8px rgba(229,9,20,0.15); }
-  50%     { box-shadow: 0 0 20px rgba(229,9,20,0.35); }
+  0%,100% { box-shadow: 0 0 8px rgba(229,9,20,0.15), inset 0 1px 0 rgba(255,255,255,0.05); }
+  50%     { box-shadow: 0 0 25px rgba(229,9,20,0.45), 0 0 50px rgba(229,9,20,0.1), inset 0 1px 0 rgba(255,255,255,0.08); }
 }
 .rx-empty {
   text-align: center;
