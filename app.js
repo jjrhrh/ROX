@@ -2025,6 +2025,7 @@ const svgRadar = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/
   const hasTrakt = localStorage.getItem('trakt_token');
 
   const radarHTML = await loadRadarSection();
+  const animeRadarHTML = await loadAnimeRadarSection();
   page.innerHTML = `
     <div class="lib-header"><h2 class="lib-title">مكتبتي</h2></div>
     ${buildSection('lib-laser-magenta','lib-icon3d-magenta', svgArchive, 'أرشيفي الخاص',   wlHTML,  'rox_watchlist',  watchlist)}
