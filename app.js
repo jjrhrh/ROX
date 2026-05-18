@@ -2372,20 +2372,17 @@ async function loadRadarSection() {
       const cardClass = isActive ? 'radar-card radar-card-active' : 'radar-card';
       return `
         <div class="${cardClass}" onclick="openDetail(${item.id},'tv')">
-          <img class="radar-poster" src="${poster}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-          <div class="radar-info">
-            <div class="radar-title">${title}</div>
-            <div class="radar-ep-row">
-              <span class="radar-last">${lastTxt}</span>
-              ${lastSubTxt ? `<span class="radar-last-sub"> · ${lastSubTxt}</span>` : ''}
-            </div>
-            <div class="radar-next ${nextClass}">${nextTxt}</div>
-            ${nextSubTxt ? `<div class="radar-next-sub ${nextClass}">${nextSubTxt}</div>` : ''}
-          </div>
           <button class="radar-watch-btn" onclick="event.stopPropagation();openWatchPage(${item.id},'tv',${last?.season_number||1},${last?.episode_number||1})">
             <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             شاهد
           </button>
+          <div class="radar-info">
+            <div class="radar-title">${title}</div>
+            <div class="radar-last">${lastTxt}</div>
+            <div class="radar-next ${nextClass}">${nextTxt}</div>
+            ${nextSubTxt ? `<div class="radar-next-sub ${nextClass}">${nextSubTxt}</div>` : ''}
+          </div>
+          <img class="radar-poster" src="${poster}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
         </div>`;
     } catch { return ''; }
   }));
