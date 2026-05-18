@@ -61,62 +61,134 @@ html, body {
 .bnav-btn {
   flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  gap: 4px; background: none; border: none;
-  color: var(--text3); cursor: pointer;
-  padding: 8px 4px; border-radius: 0; position: relative; overflow: visible;
-  transition: color 0.2s;
+  gap: 3px; background: none; border: none;
+  color: rgba(255,255,255,0.28); cursor: pointer;
+  padding: 6px 4px 8px; border-radius: 18px;
+  position: relative; overflow: visible;
+  transition: color 0.4s cubic-bezier(0.34,1.56,0.64,1),
+              transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
   font-family: 'Cairo', sans-serif;
 }
-.bnav-btn.active { color: var(--rox-laser, #00e5ff); }
-.bnav-btn.active .bnav-icon { filter: none; }
+.bnav-btn .bnav-icon svg {
+  filter: grayscale(0.4) brightness(0.45);
+  transition: filter 0.4s ease;
+}
+/* — Active State — */
+.bnav-btn.active {
+  color: var(--rox-laser, #00e5ff);
+  transform: translateY(-6px);
+}
+.bnav-btn.active .bnav-icon svg {
+  filter: none;
+}
+/* — Floating Halo — */
+.bnav-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 2px; left: 50%;
+  transform: translateX(-50%);
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  opacity: 0.9;
+  z-index: -1;
+  filter: blur(14px);
+  transition: background 0.4s ease;
+}
+#bnavHome.active::before,
+#bnavSearch.active::before,
+#bnavLibrary.active::before,
+#bnavProfile.active::before {
+  background: radial-gradient(circle, rgba(0,229,255,0.28) 0%, transparent 72%);
+}
+#bnavOtaku.active::before {
+  background: radial-gradient(circle, rgba(255,77,0,0.28) 0%, transparent 72%);
+}
+/* — Dot Indicator — */
 .bnav-btn::after {
   content: '';
   position: absolute;
-  bottom: 2px;
-  left: 50%; transform: translateX(-50%);
-  width: 36px; height: 3px;
+  bottom: 1px; left: 50%;
+  transform: translateX(-50%);
+  width: 5px; height: 5px;
   border-radius: 50%;
-  background: var(--rox-laser, transparent);
-  box-shadow: 0 0 6px var(--rox-laser,transparent),
-              0 0 18px var(--rox-laser,transparent),
-              0 0 36px var(--rox-laser,transparent);
-  transition: all 0.35s ease;
+  background: transparent;
+  transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
 }
-@keyframes clickBounce {
-  0%   { transform: translateY(0)    scale(1); }
-  40%  { transform: translateY(-8px) scale(1.2); }
-  70%  { transform: translateY(-3px) scale(1.1); }
-  100% { transform: translateY(0)    scale(1.15); }
+.bnav-btn.active::after {
+  background: var(--rox-laser, #00e5ff);
+  box-shadow: 0 0 8px var(--rox-laser,#00e5ff),
+              0 0 20px var(--rox-laser,#00e5ff);
 }
-@keyframes rox-breathe {
-  0%,100% { filter: drop-shadow(0 0 5px var(--rox-laser)) drop-shadow(0 0 12px var(--rox-laser)); }
-  50%     { filter: drop-shadow(0 0 16px var(--rox-laser)) drop-shadow(0 0 32px var(--rox-laser)); opacity:.75; }
-}
-.bnav-btn.active .bnav-icon {
-  animation: clickBounce 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards,
-             rox-breathe 2.8s ease-in-out 0.35s infinite;
-}
+/* — Colors — */
 #bnavHome.active,
 #bnavSearch.active,
 #bnavLibrary.active,
-#bnavProfile.active { --rox-laser: #00e5ff; color: #00e5ff; }
-#bnavOtaku.active   { --rox-laser: #ff4d00; color: #ff4d00; } 
-.bnav-icon  { font-size: 1.3rem; line-height: 1; }
-.bnav-icon svg { width: 1.4rem; height: 1.4rem; } 
-.bnav-label { font-size: 0.7rem; font-weight: 700; }
+#bnavProfile.active { --rox-laser:#00e5ff; color:#00e5ff; }
+#bnavOtaku.active   { --rox-laser:#ff4d00; color:#ff4d00; }
+/* — Animations — */
+@keyframes clickBounce {
+  0%   { transform:translateY(0)    scale(1);    }
+  40%  { transform:translateY(-8px) scale(1.22); }
+  70%  { transform:translateY(-3px) scale(1.1);  }
+  100% { transform:translateY(0)    scale(1.15); }
+}
+@keyframes rox-breathe {
+  0%,100% { filter:drop-shadow(0 0 5px var(--rox-laser)) drop-shadow(0 0 12px var(--rox-laser)); }
+  50%     { filter:drop-shadow(0 0 18px var(--rox-laser)) drop-shadow(0 0 36px var(--rox-laser)); opacity:.8; }
+}
+.bnav-btn.active .bnav-icon {
+  animation: clickBounce 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards,
+             rox-breathe 3s ease-in-out 0.4s infinite;
+}
+/* — Sizes — */
+.bnav-icon     { font-size:1.3rem; line-height:1; }
+.bnav-icon svg { width:1.5rem; height:1.5rem; }
+.bnav-label    { font-size:0.67rem; font-weight:700; letter-spacing:0.01em; }
 .bnav-center {
-  width: 56px; height: 56px;
-  background: var(--accent2);
+  width: 60px !important; height: 60px !important;
+  flex: 0 0 60px !important;
   border-radius: 50% !important;
   color: #fff !important;
-  font-size: 1.5rem !important;
-  box-shadow: 0 0 20px var(--accent2-glow);
-  flex: 0 0 56px;
-  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  background: linear-gradient(145deg,#ff2a2a 0%,#cc0000 50%,#7a0000 100%) !important;
+  box-shadow:
+    0 0 0 1.5px rgba(255,80,80,0.35),
+    0 0 22px rgba(229,9,20,0.6),
+    0 0 45px rgba(229,9,20,0.3),
+    0 6px 22px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 -3px 8px rgba(0,0,0,0.45) !important;
+  animation: orbPulse 3.2s ease-in-out infinite !important;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1) !important;
 }
-.bnav-center:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 32px var(--accent2-glow);
+.bnav-center::before {
+  content: '';
+  position: absolute;
+  top: 7px; left: 11px;
+  width: 36px; height: 13px;
+  background: rgba(255,255,255,0.22);
+  border-radius: 50%;
+  filter: blur(5px);
+  pointer-events: none;
+}
+.bnav-center:active {
+  transform: scale(0.91) translateY(2px) !important;
+}
+@keyframes orbPulse {
+  0%,100% {
+    box-shadow: 0 0 0 1.5px rgba(255,80,80,0.35),
+                0 0 22px rgba(229,9,20,0.6),
+                0 0 45px rgba(229,9,20,0.3),
+                0 6px 22px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.22);
+  }
+  50% {
+    box-shadow: 0 0 0 2px rgba(255,80,80,0.55),
+                0 0 35px rgba(229,9,20,0.85),
+                0 0 70px rgba(229,9,20,0.45),
+                0 6px 22px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+  }
 }
 /* ===== PAGES ===== */
 .page {
