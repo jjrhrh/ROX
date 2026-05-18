@@ -2341,8 +2341,11 @@ async function loadRadarSection() {
       } else {
         nextTxt = 'لا يوجد موعد محدد بعد'; nextClass = 'nodate';
       }
+      const futureNext = next?.air_date && Math.floor((new Date(next.air_date) - new Date().setHours(0,0,0,0)) / 86400000) > 0;
+      const recentNext = next?.air_date && Math.floor((new Date(next.air_date) - new Date().setHours(0,0,0,0)) / 86400000) <= 0;
+      const sortKey = futureNext ? 0 : recentNext ? 1 : 2;
       return `
-        <div class="radar-card" onclick="openDetail(${item.id},'tv')">
+        <div class="radar-card" data-sort="${sortKey}" onclick="openDetail(${item.id},'tv')">
           <img class="radar-poster" src="${poster}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
           <div class="radar-info">
             <div class="radar-title">${title}</div>
