@@ -2353,7 +2353,8 @@ async function loadRadarSection() {
             <div class="radar-next ${nextClass}">${nextTxt}</div>
           </div>
           <button class="radar-watch-btn" onclick="event.stopPropagation();openWatchPage(${item.id},'tv',${last?.season_number||1},${last?.episode_number||1})">
-            ▶ شاهد
+            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            شاهد
           </button>
         </div>`;
     } catch { return ''; }
