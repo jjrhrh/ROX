@@ -3703,7 +3703,8 @@ body.cinema-mode .ws-overlay        { border-radius: 0; }
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   gap: 3px;
-  padding: 10px 14px;
+  padding: 10px 10px;
+  min-width: 52px;
   background: rgba(229,9,20,0.12);
   border: 1px solid rgba(229,9,20,0.4);
   border-radius: 14px;
