@@ -2261,15 +2261,6 @@ function handleSearch(val) {
   if (discovery) discovery.classList.add('hidden');
   searchDebounce = setTimeout(() => runSearch(q), CONFIG.SEARCH.DEBOUNCE_MS);
 }
-  clearTimeout(searchDebounce);
-  const q = val.trim();
-  if (q.length < CONFIG.SEARCH.MIN_CHARS) {
-    const c = document.getElementById('searchResults');
-    if (c) c.innerHTML = '';
-    return;
-  }
-  searchDebounce = setTimeout(() => runSearch(q), CONFIG.SEARCH.DEBOUNCE_MS);
-}
 
 async function runSearch(q) {
   const container = document.getElementById('searchResults');
