@@ -2346,9 +2346,11 @@ async function loadRadarSection() {
         const nextEp = next.episode_number || '';
         const nextFmt = fmtDate(next.air_date);
         if (diff <= 0) {
-          nextTxt = `الموسم ${nextSeason} — الحلقة ${nextEp} — صدرت اليوم`;
+          const daysSince = Math.abs(diff);
+          const sinceStr = daysSince === 0 ? 'صدرت اليوم' : daysSince === 1 ? 'نزلت أمس' : `نزلت قبل ${daysSince} أيام`;
+          nextTxt = `الموسم ${nextSeason} — الحلقة ${nextEp} — ${sinceStr}`;
           nextSubTxt = nextFmt;
-          nextClass = 'soon'; isActive = true;
+          nextClass = daysSince <= 2 ? 'soon' : 'days'; isActive = true;
         } else if (diff === 1) {
           nextTxt = `الموسم ${nextSeason} — الحلقة ${nextEp} — غداً`;
           nextSubTxt = nextFmt;
