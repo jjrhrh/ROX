@@ -2320,22 +2320,25 @@ async function loadRadarSection() {
         const diff = Math.floor((nextDate - todayClean) / 86400000);
         const fmtDate = new Date(next.air_date).toLocaleDateString('ar-SA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
         const ns = next.season_number, ne = next.episode_number;
+        const icoLive   = `<svg width="11" height="11" viewBox="0 0 24 24" fill="#1ce783"><circle cx="12" cy="12" r="10"/></svg>`;
+        const icoTimer  = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M5 3h14M5 21h14M12 3v3M12 21v-3M6.3 6.3l2.1 2.1M15.6 15.6l2.1 2.1M3 12h3M18 12h3M6.3 17.7l2.1-2.1M15.6 8.4l2.1-2.1"/></svg>`;
+        const icoCheck  = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1ce783" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
         if (diff < 0) {
           const days = Math.abs(diff);
-          const since = days === 1 ? 'أمس' : days === 2 ? 'منذ يومين' : `قبل ${days} أيام`;
-          nextTxt = `الموسم ${ns} — الحلقة ${ne} — نزلت ${since} | ${fmtDate}`;
+          const since = days === 1 ? 'نزلت أمس' : days === 2 ? 'نزلت منذ يومين' : `نزلت قبل ${days} أيام`;
+          nextTxt = `${icoCheck} الموسم ${ns} — الحلقة ${ne} — ${since} | ${fmtDate}`;
           nextClass = days <= 2 ? 'soon' : 'days';
         } else if (diff === 0) {
-          nextTxt = `الموسم ${ns} — الحلقة ${ne} — صدرت اليوم | ${fmtDate}`;
+          nextTxt = `${icoLive} الموسم ${ns} — الحلقة ${ne} — صدرت اليوم | ${fmtDate}`;
           nextClass = 'soon';
         } else if (diff === 1) {
-          nextTxt = `الموسم ${ns} — الحلقة ${ne} — غداً | ${fmtDate}`;
+          nextTxt = `${icoTimer} الموسم ${ns} — الحلقة ${ne} — غداً | ${fmtDate}`;
           nextClass = 'soon';
         } else if (diff <= 7) {
-          nextTxt = `الموسم ${ns} — الحلقة ${ne} — بعد ${diff} أيام | ${fmtDate}`;
+          nextTxt = `${icoTimer} الموسم ${ns} — الحلقة ${ne} — بعد ${diff} أيام | ${fmtDate}`;
           nextClass = 'days';
         } else {
-          nextTxt = `الموسم ${ns} — الحلقة ${ne} | ${fmtDate}`;
+          nextTxt = `${icoTimer} الموسم ${ns} — الحلقة ${ne} | ${fmtDate}`;
           nextClass = 'days';
         }
       } else {
