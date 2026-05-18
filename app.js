@@ -2339,14 +2339,19 @@ async function loadRadarSection() {
         status = 'لا يوجد موعد بعد'; statusClass='rx-nodate'; sortKey=2;
       }
 
-      const cardGlow = sortKey===0 ? 'rx-soon-card' : sortKey===1 ? 'rx-days-card' : '';
+      const backdrop = d.backdrop_path ? `${CONFIG.IMAGES.BACKDROP_SM || 'https://image.tmdb.org/t/p/w300'}${d.backdrop_path}` : poster;
       return { sortKey, html: `
-        <div class="rx-card ${cardGlow}" onclick="openDetail(${item.id},'tv')">
-          <img class="rx-poster" src="${poster}" onerror="this.src='${CONFIG.IMAGES.PLACEHOLDER}'">
-          <div class="rx-body">
-            <div class="rx-title">${title}</div>
-            <div class="rx-last">${lastTxt}</div>
-            <div class="rx-status ${statusClass}">${status}</div>
+        <div class="rx-hcard rx-hcard--${statusClass}" onclick="openDetail(${item.id},'tv')">
+          <div class="rx-hcard-img" style="background-image:url('${backdrop}')">
+            <div class="rx-hcard-grad"></div>
+            <span class="rx-hcard-badge rx-hcard-badge--${statusClass}">
+              ${sortKey===0 ? '🟢' : sortKey===1 ? '🟡' : '⚫'}
+            </span>
+          </div>
+          <div class="rx-hcard-body">
+            <div class="rx-hcard-title">${title}</div>
+            <div class="rx-hcard-last">${lastTxt}</div>
+            <div class="rx-hcard-status ${statusClass}">${status}</div>
           </div>
           <button class="rx-btn" onclick="event.stopPropagation();openWatchPage(${item.id},'tv',${last?.season_number||1},${last?.episode_number||1})">
             <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>
